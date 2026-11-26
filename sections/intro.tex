@@ -1,0 +1,134 @@
+\section{Introduction}\label{sec:intro}
+
+\subsection{Computation over the reals and its complexity classes}
+
+In the model of Blum, Shub and Smale \cite{BSS89,BCSS98} a machine computes with real numbers. Its registers hold real numbers, an input is a vector $x\in\RR^n$ of size $n$, and one arithmetic operation $+,-,\times,/$ or one comparison $v\ge0$ costs one step, whatever the numbers involved. The program may contain finitely many real constants. This is the natural model for algorithms of numerical analysis, optimisation and computational geometry, and it carries a complexity theory parallel to the classical one. The classes that occur in this paper are the following; precise definitions are in \cref{sec:prelim}.
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item $\PR$ consists of the languages $L\subseteq\RR^\infty=\bigsqcup_n\RR^n$ decided by a machine in polynomial time.
+\item $\NPR$ consists of the languages with short real certificates: $x\in L$ exactly when some vector $z$ of polynomially many \emph{real numbers} makes a polynomial-time machine accept $(x,z)$. Deciding whether a system of real polynomial equations has a solution is complete for $\NPR$ \cite{BSS89}. The class $\coNPR$ consists of the complements.
+\item $\Sigma_2^{\RR}$ consists of the languages defined by $\exists z\,\forall u$ over a polynomial-time machine, with $z$ and $u$ real vectors of polynomial length. It is the second existential level of the real polynomial hierarchy $\PHR$.
+\item $\PARR$, parallel polynomial time, consists of the languages decided by uniform families of algebraic circuits of polynomial depth and at most exponential size. It is the real counterpart of polynomial space.
+\end{itemize}
+
+These classes form a chain
+\begin{equation}\label{eq:chain}
+\PR\ \subseteq\ \NPR\ \subseteq\ \Sigma_2^{\RR}\ \subseteq\ \PHR\ \subseteq\ \PARR ,
+\end{equation}
+whose last inclusion is quantifier elimination in parallel polynomial time \cite{Ren92,Cuc93,BCSS98}. Over the complex numbers, where machines test only $v=0$, the classes $\PC$, $\NPC$, $\coNPC$ and $\PARC$ are defined in the same way; Hilbert's Nullstellensatz is complete for $\NPC$, and whether $\PC=\NPC$ is the question of Shub and Smale \cite{SS95,BCSS98}.
+
+Few separations are known. Above $\PARR$, the inclusions $\PARR\subseteq\PATR$ and $\PARR\subseteq\EXPR$ are strict, where $\PATR$ is polynomial alternating time \cite{Cuc93,BCSS98}; see the survey \cite{MM97}. Baartse and Meer proved $\PARR\subsetneq\IPR$ for interactive proofs with real messages \cite{BM16}. Inside the chain \eqref{eq:chain}, however, no inclusion was known to be strict until recently. The question whether $\NPR=\PARR$ is the real analogue of the classical question whether $\cc{NP}=\cc{PSPACE}$.
+
+\subsection{The permanent and border complexity}
+
+A second algebraic theory of hardness, due to Valiant \cite{Val79}, concerns the size of arithmetic circuits for families of polynomials. Its central example is the permanent
+\[
+\per_m(X)=\sum_{\sigma\in S_m}\ \prod_{i=1}^mX_{i\sigma(i)}
+\]
+of an $m\times m$ matrix of variables, which is complete for the class $\VNP$. A circuit builds a polynomial from variables and constants by additions and multiplications, and its size is the number of gates. The \emph{border size} of a polynomial $f$ allows the constants of the circuit to depend on a parameter $\eps$ and asks only that the circuit compute $f$ up to terms that vanish with $\eps$ (\cref{def:border}); it is never larger than the circuit size. The following lower bound was proved recently.
+
+\medskip
+\noindent\textbf{Theorem} (\cite{Cla26}; \cref{thm:lowerbound} below)\textbf{.} \emph{For all large $m$, the border size of $\per_m$ over $\RR$ is greater than $2^{c(\log m)^{4/3}}$, for an absolute constant $c>0$.}
+\medskip
+
+The two theories meet in a theorem of B\"urgisser \cite{Bur04}: if the graph $\{Y=f(X)\}$ of a real polynomial of degree $d$ is decided by a computation tree of depth $t$, then the border size of $f$ is polynomial in $t$ and $d$. In words, for polynomials of moderate degree, \emph{checking} a value is not easier than \emph{computing} it. B\"urgisser deduced that a superpolynomial lower bound for the border size of the permanent implies $\PR\ne\PARR$ \cite{Bur01,Bur04}. With the theorem above this gives $\PR\subsetneq\PARR$, the first strict inclusion inside the chain \eqref{eq:chain}.
+
+A deterministic tree is the weakest kind of verifier. This paper asks what happens when the verifier is helped: by a certificate of real numbers, by a universal quantifier, by an alternation of the two, or by a prover with whom it interacts. Throughout, the test language is
+\[
+\mathrm{PERM}=\bigl\{(X,Y)\in\RR^{m^2}\times\RR:\ Y=\per_m(X),\ m\ge1\bigr\},
+\]
+the graph of the permanent. It lies in $\PARR$ by Ryser's formula (\cref{lem:ryser}).
+
+\subsection{Main results}
+
+All lower bounds below are stated for \emph{trees} (\cref{def:tree}), the nonuniform version of a machine: one tree for each input size, with arbitrary real constants. A machine running in time $T$ unrolls into trees of depth $O(T)$, so the bounds hold for machines, with or without uniformity.
+
+\begin{maintheorem}[$\NPR\ne\PARR$]\label{thm:A}
+The language $\mathrm{PERM}$ is in $\PARR$ and not in $\NPR$. More precisely, suppose that for every $m$ a tree of depth $t_m$ on inputs $(X,Y,z)$ accepts some real certificate $z$ exactly when $Y=\per_m(X)$. Then
+\[
+t_m\ \ge\ 2^{\Omega((\log m)^{4/3})} .
+\]
+The same holds for the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$. Consequently $\NPR\subsetneq\PARR$.
+\end{maintheorem}
+
+\Cref{thm:A} says that the value of a real permanent has no short proof: no list of polynomially many real numbers, however cleverly chosen and however it depends on the matrix, can be checked in polynomial time to certify that $Y=\per_m(X)$. The certificate may contain arbitrary real numbers, and the verifier may use arbitrary real constants and may be different for every $m$. In the classical setting the corresponding statement, that the permanent has no $\cc{NP}$ certificates, is not known; it is only known that such certificates would collapse the polynomial hierarchy, by Toda's theorem \cite{Tod91}. \Cref{thm:A} is proved as \cref{cor:np}.
+
+\begin{maintheorem}[universal certificates and the second level]\label{thm:B}
+The language $\mathrm{PERM}$ is not in $\coNPR$ and not in $\Sigma_2^{\RR}$, and the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ are not in $\coNPR$. A tree of depth $t_m$ that accepts every $z$ exactly when $Y=\per_m(X)$ has $t_m\ge2^{\Omega((\log m)^{4/3})}$. A tree of depth $t_m$ for which
+\[
+Y=\per_m(X)\quad\Longleftrightarrow\quad\exists z\ \forall u\ \text{the tree accepts }(X,Y,z,u),
+\]
+with $z$ and $u$ real vectors of lengths $k_m$ and $l_m$, has $t_m+k_m+l_m\ge2^{\Omega((\log m)^{4/3})}$. Consequently $\coNPR\subsetneq\PARR$ and $\Sigma_2^{\RR}\subsetneq\PARR$.
+\end{maintheorem}
+
+The first part says that there is also no short \emph{refutation} of a wrong value of the permanent that could be found for every wrong value. The second part reaches the second level of the hierarchy: one alternation of real quantifiers does not help either. Whether the permanent lies outside the whole hierarchy $\PHR$, which would give $\PHR\subsetneq\PARR$, remains open (\cref{sec:open}). \Cref{thm:B} is proved as \cref{cor:conp,cor:second}.
+
+\begin{maintheorem}[the complex numbers]\label{thm:C}
+Over $\CC$, the language $\{(X,Y)\in\CC^{m^2}\times\CC:Y=\per_m(X)\}$ is in $\PARC$ and in neither $\NPC$ nor $\coNPC$; the corresponding trees have depth $2^{\Omega((\log m)^{4/3})}$. Consequently $\NPC\subsetneq\PARC$ and $\coNPC\subsetneq\PARC$.
+\end{maintheorem}
+
+Over $\CC$ a certificate is a solution of a system of polynomial equations, so \cref{thm:C} says that no system of polynomially many equations of polynomial complexity in $(X,Y,z)$ is solvable in $z$ exactly when $Y=\per_m(X)$. It is proved as \cref{cor:conp}.
+
+The next two results concern interactive proofs. In an interactive proof a polynomial-time verifier exchanges messages with a computationally unbounded prover and flips coins; an input in the language must be accepted with probability at least $2/3$ for a suitable prover, and an input outside it with probability at most $1/3$ for every prover. Over the reals the verifier is a real machine and the coins are discrete. Ivanov and de Rougemont \cite{IdR99} studied the class $\BIPR$ in which all messages are Boolean. They proved that it equals parallel polynomial time in the additive model, a real version of Shamir's theorem \cite{Sha92}, and that $\BIPR\subseteq\PARR$ in the model with multiplication. Baartse and Meer \cite{BM16} studied the class $\IPR$ in which the messages are real numbers and proved $\PARR\subsetneq\IPR$; in particular the protocol of Lund, Fortnow, Karloff and Nisan \cite{LFKN92} verifies the real permanent with real messages.
+
+\begin{maintheorem}[Boolean messages]\label{thm:D}
+Every interactive protocol with a real verifier, discrete coins and Boolean messages that decides $\mathrm{PERM}$ has verifier time $2^{\Omega((\log m)^{4/3})}$, for any number of rounds and with private coins. Consequently $\BIPR\subsetneq\PARR$ in the model with multiplication.
+\end{maintheorem}
+
+\Cref{thm:D} shows that the inclusion of Ivanov and de Rougemont is strict as soon as the verifier can multiply, and it explains why the protocol for the permanent must send real numbers: a prover that can only send bits, or more generally numbers from a fixed countable set (\cref{rem:discrete}), cannot convince a real verifier of the value of a permanent. It is proved as \cref{thm:bip}.
+
+For real messages we consider public-coin protocols, in which the verifier Arthur sends only its coin flips and the prover Merlin answers with real vectors. Let $\AMR[c]$ be the class of languages with such a protocol of $c$ rounds, and $\AMR[\mathrm{poly}]$ the class with polynomially many rounds; by \cite{BM16} the latter equals $\IPR$.
+
+\begin{maintheorem}[rounds of real interaction]\label{thm:E}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For every constant $c$, $\AMR[c]=\NPR$. Hence
+\[
+\AMR[O(1)]\ =\ \NPR\ \subsetneq\ \AMR[\mathrm{poly}]\ =\ \IPR .
+\]
+\item Every public-coin protocol with real messages and a polynomial-time verifier that decides $\mathrm{PERM}$ has $\Omega(\log\log m)$ rounds. In particular $\mathrm{PERM}\notin\AMR[O(1)]$.
+\end{enumerate}
+\end{maintheorem}
+
+Part (i) uses no lower bound. It says that a bounded number of rounds of randomness can be removed entirely in favour of a single real certificate, because polynomially many coin strings serve all inputs at once and a real machine can carry them in a constant. The strict inclusion in (i) is the theorem of Baartse and Meer. Classically a constant number of rounds also collapses, to two rounds \cite{BM88}, but neither the collapse to $\cc{NP}$ nor the separation from polynomially many rounds is known. Part (ii) shows that the number of rounds in the protocol for the permanent cannot be made constant. \Cref{thm:E} is proved as \cref{thm:am,thm:amper}.
+
+\Cref{thm:A,thm:B,thm:C} and the second part of \cref{thm:E} are consequences of the lower bound for the permanent and of the following theorem, which holds for every polynomial and uses no lower bound.
+
+\begin{maintheorem}[certificates do not help to check a polynomial]\label{thm:F}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$, and let $U\subseteq\RR^n$ be open and nonempty. Suppose that for $x\in U$ and $y\in\RR$ the relation $y=f(x)$ holds exactly when one of the following holds, for a tree of depth $t$ with arbitrary real constants and real vectors $z$, $u$ of length at most $t$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the tree accepts $(x,y,z)$ for some $z$;
+\item the tree accepts $(x,y,z)$ for all $z$;
+\item there is $z$ such that the tree accepts $(x,y,z,u)$ for all $u$.
+\end{enumerate}
+Then the border size of $f$ is bounded by a polynomial in $t$, $d$ and $n$. In cases \textup{(i)} and \textup{(ii)} the same holds with $y\le f(x)$ or $y\ge f(x)$ in place of $y=f(x)$.
+\end{maintheorem}
+
+The case without certificates is B\"urgisser's theorem. \Cref{thm:F} says that his principle, that a polynomial of moderate degree is not easier to check than to compute, survives when the checker is given real certificates, universally quantified real certificates, or both in this order. Case (i) is \cref{thm:graph,thm:threshold}, case (ii) is \cref{thm:onesided}, and case (iii) is \cref{thm:second}. Over the complex numbers cases (i) and (ii) hold for polynomials with real coefficients (\cref{thm:complex}).
+
+In summary, the known relations among these classes are now
+\[
+\PR\ \subseteq\ \NPR=\AMR[O(1)]\ \subsetneq\ \PARR\ \subsetneq\ \IPR=\AMR[\mathrm{poly}],\qquad
+\coNPR,\ \Sigma_2^{\RR},\ \BIPR\ \subsetneq\ \PARR .
+\]
+
+\subsection{Ideas of the proofs}
+
+\emph{Existential certificates.} With a certificate the generic-path argument of B\"urgisser breaks down: the polynomials that the tree tests involve the certificate, and no tested polynomial needs to vanish on the graph. After fixing one accepting path and its active tests, the accepted points near a certificate are the common zeros of polynomials $p_1,\dots,p_r$ with small programs, and the certificate of $(x,f(x))$ can be made isolated by freezing some of its coordinates (\cref{lem:isolate}). Then the pair consisting of $f(x)$ and the certificate is the unique zero of $Q=\sum p_i^2$ over $x$. If that zero were nondegenerate, Newton iteration in a truncated power series ring would compute $f$ by a small circuit. In general it is degenerate to arbitrary order. We replace it by the minimiser of $Q+\eps^2|w-c|^2$ for a generic centre $c$, which is a nondegenerate critical point for almost all parameters, and let $\eps\to0$. The limit is taken inside the constants of the circuit, which is exactly what border complexity permits. The step that needs care is that Taylor coefficients, and not only values, converge; this holds on some open ball for every semialgebraic family (\cref{lem:derivatives}). The combination is the local theorem (\cref{thm:local}).
+
+\emph{Universal certificates.} If every $z$ is accepted exactly on the graph, the rejecting certificates live on the two sides of the graph. On one side, a single cell of rejecting computations covers a one-sided neighbourhood of the graph over a ball. We measure how far a certificate stays inside its cell and away from infinity by a margin, and the largest margin $v(x,y)$ is the optimal value of a polynomial program. The local theorem shows that such value functions have Taylor polynomials of small border size at generic points (\cref{prop:value}). The margin tends to zero at the graph, its level sets $\{v=\delta\}$ are graphs of functions $f_\delta\to f$, and the derivatives converge again.
+
+\emph{An existential and a universal block.} Here the good certificates $z$ form, after isolation, a thin graph $\Gamma$ in $(x,y,z)$-space, and every other nearby point has a rejecting certificate. The largest rejecting margin $v$ vanishes exactly on $\Gamma$, but it is a maximum, it may have kinks along $\Gamma$, and it may jump on thin sets, so that its small values need not concentrate near $\Gamma$. We pass to the envelope
+\[
+e(x;c)=\max_\mu\Bigl[\int v^N\,d\mu-a\Var(\mu)-2a\,|c-\operatorname{mean}(\mu)|^2\Bigr]
+\]
+over probability measures $\mu$ with finitely many atoms, a regularisation of Lasry--Lions type \cite{LL86}. It is again the largest of finitely many values of polynomial programs, it is continuously differentiable in $c$, and for a suitable power $N$ its zero set is exactly $\Gamma$. A generic linear tilt then produces a nondegenerate critical point in the region where $e$ is smooth.
+
+\emph{Interaction.} Boolean messages cannot depend continuously on the input, so near a generic point of the graph every computation path of the verifier is locally constant unless some tested polynomial vanishes on the graph; freezing the honest prover's strategy then contradicts soundness, and B\"urgisser's theorem on factors applies to the tested polynomial. For a constant number of rounds with real messages, polynomially many coin strings per round suffice for all inputs at once, by a counting bound for sign conditions, and the protocol becomes an existential certificate.
+
+\subsection{What remains open}
+
+The witness $\mathrm{PERM}$ lies outside $\NPR$, so it says nothing about $\PR$ versus $\NPR$. By \cref{thm:F} that question cannot be settled by a lower bound on the border complexity of a polynomial of polynomial degree whose graph is in $\NPR$. \Cref{sec:open} discusses this, the higher levels of the hierarchy, and the relation to a conjecture of B\"urgisser \cite{Bur26}.
+
+\subsection{Organisation}
+
+\Cref{sec:prelim} fixes the model and the tools. \Cref{sec:core} proves the local theorem. \Cref{sec:certificates} treats existential certificates, \cref{sec:universal} universal certificates and the complex field, \cref{sec:second} the second level, and \cref{sec:interaction} interactive proofs.

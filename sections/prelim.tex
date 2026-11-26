@@ -1,0 +1,83 @@
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Trees, machines and classes}\label{sec:trees}
+
+We work in the Blum--Shub--Smale model over the ordered field $\RR$ \cite{BSS89,BCSS98}. All lower bounds are proved for the following nonuniform device.
+
+\begin{definition}\label{def:tree}
+A \emph{tree} takes an input $w\in\RR^N$. A computation node applies $+$, $-$, $\times$ or $/$ to two operands, each an earlier value, an input coordinate or a real constant. A test node branches on $v\ge 0$ or on $v=0$ for an earlier value $v$. Leaves accept or reject, and an input that reaches a division by zero is rejected. The \emph{depth} is the largest number of nodes on a path from the root to a leaf.
+\end{definition}
+
+A machine that runs in time $T$ on inputs of a given size unrolls, for that size, into a tree of depth $O(T)$ whose constants are the constants of the machine. By inserting a test before every division, which at most doubles the depth, we may and do assume that every rejection happens at a leaf.
+
+A language $L\subseteq\RR^\infty=\bigsqcup_n\RR^n$ is in $\PR$ if a polynomial-time machine decides it. It is in $\NPR$ if there are a polynomial-time machine $M$ and a polynomial $q$ such that $x\in L$ exactly when $M$ accepts $(x,z)$ for some $z\in\RR^{q(|x|)}$, and $\coNPR$ consists of the complements. It is in $\Sigma_2^{\RR}$ if $x\in L$ exactly when there is $z$ such that $M$ accepts $(x,z,u)$ for all $u$, with $z$ and $u$ of polynomial length. The class $\PARR$ of parallel polynomial time consists of the languages decided by uniform families of algebraic circuits with sign gates of polynomial depth, and hence of at most exponential size. We use the inclusions
+\[
+\PR\subseteq\NPR\subseteq\Sigma_2^{\RR}\subseteq\PHR\subseteq\PARR ,
+\]
+of which the last rests on quantifier elimination in parallel polynomial time for a bounded number of quantifier blocks; see \cite{Ren92,Cuc93,BCSS98}. Among these classes the strict inclusions recorded in the literature are $\PARR\subsetneq\PATR$ and $\PARR\subsetneq\EXPR$ \cite{Cuc93,BCSS98,MM97}, and $\PARR\subsetneq\IPR$ \cite{BM16}. Over $\CC$ the machines branch on $v=0$ only, and $\PC$, $\NPC$, $\coNPC$ and $\PARC$ are defined in the same way.
+
+\subsection{Circuits and border complexity}
+
+A \emph{circuit} over a commutative ring $A$ is a finite list of polynomials over $A$, each of which is a variable, a constant from $A$, or the sum or the product of two earlier entries. Its \emph{size} is the length of the list. The \emph{graph} of a circuit is its list of gate types and wirings, without the values of the constants. A \emph{straight-line program} is a circuit in which we count only the operations $+,-,\times$; a program with $\ell$ operations on $N$ inputs with $p$ constants is a circuit of size at most $3\ell+N+p$.
+
+\begin{definition}\label{def:border}
+A circuit over the field $\Leps$ of formal Laurent series \emph{approximates} $f\in\RR[X]$ if it computes a polynomial $f+\eps g$ in which every coefficient of $g$ lies in $\RR[[\eps]]$. The \emph{border size} of $f$ is the least size of a circuit that approximates $f$.
+\end{definition}
+
+Our lower bounds all come from the following theorem.
+
+\begin{theorem}[{\cite[Theorems~1.4 and~N.5]{Cla26}}]\label{thm:lowerbound}
+There are constants $c>0$ and $m_0$ such that for every $m\ge m_0$ the border size of the permanent $\per_m$ of an $m\times m$ matrix of variables is greater than
+\[
+m^{c(\log m)^{1/3}}=2^{c(\log m)^{4/3}} .
+\]
+\end{theorem}
+
+We also use two classical tools.
+
+\begin{theorem}[Baur and Strassen \cite{BS83}]\label{thm:baurstrassen}
+If a polynomial has a straight-line program with $\ell$ operations, then the polynomial together with all its first partial derivatives has a straight-line program with $O(\ell)$ operations.
+\end{theorem}
+
+\begin{theorem}[B\"urgisser {\cite[Theorem~1.3 and Remark~1.4]{Bur04}}]\label{thm:burgisser}
+There is an absolute constant $C$ with the following property. Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d\ge1$, and suppose that some nonzero multiple of $Y-f(X)$ in $\RR[X,Y]$ has a straight-line program with $\ell$ operations. Then the border size of $f$ is at most $Cd^3(\ell+n)$.
+\end{theorem}
+
+\subsection{Semialgebraic tools}\label{sec:semialgebraic}
+
+We use the following standard facts about semialgebraic sets and maps; see \cite{BCR98,vdD98}. Dimension means semialgebraic dimension.
+
+\begin{enumerate}[label=\textup{(S\arabic*)},ref=\textup{(S\arabic*)},leftmargin=3em]
+\item\label{S1} Sets and maps defined by first-order formulas over $(\RR,+,\times,<)$ are semialgebraic (Tarski--Seidenberg). Dimension is definable in semialgebraic families.
+\item\label{S2} A semialgebraic set $E\subseteq\RR^a\times\RR^b$ has a semialgebraic section over its projection to $\RR^a$ (definable choice).
+\item\label{S3} A semialgebraic subset of $\RR$ is a finite union of points and intervals. A semialgebraic function $(0,\delta)\to\RR$ has a limit in $[-\infty,\infty]$ at $0^+$, and on some interval $(0,\delta')$ it is continuous and either constant or strictly monotone (monotonicity theorem).
+\item\label{S4} \textup{(a)} A semialgebraic subset of $\RR^n$ has dimension $n$ exactly when it has nonempty interior; if its dimension is smaller, so is that of its closure; a finite union has the largest of the dimensions. \textup{(b)} $\dim(\overline A\setminus A)<\dim A$. \textup{(c)} For $A\subseteq\RR^a\times\RR^b$ with fibers $A_c$ over $c\in\RR^b$, $\dim A=\max_e\bigl(e+\dim\{c:\dim A_c=e\}\bigr)$.
+\item\label{S5} (Cell decomposition.) A semialgebraic set is a finite disjoint union of Nash manifolds. Given semialgebraic functions on an open set and $p\ge1$, the open set is a finite disjoint union of cells such that the functions are of class $C^p$ on each open cell. A semialgebraic function on an open set is continuous on an open dense semialgebraic subset. A semialgebraic set in $\RR^n\times\RR$ with finite nonempty fibers over an open set $V$ is, over some open ball in $V$, a finite union of graphs of continuous semialgebraic functions $\lambda_1<\dots<\lambda_q$.
+\item\label{S6} The critical values of a Nash map between Nash manifolds form a semialgebraic set of dimension smaller than that of the target (Sard).
+\item\label{S7} A semialgebraic function $a\colon(0,\delta)\to\RR$ agrees near $0^+$ with a convergent Puiseux series $\sum_{j\ge j_0}a_j\eta^{j/M}$.
+\item\label{S8} A semialgebraic map does not increase dimension, and a semialgebraic bijection preserves it. A semialgebraic function on an open set is Nash on an open dense semialgebraic subset.
+\end{enumerate}
+
+For \ref{S7}, the function $a$ satisfies $P(\eta,a(\eta))=0$ for a nonzero polynomial $P$ of positive degree in its second variable. By the Newton--Puiseux theorem the roots of $P(\eta,\cdot)$ for small $\eta>0$ are finitely many convergent Puiseux branches. By \ref{S3} the function $a$ is continuous near $0^+$, and two distinct real branches differ for all small $\eta>0$, so $a$ stays on one branch.
+
+\subsection{The polynomials on a path, and cells}\label{sec:cells}
+
+Fix a path $\pi$ from the root of a tree to a leaf. Represent each value computed on $\pi$ as a fraction $P/D$ of polynomials in the input coordinates. Inputs and constants are $P/1$, and
+\[
+\frac{P_1}{D_1}\pm\frac{P_2}{D_2}=\frac{P_1D_2\pm P_2D_1}{D_1D_2},\qquad
+\frac{P_1}{D_1}\cdot\frac{P_2}{D_2}=\frac{P_1P_2}{D_1D_2},\qquad
+\frac{P_1}{D_1}\Big/\frac{P_2}{D_2}=\frac{P_1D_2}{D_1P_2}.
+\]
+For a tested value put $S=PD$. An input $w$ follows $\pi$ exactly when: \textup{(a)} $P_2(w)\ne0$ at every division on $\pi$; \textup{(b)} at every test $v\ge0$ on $\pi$ we have $S(w)\ge0$ if $\pi$ continues with ``yes'' and $S(w)<0$ if it continues with ``no''; \textup{(c)} at every test $v=0$ we have $P(w)=0$ for ``yes'' and $P(w)\ne0$ for ``no''. Indeed, by induction along $\pi$, condition \textup{(a)} makes every denominator nonzero at $w$, the value is then $P(w)/D(w)$, it has the sign of $S(w)$, and it vanishes exactly when $P(w)$ does.
+
+\begin{lemma}[cells]\label{lem:cells}
+Let a tree of depth $t$ be given and let some of its leaves be designated as \emph{marked}. The set of inputs that reach a marked leaf is a finite union of sets of the form
+\[
+B=Z\cap O,\qquad Z=\{p_1=\dots=p_r=0\},\qquad O=\{q_1>0,\dots,q_m>0\},
+\]
+called \emph{cells}, where $r,m\le2t$ and, for each cell, all the polynomials $p_i,q_j$ are computed by one straight-line program with at most $8t$ operations from the input coordinates and the constants on one path. The polynomials of a cell involve at most $2t$ input coordinates.
+\end{lemma}
+
+\begin{proof}
+For a path $\pi$ to a marked leaf let $I_\ge$ be the set of its tests of type \textup{(b)} answered ``yes''. For $J\subseteq I_\ge$ let $B_{\pi,J}$ be the set of inputs that satisfy \textup{(a)}, \textup{(c)}, the strict conditions in \textup{(b)}, $S_j=0$ for $j\in J$ and $S_j>0$ for $j\in I_\ge\setminus J$. The inputs following $\pi$ are the union of the $B_{\pi,J}$. Write each condition $P\ne0$ as $P^2>0$ and each $S<0$ as $-S>0$. The fractions along $\pi$ cost at most $4$ operations per node and each test at most $3$ more. A path has at most $t$ nodes, each with two operands, so at most $2t$ input coordinates occur.
+\end{proof}

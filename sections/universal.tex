@@ -1,0 +1,167 @@
+\section{Universal certificates and the complex field}\label{sec:universal}
+
+A machine that places the graph of a polynomial $f$ in $\coNPR$ certifies the wrong side of the graph: every point off the graph has a rejected certificate, and no point on the graph has one. The rejected certificates of the points just above the graph lie in finitely many cells, and none of these cells reaches the graph. We measure how far such a certificate stays inside its cell, away from the boundary of the cell and away from infinity. The best such margin is the optimal value of a polynomial program, so \cref{prop:value} applies to it. The margin tends to $0$ at the graph, and its level sets are hypersurfaces that converge to the graph together with their derivatives. The Taylor polynomials of a level set are obtained from those of the margin by a Newton iteration with one unknown. This gives \cref{thm:onesided}. Passing to real and imaginary parts gives the same conclusion over $\CC$ (\cref{thm:complex}), and with \cref{thm:lowerbound} we obtain the separations of \cref{cor:conp}.
+
+\subsection{One-sided certificates}\label{sec:universal-onesided}
+
+Let a tree on inputs $(x,y,z)\in\RR^n\times\RR\times\RR^k$ be given, and designate some of its leaves as \emph{marked}. A triple $(x,y,z)$ is \emph{marked} if it reaches a marked leaf. By the convention of \cref{sec:trees} every rejection happens at a leaf. In particular, when the rejecting leaves are marked, a triple that is rejected through a division by zero is marked.
+
+\begin{theorem}[one-sided certificates]\label{thm:onesided}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$ with $d\ge1$, let $U\subseteq\RR^n$ be open and nonempty, and let a tree of depth $t$ on inputs $(x,y,z)\in\RR^n\times\RR\times\RR^k$, with some of its leaves marked, be given. Suppose that for every $x\in U$
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item no triple $(x,f(x),z)$ is marked, and
+\item there is $\rho>0$, depending on $x$, such that for every $y$ with $f(x)<y<f(x)+\rho$ some triple $(x,y,z)$ is marked.
+\end{enumerate}
+Then the border size of $f$ is at most $C(d+1)^6\bigl((t+1)^2+n\bigr)$, where $C$ is an absolute constant.
+\end{theorem}
+
+With the rejecting leaves marked, the theorem applies to a tree that, for $x\in U$, accepts $(x,y,z)$ for every $z$ exactly when $y=f(x)$, and to a tree that accepts $(x,y,z)$ for every $z$ exactly when $y\le f(x)$. In both cases every certificate of a point $(x,f(x))$ is accepted, and every point $(x,y)$ with $y>f(x)$ has a rejected certificate. With the accepting leaves marked, the theorem applies to a tree that accepts $(x,y,z)$ for some $z$ exactly when $y>f(x)$. The mirror cases, with $y\ge f(x)$ in place of $y\le f(x)$ and $y<f(x)$ in place of $y>f(x)$, follow by replacing $(y,f)$ with $(-y,-f)$.
+
+\subsection{One cell covers a one-sided neighbourhood}\label{sec:universal-cell}
+
+In this subsection and the next three we fix $f$, $d$, $U$ and a tree of depth $t$ with marked leaves as in \cref{thm:onesided}, and we prove the theorem.
+
+By \cref{lem:cells}, whose statement allows any set of marked leaves, the set of marked triples is a finite union of cells
+\[
+B=Z\cap O,\qquad Z=\{p_1=\dots=p_r=0\},\qquad O=\{q_1>0,\dots,q_m>0\},
+\]
+where $r,m\le2t$ and, for each cell, all the $p_i$ and $q_j$ are computed by one straight-line program with at most $8t$ operations from the input coordinates and the constants on one path. For a cell $B$ let $\Pi_B\subseteq\RR^n\times\RR$ be its projection to $(x,y)$-space. It is semialgebraic by \ref{S1}.
+
+Let $x\in U$. By \ref{S3} each set $\{y:(x,y)\in\Pi_B\}$ is a finite union of points and intervals, so it either contains an interval $(f(x),f(x)+e)$ with $e>0$ or is disjoint from such an interval. By \textup{(ii)} the union of these finitely many sets contains $(f(x),f(x)+\rho)$. Hence at least one of them contains an initial interval $(f(x),f(x)+e)$ with $e>0$. For each cell $B$ the set of $x\in U$ for which this happens is semialgebraic by \ref{S1}, and these finitely many sets cover $U$. By \ref{S4}(a) one of them has nonempty interior. We fix the corresponding cell $B$. Certificate coordinates that do not occur in the polynomials of $B$ do not affect membership in $B$. We fix them to $0$ and let $k$ denote the number of the others, which is at most $2t$ by \cref{lem:cells}. This does not change $\Pi_B$.
+
+For $x$ in the interior of the chosen set let $e(x)$ be the supremum of the numbers $e\in(0,1]$ with $\{x\}\times(f(x),f(x)+e)\subseteq\Pi_B$. Then $\{x\}\times(f(x),f(x)+e(x))\subseteq\Pi_B$, and $e$ is a positive semialgebraic function. By \ref{S5} it is continuous on an open dense set, so it is bounded below by some $e_0>0$ on an open ball $U_1$. Put
+\[
+A=\{(x,y):\ x\in U_1,\ f(x)<y<f(x)+e_0\}.
+\]
+This is a nonempty open subset of $\RR^{n+1}$ with $A\subseteq\Pi_B$. Since $B$ consists of marked triples, \textup{(i)} shows that no point $(x,f(x))$ with $x\in U$ lies in $\Pi_B$.
+
+\subsection{The margin of a certificate}\label{sec:universal-margin}
+
+A certificate in $B$ may run to infinity, and the strict inequalities $q_j>0$ that it satisfies may degenerate, as $y$ decreases to $f(x)$. The margin measures both.
+
+Substitute $z=\tilde u/u_0$, with new variables $u_0\in\RR$ and $\tilde u\in\RR^k$, in the program of $B$, and keep numerators as in \cref{sec:cells}. Precisely, we represent each value $V$ of the program by a pair $(P,R)$ of polynomials in $(x,y,u_0,\tilde u)$ such that $R=u_0^a$ for some integer $a\ge0$ and $V(x,y,\tilde u/u_0)=P/R$ whenever $u_0\ne0$. The input coordinates $x_i$ and $y$ and the constants $c$ are represented by $(x_i,1)$, $(y,1)$ and $(c,1)$, a certificate coordinate $z_i$ by $(\tilde u_i,u_0)$, and
+\[
+(P_1,R_1)\pm(P_2,R_2)=(P_1R_2\pm P_2R_1,\ R_1R_2),\qquad(P_1,R_1)\cdot(P_2,R_2)=(P_1P_2,\ R_1R_2).
+\]
+Each operation of the program costs at most four operations here. We obtain polynomials $p_i^\sharp$ and $q_j^\sharp$ in $(x,y,u_0,\tilde u)$, computed together by one straight-line program with at most $32t$ operations, and integers $a_i,b_j\ge0$ such that
+\[
+p_i\bigl(x,y,\tilde u/u_0\bigr)=\frac{p_i^\sharp(x,y,u_0,\tilde u)}{u_0^{a_i}},\qquad q_j\bigl(x,y,\tilde u/u_0\bigr)=\frac{q_j^\sharp(x,y,u_0,\tilde u)}{u_0^{b_j}}\qquad\text{whenever }u_0\ne0 .
+\]
+The exponents $a_i$ and $b_j$ may be exponentially large in $t$. They are never written out, because the powers of $u_0$ are carried along as computed polynomials and sums are formed as $P_1R_2\pm P_2R_1$.
+
+Consider the system
+\begin{equation}\label{eq:margin}
+u_0^2+|\tilde u|^2=1,\qquad p_i^\sharp=0,\qquad u_0-s=\sigma_0^2,\qquad q_j^\sharp-s=\sigma_j^2\qquad(1\le i\le r,\ 1\le j\le m)
+\end{equation}
+in the unknowns $s\in\RR$ and $\nu=(u_0,\tilde u,\sigma_0,\dots,\sigma_m)\in\RR^\kappa$, where $\kappa=k+m+2\le4t+2$, with parameters $\xi=(x,y)\in\RR^{n+1}$. Let
+\[
+Q=\bigl(u_0^2+|\tilde u|^2-1\bigr)^2+\sum_{i=1}^r\bigl(p_i^\sharp\bigr)^2+\bigl(u_0-s-\sigma_0^2\bigr)^2+\sum_{j=1}^m\bigl(q_j^\sharp-s-\sigma_j^2\bigr)^2\ \in\RR[\xi,s,\nu]
+\]
+be the sum of the squares of its equations. Then $Q\ge0$, the zero set of $Q(\xi,\cdot)$ is the set of solutions of \eqref{eq:margin} at $\xi$, and $Q$ has a straight-line program with $\ell\le50t+8$ operations: at most $32t$ for the $p_i^\sharp$ and $q_j^\sharp$, and at most $2k+2r+5m+8\le18t+8$ for the equations, their squares and their sum.
+
+\begin{lemma}[margin]\label{lem:margin}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item A point $(x,y)\in\RR^{n+1}$ lies in $\Pi_B$ exactly when \eqref{eq:margin} has a solution with $s>0$.
+\item For $(x,y)\in A$ the coordinate $s$ attains a maximum $v(x,y)$ on the set of solutions of \eqref{eq:margin}, and $0<v(x,y)\le1$.
+\item For every $x\in U_1$, $v(x,y)\to0$ as $y$ decreases to $f(x)$.
+\end{enumerate}
+\end{lemma}
+
+We call the function $v\colon A\to(0,1]$ the \emph{margin}.
+
+\begin{proof}
+(a) Let $(s,\nu)$ be a solution with $s>0$. Then $u_0=s+\sigma_0^2\ge s>0$, $q_j^\sharp=s+\sigma_j^2\ge s>0$ and $p_i^\sharp=0$. So $z=\tilde u/u_0$ satisfies $p_i(x,y,z)=0$ and $q_j(x,y,z)>0$ for all $i$ and $j$, that is, $(x,y,z)\in B$. Conversely, let $(x,y,z)\in B$ and put $(u_0,\tilde u)=(1,z)/\sqrt{1+|z|^2}$. Then $u_0>0$ and $\tilde u/u_0=z$, so $p_i^\sharp=u_0^{a_i}p_i(x,y,z)=0$ and $q_j^\sharp=u_0^{b_j}q_j(x,y,z)>0$. With $s=\min(u_0,q_1^\sharp,\dots,q_m^\sharp)>0$, $\sigma_0=(u_0-s)^{1/2}$ and $\sigma_j=(q_j^\sharp-s)^{1/2}$ this is a solution of \eqref{eq:margin}.
+
+(b) Let $(x,y)\in A$. The solutions of \eqref{eq:margin} with $s\ge0$ form a closed set. It is bounded: $(u_0,\tilde u)$ lies on the unit sphere, $0\le s\le s+\sigma_0^2=u_0\le1$, so that $\sigma_0^2\le1$, and $\sigma_j^2\le q_j^\sharp(x,y,u_0,\tilde u)$, which is bounded on the unit sphere. So this set is compact. Since $A\subseteq\Pi_B$, by (a) it contains a solution with $s>0$. Hence $s$ attains on it a maximum $v(x,y)>0$, which is also the maximum of $s$ on all solutions, and $v(x,y)\le u_0\le1$.
+
+(c) Let $x\in U_1$. The function $y\mapsto v(x,y)$ on $(f(x),f(x)+e_0)$ is semialgebraic by \ref{S1} and bounded, so by \ref{S3} it has a limit $\gamma\in[0,1]$ as $y$ decreases to $f(x)$. Take $y_l$ decreasing to $f(x)$ and solutions $(v(x,y_l),\nu_l)$ of \eqref{eq:margin} at $(x,y_l)$. As in (b) they lie in a compact set, since each $q_j^\sharp(x,\cdot,\cdot)$ is bounded on the compact set $[f(x),f(x)+e_0]\times\{u_0^2+|\tilde u|^2=1\}$. A limit point is a solution of \eqref{eq:margin} at $(x,f(x))$ with $s=\gamma$. If $\gamma>0$, then $(x,f(x))\in\Pi_B$ by (a), which contradicts \textup{(i)}. So $\gamma=0$.
+\end{proof}
+
+\subsection{Level sets of the margin}\label{sec:universal-levels}
+
+Let $x\in U_1$. By \cref{lem:margin} the function $y\mapsto v(x,y)$ on $(f(x),f(x)+e_0)$ is positive and semialgebraic, and it tends to $0$ as $y$ decreases to $f(x)$. By the monotonicity theorem \ref{S3}, applied to $h\mapsto v(x,f(x)+h)$, it is continuous and either constant or strictly monotone on some interval $(f(x),f(x)+e)$ with $e>0$. A positive constant does not tend to $0$, and neither does a positive strictly decreasing function. So $v(x,\cdot)$ is continuous and strictly increasing on such an interval. Let $e_1(x)$ be the supremum of the numbers $e\le e_0$ for which this holds. Then it holds on $(f(x),f(x)+e_1(x))$, and $e_1$ is a positive semialgebraic function on $U_1$ by \ref{S1}. By \ref{S5} there are an open ball $U_2\subseteq U_1$ and $e_2>0$ with $e_1\ge e_2$ on $U_2$. The supremum of $v(x,\cdot)$ on $(f(x),f(x)+e_2)$ is again a positive semialgebraic function of $x\in U_2$, so by \ref{S5} it is at least some $\delta_0>0$ on an open ball $U_3\subseteq U_2$.
+
+For $x\in U_3$ and $0<\delta<\delta_0$ let $f_\delta(x)$ be the unique $y\in(f(x),f(x)+e_2)$ with $v(x,y)=\delta$. It exists by the intermediate value theorem, since $v(x,\cdot)$ is continuous and strictly increasing on this interval, with infimum $0$ and supremum at least $\delta_0$. The map $(x,\delta)\mapsto f_\delta(x)$ is semialgebraic by \ref{S1}. Since $\delta\mapsto f_\delta(x)$ is the inverse of a continuous strictly increasing function, $f_\delta(x)$ decreases to $f(x)$ as $\delta$ decreases to $0$. Thus the level sets of the margin converge pointwise to the graph of $f$.
+
+\Cref{lem:derivatives} and \cref{cor:derivatives} require only pointwise convergence. Apply \cref{cor:derivatives} with $V=U_3$, $W(x,\delta)=f_\delta(x)$, $\varphi=f$ and $D=d$, with $x$ in the role of $\xi$ and $\delta$ in the role of $\eps$. It gives an open ball $V^*\subseteq U_3$ and $\delta_1\in(0,\delta_0)$ such that $(x,\delta)\mapsto f_\delta(x)$ is of class $C^1$ on $V^*\times(0,\delta_1)$ and has continuous $x$-derivatives of all orders up to $d$ there, and
+\begin{equation}\label{eq:levelconv}
+\sup_{x\in V^*}\bigl|\partial^\alpha f_\delta(x)-\partial^\alpha f(x)\bigr|\longrightarrow0\qquad(\delta\to0,\ |\alpha|\le d).
+\end{equation}
+
+\subsection{From the margin to the polynomial}\label{sec:universal-assembly}
+
+\begin{proof}[Proof of \cref{thm:onesided}]
+\emph{The margin as a value function.} Apply \cref{prop:value} to $Q$ on the open set $A$, with $\xi=(x,y)$, $N=n+1$, $\kappa=k+m+2$ and $D=d$. Its hypotheses hold: $Q$ is nonnegative and has a straight-line program with $\ell\le50t+8$ operations, and by \cref{lem:margin}(b), for every $\xi\in A$ the coordinate $s$ attains the maximum $v(\xi)$ on the set $\{(s,\nu):Q(\xi,s,\nu)=0\}$. The proposition gives a dense semialgebraic set $A^\circ\subseteq A$ and finitely many circuit graphs, each with at most
+\[
+L_A=C\bigl((d+1)^3(50t+8)+(d+1)^2(4t+3)^2+n+1\bigr)
+\]
+gates, such that for every $\xi_1\in A^\circ$ the margin $v$ is of class $C^d$ near $\xi_1$ and its Taylor polynomial of order $d$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $d$ computed by one of these graphs with real constants.
+
+\emph{Good points.} Let $A'=\{(x,y):\ x\in V^*,\ f(x)<y<f(x)+e_2\}$, an open subset of $A$, and let $G$ be the set of $\xi\in A'\cap A^\circ$ with $\partial v/\partial y(\xi)\ne0$. It is semialgebraic by \ref{S1}. The set $A'\setminus A^\circ$ has empty interior, because $A^\circ$ is dense in $A$. The set of $\xi\in A'\cap A^\circ$ with $\partial v/\partial y(\xi)=0$ also has empty interior: on a ball inside it $v$ would be of class $C^1$ with $\partial v/\partial y=0$, hence constant on the segments in the ball parallel to the $y$-axis, whereas $v(x,\cdot)$ is strictly increasing on $(f(x),f(x)+e_2)$ for $x\in V^*$. By \ref{S4}(a), $\dim(A'\setminus G)\le n$.
+
+\emph{Finitely many exceptional levels.} For $0<\delta<\delta_1$ put $H_\delta=\{(x,f_\delta(x)):\ x\in V^*\}$. Since $v(x,\cdot)$ is strictly increasing on $(f(x),f(x)+e_2)$ for $x\in V^*$, the set $H_\delta$ consists of the points of $A'$ at which $v=\delta$. So the $H_\delta$ are pairwise disjoint level sets of $v$. Let $\Delta$ be the set of $\delta\in(0,\delta_1)$ for which $H_\delta\setminus G$ has dimension $n$. It is semialgebraic by \ref{S1}, because dimension is definable in semialgebraic families. The map $\Phi(x,\delta)=(x,f_\delta(x))$ is continuous and injective on $V^*\times(0,\delta_1)$, with inverse $(x,y)\mapsto(x,v(x,y))$ on its image. Pull $A'\setminus G$ back along $\Phi$. The fibre of $\Phi^{-1}(A'\setminus G)$ over $\delta$ is $\{x\in V^*:(x,f_\delta(x))\notin G\}$, which is the image of $H_\delta\setminus G$ under the projection $(x,y)\mapsto x$, and this projection is injective on $H_\delta$. By \ref{S8} the fibre has the same dimension as $H_\delta\setminus G$. If $\Delta$ were infinite, it would contain an interval by \ref{S3}, and $\Phi^{-1}(A'\setminus G)$ would have dimension $n+1$ by \ref{S4}(c). But $\Phi$ maps this set bijectively onto a subset of $A'\setminus G$, so by \ref{S8} its dimension is at most $\dim(A'\setminus G)\le n$. Hence $\Delta$ is finite. For $\delta\in(0,\delta_1)\setminus\Delta$ the set $\{x\in V^*:(x,f_\delta(x))\notin G\}$ has dimension less than $n$, hence empty interior by \ref{S4}(a), and so the points $x\in V^*$ with $(x,f_\delta(x))\in G$ are dense in $V^*$.
+
+\emph{A level set near the graph.} Fix $\eta>0$. Since $\Delta$ is finite, \eqref{eq:levelconv} gives $\delta\in(0,\delta_1)\setminus\Delta$ with $|\partial^\alpha f_\delta-\partial^\alpha f|\le\eta$ on $V^*$ for all $|\alpha|\le d$. Choose $x_1\in V^*$ with $\xi_1=(x_1,y_1)\in G$, where $y_1=f_\delta(x_1)$. Near $\xi_1$ the margin $v$ is of class $C^d$ with $\partial v/\partial y(\xi_1)\ne0$, and $v(x,f_\delta(x))=\delta$ for $x\in V^*$, with $f_\delta$ continuous. By the implicit function theorem the equation $v(x,y)=\delta$ has near $\xi_1$ a unique continuous solution $y$ as a function of $x$ through $\xi_1$, and this solution is of class $C^d$. So $f_\delta$ is of class $C^d$ near $x_1$. Let $P$ be the Taylor polynomial of order $d$ of $v$ at $\xi_1$, and let $g$ be that of $f_\delta$ at $x_1$. Then $g$ depends only on $P$: it is the unique polynomial of degree at most $d$ with $g(x_1)=y_1$ and
+\begin{equation}\label{eq:taylorlevel}
+P\bigl(x,g(x)\bigr)\equiv\delta\qquad\text{modulo terms of order above $d$ in $x-x_1$.}
+\end{equation}
+Indeed, by the chain rule the Taylor polynomial of order $d$ at $x_1$ of the constant function $x\mapsto v(x,f_\delta(x))$ is obtained by truncating $P(x,g(x))$ at order $d$, so $g$ satisfies \eqref{eq:taylorlevel}. If a polynomial $g'\ne g$ of degree at most $d$ with $g'(x_1)=y_1$ also satisfies it, let $h_j$ be the nonzero homogeneous part of lowest order $j$ of $g'-g$ in $x-x_1$, so that $1\le j\le d$. The part of order $j$ of $P(x,g'(x))-P(x,g(x))$ is $\partial P/\partial y(\xi_1)\,h_j$, which is nonzero because $\partial P/\partial y(\xi_1)=\partial v/\partial y(\xi_1)\ne0$. This contradicts \eqref{eq:taylorlevel} for $g$ and $g'$.
+
+Written in powers of $x-x_1$, the coefficients of $g$ are the numbers $\partial^\alpha f_\delta(x_1)/\alpha!$ and, since $\deg f\le d$, those of $f$ are the numbers $\partial^\alpha f(x_1)/\alpha!$, for $|\alpha|\le d$. They differ by at most $\eta$. Expanding the powers of $x-x_1$ and using that $V^*$ is bounded, we obtain a constant $C_1$, depending on $n$, $d$ and $V^*$ but not on $\eta$, such that every coefficient of $g-f$ is at most $C_1\eta$ in absolute value.
+
+\emph{The circuit.} Let $\Rtrunc=\RR[\chi][\tau]/(\tau^{d+1})$, with $\chi=(\chi_1,\dots,\chi_n)$, be the ring of \cref{lem:newton} with $D=d$, where $\chi=x-x_1$ plays the role of the increment. Put $b=\bigl(\partial P/\partial y(\xi_1)\bigr)^{-1}$, $Y^{(0)}=y_1$ and
+\[
+Y^{(j+1)}=Y^{(j)}-b\,\bigl(P(x_1+\tau\chi,\,Y^{(j)})-\delta\bigr)\qquad(0\le j<d).
+\]
+This is the iteration of \cref{lem:newton} with one unknown, for $E(x,y)=P(x,y)-\delta$, the point $x_1$ in place of $\xi_1$, $w_1=y_1$ and the $1\times1$ matrix $b$ in the role of the matrix called $A$ there. We have $E(x_1,y_1)=v(\xi_1)-\delta=0$, and $b$ is the inverse of $\partial E/\partial y(x_1,y_1)$. Let $\omega$ be the analytic function near $x_1$ with $\omega(x_1)=y_1$ and $P(x,\omega(x))=\delta$. By the chain rule its Taylor polynomial of order $d$ at $x_1$ satisfies \eqref{eq:taylorlevel}, so it equals $g$. By \cref{lem:newton}(b), $g$ is the sum of the $d+1$ coefficients of $Y^{(d)}$ with $\chi=x-x_1$ substituted; in other words, $Y^{(d)}$ is the expansion of $g(x_1+\tau\chi)$.
+
+Now let $\Gamma$ be one of the circuit graphs given by \cref{prop:value}, and let $\Psi$ be a polynomial of degree at most $d$ that $\Gamma$ computes with real constants. Replace $P$ in the iteration by $\Psi$, evaluated gate by gate in $\Rtrunc$ with $x_1+\tau\chi$ and $Y^{(j)}$ fed into the variable gates of $\Gamma$, and take the sum of the coefficients of the result. This defines a composite circuit graph that depends only on $\Gamma$, $n$ and $d$. It has at most $d(d+1)(d+2)L_A+O(d^2+n)$ gates: each of the $d$ steps evaluates $\Gamma$ in $\Rtrunc$ at a cost of at most $(d+1)(d+2)$ gates per gate of $\Gamma$, the subtraction of $\delta$, the multiplication by $b$ and the subtraction from $Y^{(j)}$ cost $O(d)$ gates, and forming $\chi$ and the final sum costs $O(n+d)$ gates. Its constants are those of $\Psi$ together with $x_1$, $y_1$, $\delta$ and $b$. By \cref{lem:newton}(a), applied with $E=\Psi-\delta$, the output has degree at most $d$, and, since $\Psi$ has degree at most $d$ and evaluating a circuit in $\Rtrunc$ evaluates the polynomial it computes, the coefficients of the output are fixed polynomial functions of the coefficients of $\Psi$ and of $x_1,y_1,\delta,b$. At the coefficients of $P$ these functions give the coefficients of $g$. By the choice of $\xi_1\in A^\circ$, $P$ is a coefficientwise limit of polynomials $\Psi$ of degree at most $d$ computed by one graph $\Gamma$ with real constants. By continuity, $g$ is a coefficientwise limit of outputs of the corresponding composite graph with real constants. So one such output has all its coefficients within $C_1\eta$ of those of $g$, and hence within $2C_1\eta$ of those of $f$.
+
+\emph{Conclusion.} For every $\eta>0$ one of finitely many composite graphs computes, with real constants, a polynomial whose coefficients are within $2C_1\eta$ of those of $f$. By \cref{lem:closure} one of these graphs approximates $f$. Since $L_A\le C'(d+1)^3\bigl((t+1)^2+n\bigr)$ and $d(d+1)(d+2)\le(d+1)^3$, its size is at most $C''(d+1)^6\bigl((t+1)^2+n\bigr)$ for absolute constants $C'$ and $C''$.
+\end{proof}
+
+\subsection{The complex field}\label{sec:universal-complex}
+
+A \emph{complex tree} is defined as in \cref{def:tree}, with complex inputs and complex constants and with tests $v=0$ only. As over $\RR$, an input that reaches a division by zero is rejected, and every rejection happens at a leaf. A machine over $\CC$ that runs in time $T$ unrolls into a complex tree of depth $O(T)$.
+
+\begin{theorem}[complex field]\label{thm:complex}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$ with $d\ge1$. Suppose that a complex tree of depth $t$ on inputs $(x,y,z)\in\CC^n\times\CC\times\CC^k$ satisfies one of the following for all $(x,y)\in\CC^n\times\CC$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the tree accepts $(x,y,z)$ for some $z\in\CC^k$ exactly when $y=f(x)$;
+\item the tree accepts $(x,y,z)$ for every $z\in\CC^k$ exactly when $y=f(x)$.
+\end{enumerate}
+Then the border size of $f$ is at most $C(d+1)^6\bigl((t+1)^2+n\bigr)$, where $C$ is an absolute constant. In particular a circuit over $\Leps\subseteq\CC((\eps))$ of this size approximates $f$.
+\end{theorem}
+
+\begin{proof}
+Write every complex number as the pair of its real and imaginary parts. A complex addition, subtraction or multiplication costs a bounded number of real operations. A complex division $v_1/v_2$ costs a bounded number of real operations, among them divisions by $(\operatorname{Re}v_2)^2+(\operatorname{Im}v_2)^2$, which vanishes exactly when $v_2=0$. A test $v=0$ becomes the two real tests $\operatorname{Re}v=0$ and $\operatorname{Im}v=0$, and a complex constant becomes two real constants. This turns the complex tree into a real tree of depth at most $c_0t$, for an absolute constant $c_0$, that accepts a real input exactly when the complex tree accepts the corresponding complex input; its $2k$ certificate coordinates are the real and imaginary parts of $z$. Replace the inputs $\operatorname{Im}x$ and $\operatorname{Im}y$ by the constant $0$. This gives a real tree $T'$ of depth at most $c_0t$ on inputs $(x,y,z')\in\RR^n\times\RR\times\RR^{2k}$. Since $f$ has real coefficients, for real $x$ and $y$ the complex equation $y=f(x)$ is the real one.
+
+In case (a), for all $x\in\RR^n$ and $y\in\RR$ the tree $T'$ accepts $(x,y,z')$ for some $z'$ exactly when $y=f(x)$. So \cref{thm:graph} applies with $U=\RR^n$ and $k'\le2c_0t$, and it bounds the border size of $f$ by $C\bigl((d+1)^3c_0t+(d+1)^2(2c_0t+2)^2+n\bigr)$. In case (b), mark the rejecting leaves of $T'$. For real $x$ no triple $(x,f(x),z')$ is marked, because every certificate of $(x,f(x))$ is accepted, and for every real $y\ne f(x)$ some triple $(x,y,z')$ is marked. So \cref{thm:onesided} applies with $U=\RR^n$, and it bounds the border size of $f$ by $C(d+1)^6\bigl((c_0t+1)^2+n\bigr)$. Both bounds are at most a constant multiple of $(d+1)^6\bigl((t+1)^2+n\bigr)$.
+\end{proof}
+
+\begin{remark}[complex coefficients]\label{rem:complexcoef}
+Let $f$ have complex coefficients, and write $f=f_1+if_2$ with $f_1,f_2\in\RR[X_1,\dots,X_n]$. In case (a) of \cref{thm:complex} the argument still works if both the real and the imaginary part of $y$ are kept as inputs: the real tree then decides, in the existential sense, the graph of the polynomial map $(f_1,f_2)\colon\RR^n\to\RR^2$, and \cref{rem:several} with $\mu=2$ bounds the border sizes of $f_1$ and $f_2$. In case (b) the argument does not apply: the graph of $f$ over $\RR^n$ then has real codimension two, and \cref{thm:onesided} needs a hypersurface with two sides.
+\end{remark}
+
+\subsection{The separations}\label{sec:universal-separations}
+
+A tree \emph{decides} a language $L$ on inputs $(X,Y)$ \emph{in the universal sense} if $(X,Y)\in L$ exactly when the tree accepts $(X,Y,z)$ for every $z$, and \emph{in the existential sense} if $(X,Y)\in L$ exactly when it accepts $(X,Y,z)$ for some $z$, as in \cref{thm:graph}.
+
+\begin{corollary}\label{cor:conp}
+Suppose that for every $m$ a tree of depth $t_m$ decides one of the languages $\{Y=\per_m(X)\}$, $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ in the universal sense, or one of the languages $\{Y<\per_m(X)\}$ and $\{Y>\per_m(X)\}$ in the existential sense, or that a complex tree of depth $t_m$ decides $\{Y=\per_m(X)\}\subseteq\CC^{m^2+1}$ in the existential or in the universal sense. Then $t_m\ge2^{\Omega((\log m)^{4/3})}$. In particular:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the graph $\{Y=\per_m(X)\}$ and the thresholds $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ of the real permanent are in neither $\NPR$ nor $\coNPR$, and the languages $\{Y<\per_m(X)\}$ and $\{Y>\per_m(X)\}$ are not in $\NPR$;
+\item the graph of the complex permanent is in neither $\NPC$ nor $\coNPC$;
+\item $\NPR\cup\coNPR\subsetneq\PARR$ and $\NPC\cup\coNPC\subsetneq\PARC$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Let $n=m^2$, $d=m$ and $U=\RR^{m^2}$. For a real tree in the universal sense, mark its rejecting leaves; for a real tree in the existential sense, mark its accepting leaves. As explained after \cref{thm:onesided}, the hypotheses of that theorem then hold with $f=\per_m$ for $\{Y=\per_m(X)\}$, $\{Y\le\per_m(X)\}$ and $\{Y>\per_m(X)\}$, and, after $Y$ is replaced by $-Y$, which adds one node to the depth, with $f=-\per_m$ for $\{Y\ge\per_m(X)\}$ and $\{Y<\per_m(X)\}$. A circuit that approximates $-\per_m$ gives one that approximates $\per_m$ with two more gates. For a complex tree, \cref{thm:complex} applies with $f=\per_m$, since the permanent has real coefficients. In every case the border size of $\per_m$ is $O\bigl(m^6(t_m+m)^2\bigr)$. By \cref{thm:lowerbound} it exceeds $2^{c(\log m)^{4/3}}$ for $m\ge m_0$. Hence $t_m\ge2^{\Omega((\log m)^{4/3})}$.
+
+(a) A polynomial-time machine unrolls into trees of polynomial depth. If the graph or one of the two thresholds were in $\coNPR$, its complement would be in $\NPR$, and a machine for the complement would unroll into trees of polynomial depth that accept $(X,Y,z)$ for some $z$ exactly when $(X,Y)$ is not in the language. Exchanging their accepting and rejecting leaves, which is possible because every rejection happens at a leaf, gives trees of the same depth that decide the language in the universal sense. This contradicts the bound. A machine that places $\{Y<\per_m(X)\}$ or $\{Y>\per_m(X)\}$ in $\NPR$ unrolls into trees of polynomial depth that decide it in the existential sense, which again contradicts the bound; these two languages are the complements of the thresholds $\{Y\ge\per_m(X)\}$ and $\{Y\le\per_m(X)\}$. That the graph and the thresholds are not in $\NPR$ is \cref{cor:np}, which rests on \cref{thm:graph,thm:threshold}.
+
+(b) A machine that places the graph of the complex permanent in $\NPC$ unrolls into complex trees of polynomial depth that decide it in the existential sense. If the graph were in $\coNPC$, exchanging the accepting and rejecting leaves of the complex trees for its complement would give complex trees of polynomial depth that decide it in the universal sense. Both contradict the bound.
+
+(c) By \cref{lem:ryser} the graph and the thresholds of the real permanent are in $\PARR$, and the graph of the complex permanent is in $\PARC$. We have $\NPR\subseteq\PARR$ by \cref{sec:trees}, and the inclusions $\coNPR\subseteq\PARR$ and $\NPC\subseteq\PARC$ are standard \cite{BCSS98}. Since $\PARC$ is closed under complements, also $\coNPC\subseteq\PARC$. So $\NPR\cup\coNPR\subseteq\PARR$ and $\NPC\cup\coNPC\subseteq\PARC$, and by (a) and (b) the graph of the permanent shows that both inclusions are strict.
+\end{proof}

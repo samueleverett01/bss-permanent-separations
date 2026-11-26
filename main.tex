@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb,mathtools,amsthm,microtype,mathrsfs,amsmath,geometry,enumitem}
+\geometry{margin=1in}
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0.1,0,0.5}
+\usepackage[linktocpage=true,colorlinks,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue]{hyperref}
+\usepackage[noabbrev,capitalise]{cleveref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{maintheorem}{Theorem}
+\renewcommand{\themaintheorem}{\Alph{maintheorem}}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\crefname{maintheorem}{Theorem}{Theorems}
+
+\input{macros.tex}
+
+\title{$\NPR\neq\PARR$, $\Sigma_2^{\RR}\neq\PARR$ and $\BIPR\neq\PARR$:\\ the permanent has no short real certificates}
+\author{Samuel Everett\\ \small{University of Chicago}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove new separations of complexity classes in the Blum--Shub--Smale model of computation over the real and complex numbers. Parallel polynomial time is denoted $\PARR$. In \textup{(1)--(4)} the inclusions were known and the strictness is new; in \textup{(5)} the equality is new.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em,itemsep=1pt,topsep=3pt]
+\item $\NPR\subsetneq\PARR$: nondeterministic polynomial time over the reals is strictly weaker than parallel polynomial time.
+\item $\coNPR\subsetneq\PARR$ and $\Sigma_2^{\RR}\subsetneq\PARR$, where $\Sigma_2^{\RR}$ is the second existential level of the real polynomial hierarchy.
+\item $\NPC\subsetneq\PARC$ and $\coNPC\subsetneq\PARC$ over the complex numbers.
+\item $\BIPR\subsetneq\PARR$, where $\BIPR$ is the class of interactive proofs with a real verifier and Boolean messages of Ivanov and de Rougemont.
+\item $\AMR[O(1)]=\NPR\subsetneq\AMR[\mathrm{poly}]=\IPR$: a constant number of rounds of public coins adds nothing to a real certificate, while polynomially many rounds do.
+\end{enumerate}
+In every case the witness is the permanent. The language $\{(X,Y):Y=\per_m(X)\}$ lies in parallel polynomial time, outside the classes in \textup{(1)--(4)} and outside $\AMR[O(1)]$. Verifiers for it of the kinds defining $\NPR$, $\coNPR$, $\NPC$, $\coNPC$ and $\BIPR$, uniform or not and with arbitrary constants, need time $2^{\Omega((\log m)^{4/3})}$; for $\Sigma_2^{\RR}$ the same bound holds for the running time plus the length of the certificates; and a public-coin protocol with real messages and a polynomial-time verifier needs $\Omega(\log\log m)$ rounds. The same holds for the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ with respect to $\NPR$ and $\coNPR$. The lower bounds combine the recent superpolynomial lower bound for the border complexity of the permanent with a theorem of independent interest:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em,itemsep=1pt,topsep=3pt,start=6]
+\item Certificates do not help to check a polynomial. If the graph of a real polynomial $f$ of degree $d$ can be verified by a real computation of size $t$ with existential certificates, with universal certificates, or with an existential block followed by a universal block of certificates, then $f$ has border complexity polynomial in $t$, $d$ and the number of variables.
+\end{enumerate}
+This extends a theorem of B\"urgisser from deterministic checking to these three kinds of nondeterministic checking, and it needs no hypothesis. So does the equality in \textup{(5)}.
+\end{abstract}
+
+\tableofcontents
+
+\input{sections/intro.tex}
+\input{sections/prelim.tex}
+\input{sections/core.tex}
+\input{sections/certificates.tex}
+\input{sections/universal.tex}
+\input{sections/second-level.tex}
+\input{sections/interaction.tex}
+\input{sections/open.tex}
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+\end{document}

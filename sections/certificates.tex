@@ -1,0 +1,114 @@
+\section{Existential certificates}\label{sec:certificates}
+
+\subsection{Isolating a certificate}
+
+Certificates need not be unique, and the set of certificates of a point may have positive dimension. The next lemma selects, over a small ball, one certificate that is isolated once some of its coordinates are frozen.
+
+\begin{lemma}[isolating a certificate]\label{lem:isolate}
+Let $U_1\subseteq\RR^n$ be an open ball and let $F\subseteq U_1\times\RR^k$ be a semialgebraic set that projects onto $U_1$. Then there are a point $q_0=(x_0,z_0)\in F$, an open neighbourhood $N$ of $q_0$, a set $I$ of coordinates of $\RR^k$, a ball $U_3\subseteq U_1$ about $x_0$ and an analytic map $\zeta\colon U_3\to\RR^k$ such that, for every $x\in U_3$, the point $(x,\zeta(x))$ is the only point $(x,z)$ of $F\cap N$ whose coordinates $z_I$ equal those of $z_0$.
+\end{lemma}
+
+\begin{proof}
+For an open $U'\subseteq U_1$ write $F_{U'}=F\cap(U'\times\RR^k)$. The dimensions of the sets $F_{U'}$, for open balls $U'\subseteq U_1$, are integers between $n$ and $n+k$. Choose a ball $U_2$ for which $\Delta=\dim F_{U_2}$ is smallest. Then $\dim F_{U'}=\Delta$ for every ball $U'\subseteq U_2$.
+
+Write $F_{U_2}$ as a finite disjoint union of Nash manifolds $C_1,\dots,C_s$ by \ref{S5}. Let $\mathrm{Reg}$ be the union, over the $C_i$ of dimension $\Delta$, of the sets $C_i\setminus\bigcup_{j\ne i}\overline{C_j}$. A point of such a set has a neighbourhood that meets no $C_j$ with $j\ne i$. Hence $\mathrm{Reg}$ is open in $F_{U_2}$ and is a Nash manifold of dimension $\Delta$. The remainder $F_{U_2}\setminus\mathrm{Reg}$ lies in the union of the $C_j$ of dimension below $\Delta$ and of the sets $C_i\cap\overline{C_j}\subseteq\overline{C_j}\setminus C_j$ with $j\ne i$. By \ref{S4}(a) and \ref{S4}(b) its dimension is below $\Delta$.
+
+The projection of $\mathrm{Reg}$ to $\RR^n$ meets every ball $U'\subseteq U_2$, since otherwise $F_{U'}\subseteq F_{U_2}\setminus\mathrm{Reg}$ would have dimension below $\Delta$. A semialgebraic set that is dense in $U_2$ has dimension $n$ by \ref{S4}(a). By \ref{S6} the critical values of the projection $\mathrm{Reg}\to\RR^n$ form a set of dimension below $n$. So the image contains a regular value $x_0$. Take any $q_0=(x_0,z_0)\in\mathrm{Reg}$ and a neighbourhood $N\subseteq U_2\times\RR^k$ of $q_0$ with $F\cap N=\mathrm{Reg}\cap N$ on which the projection is a submersion. Then $F\cap N$ is a manifold of dimension $n+\delta$ with $\delta=\Delta-n\ge0$.
+
+The tangent space of $F\cap N$ at $q_0$ maps onto $\RR^n$. Its intersection $V_0$ with $\{0\}\times\RR^k$ has dimension $\delta$. Choose a set $I$ of $\delta$ coordinates of $\RR^k$ such that $z\mapsto z_I$ is injective on $V_0$; it exists because a matrix of rank $\delta$ has a nonzero $\delta\times\delta$ minor. The map $(x,z)\mapsto(x,z_I)$ from $F\cap N$ to $\RR^{n+\delta}$ then has bijective differential at $q_0$. By the inverse function theorem, after shrinking $N$, it is a diffeomorphism onto an open set, which contains $U_3\times\{(z_0)_I\}$ for a small ball $U_3$ about $x_0$. Let $(x,\zeta(x))$ be the preimage of $(x,(z_0)_I)$.
+\end{proof}
+
+In the situation of the lemma we \emph{freeze} the coordinates in $I$: we write $z=(a,u)$ with $a=(z_0)_I$ a vector of constants and $u\in\RR^{k'}$, $k'=k-|I|$, the remaining coordinates, and $\zeta(x)=(a,\upsilon(x))$.
+
+\subsection{The graph theorem}
+
+\begin{theorem}[graph theorem]\label{thm:graph}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$ with $d\ge1$, and let $U\subseteq\RR^n$ be open and nonempty. Suppose a tree of depth $t$ on inputs $(x,y,z)\in\RR^n\times\RR\times\RR^k$ satisfies, for all $x\in U$ and all $y\in\RR$,
+\[
+\text{the tree accepts }(x,y,z)\text{ for some }z\in\RR^k\quad\Longleftrightarrow\quad y=f(x).
+\]
+Then the border size of $f$ is at most $C\bigl((d+1)^3\,t+(d+1)^2(\bar k+2)^2+n\bigr)$, where $\bar k=\min(k,2t)$ and $C$ is an absolute constant.
+\end{theorem}
+
+The tree may use any real constants, so the theorem is nonuniform. Boolean certificates are the special case in which the tree checks $z_i(z_i-1)=0$. B\"urgisser's theorem on the decision complexity of graphs \cite[Corollary~1.5]{Bur04} is the case $k=0$, with a sharper bound.
+
+\begin{proof}
+\emph{Fixing a cell.} Apply \cref{lem:cells} with the accepting leaves marked. For $x\in U$ the point $(x,f(x))$ has a certificate, so $U$ is the union, over the finitely many cells $B$, of the semialgebraic sets $\{x\in U:(x,f(x),z)\in B\text{ for some }z\}$. By \ref{S4}(a) one of them has nonempty interior. Fix that cell $B=Z\cap O$ with polynomials $p_1,\dots,p_r$ and $q_1,\dots,q_m$. Certificate coordinates that do not occur in these polynomials do not affect membership in $B$. Fix them to $0$ and let $k$ denote the number of the others, at most $2t$. Let $U_1$ be an open ball in the chosen set and
+\[
+F=\{(x,z)\in U_1\times\RR^k:\ (x,f(x),z)\in B\}.
+\]
+
+\emph{Isolating.} Apply \cref{lem:isolate} to $F$ and freeze coordinates. Put $w=(y,u)\in\RR^\kappa$ with $\kappa=1+k'$,
+\[
+Q(x,w)=\sum_{i=1}^rp_i\bigl(x,y,(a,u)\bigr)^2,\qquad\varphi(x)=\bigl(f(x),\upsilon(x)\bigr),\qquad w_0=\varphi(x_0).
+\]
+By \cref{lem:cells}, $Q$ has a straight-line program with at most $12t$ operations. The sets $O$ and $N$ are open and contain $(x_0,f(x_0),z_0)$ and $q_0$, and $\varphi$ is continuous. So there are $r_0>0$ and a closed ball $K\subseteq U_3$ about $x_0$ such that $|\varphi(x)-w_0|\le r_0/2$ on $K$ and, for $x\in K$ and $|w-w_0|\le r_0$, the point $(x,y,(a,u))$ lies in $O$ and $(x,(a,u))$ lies in $N$.
+
+\emph{The zero is isolated.} We claim that for $x\in K$ and $|w-w_0|\le r_0$
+\[
+Q(x,w)=0\quad\Longleftrightarrow\quad w=\varphi(x).
+\]
+If $w=\varphi(x)$, then $(x,f(x),\zeta(x))\in B\subseteq Z$ and $Q(x,w)=0$. Conversely let $Q(x,w)=0$. Every $p_i$ vanishes at $(x,y,(a,u))$, so this point lies in $Z\cap O=B$ and is accepted. Since $x\in U$, the hypothesis gives $y=f(x)$. Then $(x,(a,u))$ is a point of $F\cap N$ whose frozen coordinates are $a$, so $(a,u)=\zeta(x)$ and $u=\upsilon(x)$.
+
+\emph{Conclusion.} The hypotheses of \cref{thm:local} hold with $\xi=x$ as the parameter, in dimension $n$, with $\lambda=0$ and $D=d$. It gives a ball $V^*$, a point $x_1\in V^*\setminus E^*$, and a circuit graph of the stated size whose first output computes, for suitable real constants, polynomials of degree at most $d$ that converge coefficientwise to the Taylor polynomial of order $d$ of $f$ at $x_1$. Since $\deg f\le d$, that Taylor polynomial is $f$. By \cref{lem:closure} the graph approximates $f$.
+\end{proof}
+
+\begin{remark}[several outputs]\label{rem:several}
+The same proof applies to a polynomial map $f=(f_1,\dots,f_\mu)\colon\RR^n\to\RR^\mu$ and the language $y=f(x)$ with $y\in\RR^\mu$: the block $y$ is part of $w$, and \cref{thm:local} gives every coordinate of $\varphi$. The bound for each $f_i$ is $C\bigl((d+1)^3t+(d+1)^2(\bar k+\mu+1)^2+n\bigr)$.
+\end{remark}
+
+\subsection{Thresholds}
+
+\begin{theorem}[threshold theorem]\label{thm:threshold}
+Let $f$, $d$, $U$ and the tree be as in \cref{thm:graph}, but suppose that for all $x\in U$ and $y\in\RR$
+\[
+\text{the tree accepts }(x,y,z)\text{ for some }z\quad\Longleftrightarrow\quad y\le f(x).
+\]
+Then the border size of $f$ satisfies the bound of \cref{thm:graph}. The same holds with $y\ge f(x)$ in place of $y\le f(x)$.
+\end{theorem}
+
+\begin{proof}
+The boundary points $(x,f(x))$ are accepted. Define the cell $B$, the set $F$, the frozen coordinates, $Q$, $\varphi$, $K$ and $r_0$ exactly as in the proof of \cref{thm:graph}. Let $x\in K$ and $|w-w_0|\le r_0$. If $Q(x,w)=0$, the point $(x,y,(a,u))$ lies in $B$ and is accepted, so $y\le f(x)$. If moreover $y=f(x)$, then $(x,(a,u))\in F\cap N$ and $u=\upsilon(x)$. Since $Q(x,\varphi(x))=0$, the point $\varphi(x)$ is the unique maximiser of the coordinate $y$ on the zero set of $Q(x,\cdot)$ in the ball. So \cref{thm:local} applies with $\lambda$ the unit vector of the coordinate $y$, and the proof ends as before. For $y\ge f(x)$ replace $(y,f)$ by $(-y,-f)$.
+\end{proof}
+
+\subsection{Value functions}
+
+The next proposition is the form of the local theorem used for universal quantifiers. It concerns the optimal value of a polynomial program and does not require the value to be a polynomial.
+
+\begin{proposition}[value functions]\label{prop:value}
+Let $Q\in\RR[\xi,s,\nu]$, with $\xi\in\RR^N$, $s\in\RR$ and $\nu\in\RR^\kappa$, be nonnegative and computed by a straight-line program with $\ell$ operations. Let $A\subseteq\RR^N$ be open and nonempty, and suppose that for every $\xi\in A$ the coordinate $s$ attains a maximum $v(\xi)$ on the set $\{(s,\nu):Q(\xi,s,\nu)=0\}$. Let $D\ge1$. Then there are a dense semialgebraic set $A^\circ\subseteq A$ and finitely many circuit graphs, each with at most $C\bigl((D+1)^3\ell+(D+1)^2(\kappa+1)^2+N\bigr)$ gates, such that for every $\xi_1\in A^\circ$ the function $v$ is of class $C^D$ near $\xi_1$ and its Taylor polynomial of order $D$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed by one of these graphs with real constants.
+\end{proposition}
+
+\begin{proof}
+The function $v$ is semialgebraic by \ref{S1}, so by \ref{S5} it is continuous on an open dense subset $A_1$ of $A$. Let $U_1$ be any open ball in $A_1$ and put
+\[
+F=\{(\xi,\nu)\in U_1\times\RR^\kappa:\ Q(\xi,v(\xi),\nu)=0\},
+\]
+which projects onto $U_1$ because the maximum is attained. Apply \cref{lem:isolate} to $F$ and freeze coordinates, writing $\nu=(a,u)$. Put $w=(s,u)$, $\tilde Q(\xi,w)=Q(\xi,s,(a,u))$, $\varphi(\xi)=(v(\xi),\upsilon(\xi))$ and $w_0=\varphi(\xi_0)$. The map $\varphi$ is continuous near $\xi_0$. Choose $r_0>0$ and a closed ball $K\subseteq U_3$ about $\xi_0$ such that $|\varphi-w_0|\le r_0/2$ on $K$ and $(\xi,(a,u))\in N$ whenever $\xi\in K$ and $|w-w_0|\le r_0$.
+
+Let $\xi\in K$ and $|w-w_0|\le r_0$ with $\tilde Q(\xi,w)=0$. Then $s\le v(\xi)$ by the definition of $v$. If $s=v(\xi)$, then $(\xi,(a,u))\in F\cap N$ with frozen coordinates $a$, so $u=\upsilon(\xi)$. Hence $\varphi(\xi)$ is the unique maximiser of the coordinate $s$ on the zero set of $\tilde Q(\xi,\cdot)$ in the ball, and \cref{thm:local} applies with $\lambda$ the unit vector of $s$. It gives a ball $V^*\subseteq U_1$ and a set $E^*$ of smaller dimension such that at every $\xi_1\in V^*\setminus E^*$ the function $v$ is $C^D$ and its Taylor polynomial is a limit of polynomials computed by a circuit graph that depends only on the program, on $N$, $D$ and on the set of frozen coordinates. There are finitely many such graphs.
+
+The ball $U_1$ was arbitrary in the dense open set $A_1$, so the points $\xi_1$ obtained are dense in $A$. For each of the finitely many graphs, the set of $\xi_1\in A$ near which $v$ is $C^D$ and at which its Taylor polynomial is such a limit is defined by a first-order formula, so it is semialgebraic by \ref{S1}. Let $A^\circ$ be the union of these sets.
+\end{proof}
+
+\subsection{The permanent}
+
+\begin{lemma}\label{lem:ryser}
+The languages $\{Y=\per_m(X)\}$, $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ are in $\PARR$, and $\{Y=\per_m(X)\}$ is in $\PARC$.
+\end{lemma}
+
+\begin{proof}
+By Ryser's formula \cite{Rys63},
+\[
+\per_m(X)=\sum_{S\subseteq[m]}(-1)^{m-|S|}\prod_{i=1}^m\sum_{j\in S}X_{ij}.
+\]
+Use one processor for each of the $2^m$ subsets $S$ and combine the results by a binary tree of additions of depth $m$. This gives circuits with $2^m\mathrm{poly}(m)$ gates and depth $O(m)$ whose gates are described in polynomial time from their indices, followed by one comparison with $Y$.
+\end{proof}
+
+\begin{corollary}\label{cor:np}
+Let trees of depth $t_m$ with $k_m$ certificate coordinates decide $\{Y=\per_m(X)\}$, $\{Y\le\per_m(X)\}$ or $\{Y\ge\per_m(X)\}$ in the existential sense of \cref{thm:graph,thm:threshold}. Then $t_m\ge2^{\Omega((\log m)^{4/3})}$. In particular none of these languages is in $\NPR$, and $\NPR\subsetneq\PARR$.
+\end{corollary}
+
+\begin{proof}
+By \cref{thm:graph,thm:threshold} with $n=m^2$, $d=m$ and $\bar k\le2t_m$, the border size of $\per_m$ is $O(m^3t_m+m^2t_m^2)$. By \cref{thm:lowerbound} it exceeds $2^{c(\log m)^{4/3}}$ for large $m$. A machine witnessing membership in $\NPR$ unrolls into trees of polynomial depth. The languages are in $\PARR$ by \cref{lem:ryser}, and $\NPR\subseteq\PARR$.
+\end{proof}

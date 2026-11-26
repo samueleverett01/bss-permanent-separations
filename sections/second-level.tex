@@ -1,0 +1,169 @@
+\section{An existential and a universal block}\label{sec:second}
+
+\begin{theorem}\label{thm:second}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$ with $d\ge1$, and let $U\subseteq\RR^n$ be open and nonempty. Suppose a tree of depth $t$ on inputs $(x,y,z,u)\in\RR^n\times\RR\times\RR^k\times\RR^l$ satisfies, for all $x\in U$ and $y\in\RR$,
+\[
+\text{there is }z\text{ such that the tree accepts }(x,y,z,u)\text{ for all }u\quad\Longleftrightarrow\quad y=f(x).
+\]
+Then the border size of $f$ is bounded by a polynomial in $t$, $k$, $l$, $d$ and $n$.
+\end{theorem}
+
+After the good certificate $z$ is isolated, the points $(x,y,z)$ at which every $u$ is accepted form a thin graph $\Gamma$, and every other nearby point has a rejecting $u$. Rejection is the existential side, so no tested polynomial need vanish on $\Gamma$. The largest margin $v$ of a rejecting certificate is positive off $\Gamma$ and zero on it. But $v$ is a maximum, it can have kinks along $\Gamma$, and it can jump on thin sets, so that its small values need not concentrate near $\Gamma$. The proof replaces $v$ by an envelope that is the value of a single polynomial program, is continuously differentiable, and vanishes exactly on $\Gamma$.
+
+Throughout the section the hypotheses of \cref{thm:second} are in force.
+
+\subsection{Isolating the good certificate}
+
+Let $\mathcal T$ be the set of $(x,y,z)$ with $x\in U$ at which every $u$ is accepted. It is semialgebraic by \ref{S1}, and by hypothesis its projection to $(x,y)$ is the graph of $f$ over $U$. Put $F=\{(x,z)\in U\times\RR^k:(x,f(x),z)\in\mathcal T\}$, which projects onto $U$. Apply \cref{lem:isolate} to $F$ over a ball in $U$ and freeze coordinates, writing $z=(z^\flat,z')$ with $z^\flat$ the vector of frozen values, $z'\in\RR^{k'}$ and $\zeta(x)=(z^\flat,\zeta'(x))$. Put
+\[
+w=(y,z')\in\RR^\kappa,\qquad\kappa=1+k',\qquad\varphi(x)=\bigl(f(x),\zeta'(x)\bigr),\qquad w_0=\varphi(x_0).
+\]
+
+\begin{lemma}\label{lem:goodz}
+There are $r_0>0$ and a closed ball $K$ about $x_0$, inside the ball $U_3$ of \cref{lem:isolate}, such that $|\varphi(x)-w_0|\le r_0/2$ on $K$ and, for $x\in K$ and $w$ in the closed ball $\bar B$ of radius $r_0$ about $w_0$,
+\[
+\text{some }u\text{ is rejected at }(x,y,(z^\flat,z'))\quad\Longleftrightarrow\quad w\ne\varphi(x).
+\]
+\end{lemma}
+
+\begin{proof}
+Choose $K$ and $r_0$ such that the bound on $\varphi$ holds and $(x,(z^\flat,z'))$ lies in the neighbourhood of $q_0$ given by \cref{lem:isolate} whenever $x\in K$ and $w\in\bar B$. If no $u$ is rejected at $(x,y,(z^\flat,z'))$, this point lies in $\mathcal T$, so $y=f(x)$ by the hypothesis, so $(x,(z^\flat,z'))$ is a point of $F$ in that neighbourhood with frozen coordinates $z^\flat$, and therefore $z'=\zeta'(x)$. Conversely the point $(x,f(x),\zeta(x))$ lies in $\mathcal T$.
+\end{proof}
+
+Let $\Gamma=\{(x,\varphi(x)):x\in K\}$. From now on the frozen coordinates are constants, and we regard the tree as a tree on inputs $(x,w,u)$.
+
+\subsection{The margin and its flattening}
+
+Apply \cref{lem:cells} with the rejecting leaves marked. For each cell consider the margin system \eqref{eq:margin} of \cref{sec:universal}, with parameters $(x,w)$ in place of $(x,y)$ and unknowns $(\nu,s)$; the proof of \cref{lem:margin}(a) applies to any cell and any parameters, so the system has a solution with $s>0$ exactly when $(x,w)$ has a rejecting certificate in that cell. Each cell's system involves only the at most $2t$ coordinates of $u$ that occur in the cell. Pad the unknowns $\nu$ of the different cells to a common space, with the padding coordinates set to $0$. Let $\mathcal Y$ be the set of all $(x,w,\nu,s)$ with $x\in K$, $w\in\bar B$ and $s\ge0$ that solve the system of some cell. It is closed, and its fibers over $(x,w)$ are compact and uniformly bounded: $\nu$ consists of a point of the unit sphere and of slack variables whose squares are bounded on $K\times\bar B$, and $0\le s\le1$. Define
+\[
+v(x,w)=\max\{s:(x,w,\nu,s)\in\mathcal Y\}.
+\]
+
+\begin{lemma}\label{lem:flatten}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The fiber of $\mathcal Y$ over every $(x,w)\in K\times\bar B$ is nonempty, $0\le v\le1$, and $v(x,w)=0$ exactly when $w=\varphi(x)$.
+\item $v$ is upper semicontinuous.
+\item There are an integer $N\ge1$ and a real $a>0$ such that
+\[
+v(x,w)^N\le a\,|w-\varphi(x)|^2\qquad\text{for all }x\in K,\ w\in\bar B .
+\]
+\item The integer $N$ can be chosen with $\log N$ bounded by a polynomial in $t$, $n$, $k$ and $l$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(b) Let $(x_j,w_j)\to(x,w)$ with $v(x_j,w_j)\to\lambda$. Take solutions with $s=v(x_j,w_j)$ and pass to a subsequence that lies in one cell and converges. The limit solves that cell's system at $(x,w)$ with $s=\lambda$, so $v(x,w)\ge\lambda$.
+
+(a) Off $\Gamma$ a rejecting certificate exists by \cref{lem:goodz}, so $v>0$. On $\Gamma$ there is no rejecting certificate, hence no solution with $s>0$. Since $\varphi(x)$ is interior to $\bar B$, there are $w_j\to\varphi(x)$ with $w_j\ne\varphi(x)$, and a limit of solutions at the points $(x,w_j)$ is a solution at $(x,\varphi(x))$, necessarily with $s=0$. So the fiber is nonempty and $v=0$ there.
+
+(c) Let $g(\sigma)$ be the supremum of $v(x,w)$ over $x\in K$ and $w\in\bar B$ with $|w-\varphi(x)|\le\sigma$. It is semialgebraic and nondecreasing. If $g(\sigma)\ge\lambda>0$ for all $\sigma>0$, a limit point of near-maximisers would lie on $\Gamma$ and have $v\ge\lambda$ by (b), against (a). So $g(\sigma)\to0$ as $\sigma\to0$, and by \ref{S7} there are $L$ and a rational $\gamma>0$, the leading exponent of $g$, with $g(\sigma)\le L\sigma^\gamma$ for small $\sigma$. Since $v\le1$, the bound $v(x,w)\le L'|w-\varphi(x)|^\gamma$ holds on all of $K\times\bar B$ for a larger $L'$. Take $N\ge2/\gamma$ and $a=L'^N(2r_0)^{N\gamma-2}$.
+
+(d) The function $g$ is defined by a first-order formula with a bounded number of quantifier blocks over the tests of the tree: at most $2^{O(t)}$ polynomials of degree $2^{O(t)}$ in $O(n+k+l+t)$ variables. By effective quantifier elimination \cite[Chapter~14]{BPR06} its graph is defined by a quantifier-free formula in which the polynomials are at most $2^{q}$ in number and of degree at most $2^{q}$, with $q$ polynomial in $t,n,k,l$. The graph has empty interior in $\RR^2$, so each of its points is a zero of one of these polynomials, and all but finitely many of its points are zeros of one that has positive degree in the second variable. Let $P$ be the product of the latter. Then $P(\sigma,g(\sigma))=0$ for small $\sigma>0$, and the leading exponent $\gamma$ of the branch $g$ is a slope of the Newton polygon of $P$, a ratio of positive integers not exceeding $\deg P\le2^{2q}$. So $\gamma\ge2^{-2q}$, and $N=\lceil2/\gamma\rceil$ has $\log N\le2q+2$.
+\end{proof}
+
+Put $\hat v=v^N$. Only the upper semicontinuity of $v$ and its zero set are used below; $v$ may be discontinuous, and its small values may occur far from $\Gamma$.
+
+\subsection{The envelope}
+
+Fix $x\in K$. An \emph{atom} is a point $(\omega,\nu,s)$ with $(x,\omega,\nu,s)\in\mathcal Y$. Let $r=\kappa+3$. For $c\in\RR^\kappa$ let $e(x;c)$ be the maximum, over weights $\lambda_1,\dots,\lambda_r\ge0$ with $\sum_i\lambda_i=1$ and atoms $(\omega_i,\nu_i,s_i)$, of
+\begin{equation}\label{eq:J}
+J=\sum_i\lambda_is_i^N-a\sum_i\lambda_i|\omega_i-\bar\omega|^2-2a\,|c-\bar\omega|^2,\qquad\bar\omega=\sum_i\lambda_i\omega_i .
+\end{equation}
+The maximum exists because the weights and atoms range over a compact set. In terms of the moment vector $m=\sum_i\lambda_i\bigl(s_i^N,|\omega_i|^2,\omega_i\bigr)=(m_0,m_2,m_1)\in\RR^{\kappa+2}$,
+\[
+J=j(c;m)=m_0-a\,m_2-a\,|m_1|^2+4a\langle c,m_1\rangle-2a\,|c|^2 ,
+\]
+because $\sum_i\lambda_i|\omega_i-\bar\omega|^2=m_2-|m_1|^2$. By Carath\'eodory's theorem the moment vectors obtained with $r$ atoms are exactly the points of the convex hull $M_x$ of the compact set of vectors $(s^N,|\omega|^2,\omega)$ of single atoms. So $e(x;c)=\max_{m\in M_x}j(c;m)$, where $M_x$ is compact and convex and $j$ is concave in $m$ and strictly concave in $m_1$. In the language of measures, $e(x;c)$ is the largest value of $\int\hat v\,d\mu-a\Var(\mu)-2a|c-\operatorname{mean}(\mu)|^2$ over probability measures $\mu$ on $\bar B$; it is a regularisation of $\hat v$ of the type of Lasry and Lions \cite{LL86}.
+
+\begin{lemma}\label{lem:envelope}
+For every $x\in K$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $e(x;\cdot)$ is continuously differentiable on $\RR^\kappa$, with $\nabla_ce(x;c)=4a\,(m_1^*-c)$, where $m_1^*$ is the component $m_1$ common to all maximisers. On $\bar B$ it is Lipschitz with constant $8ar_0$.
+\item $e(x;c)\ge v(x,c)^N$ for $c\in\bar B$.
+\item $e(x;\varphi(x))=0$.
+\end{enumerate}
+Hence on $\bar B$ the function $e(x;\cdot)$ is nonnegative and vanishes exactly at $\varphi(x)$.
+\end{lemma}
+
+\begin{proof}
+(a) The function $e(x;c)+2a|c|^2=\max_{m\in M_x}\bigl[m_0-am_2-a|m_1|^2+4a\langle c,m_1\rangle\bigr]$ is a maximum of affine functions of $c$ over a compact set, so it is convex. Two maximisers with different $m_1$ would have a midpoint in $M_x$ with a larger value, by strict concavity; so all maximisers share $m_1^*$. The subdifferential of a maximum of affine functions over a compact set is the convex hull of the gradients $4am_1$ at the maximisers, here a single point. A convex function with a single subgradient at every point is continuously differentiable. Since $m_1^*\in\bar B$, the gradient has norm at most $8ar_0$ on $\bar B$.
+
+(b) Take a single atom at $\omega=c$ with $s=v(x,c)$. Then $\bar\omega=c$ and $J=v(x,c)^N$.
+
+(c) Write $\varphi=\varphi(x)$. By \cref{lem:flatten}(c), $s_i^N\le v(x,\omega_i)^N\le a|\omega_i-\varphi|^2$, and $\sum_i\lambda_i|\omega_i-\varphi|^2=\sum_i\lambda_i|\omega_i-\bar\omega|^2+|\bar\omega-\varphi|^2$. So at $c=\varphi$
+\[
+J\le a\,|\bar\omega-\varphi|^2-2a\,|\varphi-\bar\omega|^2\le0 ,
+\]
+and $e(x;\varphi)\ge0$ by (b). The last assertion follows from (b), (c) and \cref{lem:flatten}(a).
+\end{proof}
+
+The power $N$ is what makes (c) exact. Without it $e(x;\varphi(x))$ would be positive, and the minimisers of $e$ could drift toward the points where $v$ jumps.
+
+\begin{lemma}\label{lem:continuity}
+There is a closed ball $K'\subseteq K$ such that $e$ is continuous on $K'\times\bar B$. Consequently, for every $\eta>0$,
+\[
+\mu(\eta)=\min\{e(x;c):x\in K',\ c\in\bar B,\ |c-\varphi(x)|\ge\eta\}>0 .
+\]
+\end{lemma}
+
+\begin{proof}
+The function $e$ is semialgebraic by \ref{S1}. By \ref{S5}, applied on the open set $\interior K\times\interior\bar B$, its set of discontinuity there has dimension at most $n+\kappa-1$. Suppose $e$ is discontinuous at $(x^\circ,c^\circ)$ with $x^\circ\in\interior K$ and $c^\circ\in\bar B$: there are $(x_j,c_j)\to(x^\circ,c^\circ)$ with $|e(x_j;c_j)-e(x^\circ;c^\circ)|\ge\eta$. By the Lipschitz bound of \cref{lem:envelope}(a), which is uniform in $x$, we get $|e(x_j;c)-e(x^\circ;c)|\ge\eta/4$ for all large $j$ and all $c\in\bar B$ within $\eta/(32ar_0)$ of $c^\circ$. So $e$ is discontinuous at $(x^\circ,c)$ for all those $c$, which include an open subset of $\interior\bar B$. If the set of such $x^\circ$ had dimension $n$, the set of discontinuity would have dimension $n+\kappa$ by \ref{S4}(c). So it has smaller dimension, and $K'$ can be chosen away from its closure. The minimum is then positive by compactness and \cref{lem:envelope}.
+\end{proof}
+
+\subsection{The envelope is a value function}
+
+\begin{lemma}\label{lem:envelopevalue}
+Let $\mathcal O=\interior K'\times\interior\bar B$. For every $D\ge1$ there are finitely many circuit graphs, each with at most
+\[
+s_e(D)=C\bigl((D+1)^3\kappa\,(t+\kappa+\log N)+(D+1)^2\kappa^2(t+\kappa)^2+n\bigr)
+\]
+gates, and a dense semialgebraic set $\mathcal O^\circ\subseteq\mathcal O$, such that at every $\xi_1\in\mathcal O^\circ$ the function $e$ is of class $C^D$ near $\xi_1$ and its Taylor polynomial of order $D$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed by one of these graphs with real constants.
+\end{lemma}
+
+\begin{proof}
+Assign a rejecting cell to each of the $r$ atoms. For one assignment the constraints on the weights and atoms form one polynomial system with parameters $\xi=(x,c)$: the margin system \eqref{eq:margin} of the assigned cell for each atom, with $(x,\omega_i)$ in place of $(x,y)$; the equation $s_i=\theta_i^2$, which enforces $s_i\ge0$; the equation $|\omega_i-w_0|^2+\rho_i^2=r_0^2$, which keeps $\omega_i$ in $\bar B$; the equations $\lambda_i=\beta_i^2$ and $\sum_i\beta_i^2=1$; and $T=J$ for a new variable $T$, with $J$ as in \eqref{eq:J}. Let $Q$ be the sum of the squares of these equations. It has a straight-line program with $O(\kappa(t+\kappa+\log N))$ operations, where $s_i^N$ is computed by repeated squaring, and $O(\kappa(t+\kappa))$ unknowns. Its zero set over each $\xi$ is compact, since $0\le s_i\le1$ and the slack variables are bounded. The function $e$ is the largest, over the finitely many assignments, of the maxima of $T$ on these zero sets.
+
+The sets on which a given assignment attains $e$ are semialgebraic and cover $\mathcal O$, so the union of their interiors is dense by \ref{S4}(a). On each interior the maximum of $T$ for that assignment is attained and equals $e$, and \cref{prop:value} applies with the coordinate $T$ in the role of $s$. The union of the dense sets and the finitely many graphs so obtained have the stated properties.
+\end{proof}
+
+Let $\mathcal P_D$ be the closure, coefficientwise, of the set of polynomials of degree at most $D$ computed by the graphs of \cref{lem:envelopevalue} with real constants.
+
+\subsection{A generic tilt}
+
+By \ref{S8} there is an open dense semialgebraic set $\mathrm{Reg}\subseteq\mathcal O$ on which $e$ is Nash in $(x,c)$; put $\mathrm{Sing}=\mathcal O\setminus\mathrm{Reg}$, of dimension at most $n+\kappa-1$. Consider the semialgebraic map $G(x,c)=(x,\nabla_ce(x;c))$ on $\mathcal O$, which is defined everywhere by \cref{lem:envelope}(a). Let $\mathrm{Bad}\subseteq\RR^n\times\RR^\kappa$ be the union of $G(\mathrm{Sing})$ and of the set of critical values of $G$ on $\mathrm{Reg}$. By \ref{S8} and \ref{S6}, $\dim\mathrm{Bad}\le n+\kappa-1$.
+
+\begin{lemma}\label{lem:tilt}
+There are $\hat a\in\RR^\kappa$, a ball $V\subseteq\interior K'$ and $\vartheta_1>0$ such that for $x\in V$ and $0<\vartheta<\vartheta_1$ every $c\in\interior\bar B$ with $\nabla_ce(x;c)=\vartheta\hat a$ has $(x,c)\in\mathrm{Reg}$ and $\nabla_c^2e(x;c)$ invertible.
+\end{lemma}
+
+\begin{proof}
+The set of $(x,\vartheta,\hat a)$ with $\vartheta>0$ and $(x,\vartheta\hat a)\in\mathrm{Bad}$ corresponds, under the semialgebraic bijection $(x,\vartheta,\hat a)\mapsto(x,\vartheta,\vartheta\hat a)$, to $\{(x,\vartheta,b):(x,b)\in\mathrm{Bad}\}$, of dimension at most $n+\kappa$. By \ref{S4}(c) some $\hat a$ has a fiber of dimension at most $n$ in $(x,\vartheta)$-space. As in the first step of the proof of \cref{lem:derivatives}, there is a box $V\times(0,\vartheta_1)$ that misses this fiber. For $(x,\vartheta)$ in the box, $(x,\vartheta\hat a)\notin\mathrm{Bad}$: no point of $\mathrm{Sing}$ over $x$ has gradient $\vartheta\hat a$, and $\vartheta\hat a$ is a regular value of $\nabla_ce(x;\cdot)$ on $\mathrm{Reg}$.
+\end{proof}
+
+Fix $\hat a$, $V$ and $\vartheta_1$ as in the lemma. For $x\in K'$ and $\vartheta>0$ let $\bar c$ minimise $e(x;c)-\vartheta\langle\hat a,c\rangle$ over $c\in\bar B$. Comparing with $c=\varphi(x)$, where $e=0$,
+\[
+e(x;\bar c)\le\vartheta\langle\hat a,\bar c-\varphi(x)\rangle\le2r_0|\hat a|\,\vartheta .
+\]
+By \cref{lem:continuity}, $|\bar c-\varphi(x)|<\eta$ as soon as $2r_0|\hat a|\vartheta<\mu(\eta)$. So the minimisers converge to $\varphi$ uniformly on $K'$ as $\vartheta\to0$. Decrease $\vartheta_1$ so that for $\vartheta<\vartheta_1$ they are interior; then $\nabla_ce(x;\bar c)=\vartheta\hat a$.
+
+By \ref{S2} choose a semialgebraic map $\Theta\colon V\times(0,\vartheta_1)\to\bar B$ with $\Theta(x,\vartheta)$ such a minimiser. By \cref{cor:derivatives} there are a ball $V^*\subseteq V$ and $\vartheta^*\in(0,\vartheta_1)$ such that $\Theta$ is $C^1$ on $V^*\times(0,\vartheta^*)$ and the $x$-derivatives up to order $d$ of its first coordinate converge to those of $f$, uniformly on $V^*$.
+
+\subsection{Proof of \texorpdfstring{\cref{thm:second}}{the theorem}}
+
+Fix $\eta>0$. Choose $\vartheta<\vartheta^*$ such that the derivatives up to order $d$ of the first coordinate of $\Theta(\cdot,\vartheta)$ are within $\eta$ of those of $f$ on $V^*$. Take $x_1\in V^*$ and put $c_1=\Theta(x_1,\vartheta)$ and $\xi_1=(x_1,c_1)$. By \cref{lem:tilt}, $\xi_1\in\mathrm{Reg}$ and $H=\nabla_c^2e(\xi_1)$ is invertible. By the implicit function theorem there is an analytic map $\psi$ near $x_1$ with $\psi(x_1)=c_1$ and $\nabla_ce(x;\psi(x))=\vartheta\hat a$, and $\Theta(\cdot,\vartheta)$, a continuous solution through $\xi_1$, agrees with it near $x_1$. So the Taylor polynomial $h$ of order $d$ at $x_1$ of the first coordinate of $\psi$ has all coefficients within $C_1\eta$ of those of $f$, where $C_1$ depends only on $n$, $d$ and $V^*$.
+
+Let $P$ be the Taylor polynomial of $e$ of order $d+1$ at $\xi_1$. Since $e$ is Nash near $\xi_1$, its Taylor polynomials of order $d+1$ depend continuously on the base point there, and $\mathcal O^\circ$ is dense, so $P\in\mathcal P_{d+1}$ by \cref{lem:envelopevalue}. The Taylor polynomial of order $d$ of $\psi$ at $x_1$ depends only on $P$. Indeed $\nabla_cP(\xi_1)=\vartheta\hat a$ and $\nabla_c^2P(\xi_1)=H$, so there is an analytic map $\omega$ near $x_1$ with $\omega(x_1)=c_1$ and $\nabla_cP(x,\omega(x))=\vartheta\hat a$. Since $e-P$ vanishes to order $d+2$ at $\xi_1$, the difference $\nabla_ce-\nabla_cP$ vanishes to order $d+1$, and so does $\nabla_cP(x,\psi(x))-\vartheta\hat a$ at $x_1$. If $\psi-\omega$ had a nonzero homogeneous part of lowest degree $j\le d$ at $x_1$, then $\nabla_cP(x,\psi(x))-\nabla_cP(x,\omega(x))$ would have as its lowest part the image of that part under $H$, of degree $j$, which is impossible. So $\psi$ and $\omega$ have the same Taylor polynomial of order $d$ at $x_1$. That of $\omega$ is obtained by \cref{lem:newton}, with $\xi=x$, $w=c$, $D=d$,
+\[
+E(x,c)=\nabla_cP(x,c)-\vartheta\hat a
+\]
+and $A=H^{-1}$. Now replace $P$ by the output $\Psi$ of one of the circuit graphs of \cref{lem:envelopevalue} for $D=d+1$, with its gradient in $c$ obtained from the circuit by \cref{thm:baurstrassen}. By \cref{lem:newton}(a) this defines a composite circuit graph with $O\bigl(d^3(s_e(d+1)+\kappa^2)+n\bigr)$ gates, whose output has degree at most $d$ and is a polynomial function of the coefficients of $\Psi$ and of $x_1$, $c_1$, $\vartheta\hat a$ and $H^{-1}$. By continuity, $h$ is a coefficientwise limit of outputs of one of the finitely many composite graphs.
+
+So for every $\eta>0$ one of finitely many circuit graphs computes, with real constants, a polynomial of degree at most $d$ within $2C_1\eta$ of $f$. By \cref{lem:closure} one of them approximates $f$. Its size is polynomial in $t$, $k$, $d$, $n$ and $\log N$, since $\kappa\le k+1$, and $\log N$ is polynomial in $t$, $n$, $k$ and $l$ by \cref{lem:flatten}(d). \qed
+
+\begin{corollary}\label{cor:second}
+Let trees of depth $t_m$, with $k_m$ and $l_m$ coordinates in $z$ and $u$, decide $Y=\per_m(X)$ in the sense of \cref{thm:second}. Then $t_m+k_m+l_m\ge2^{\Omega((\log m)^{4/3})}$, where the constant in the exponent depends on the degree of the polynomial bound of \cref{thm:second}. In particular the graph of the permanent is not in $\Sigma_2^{\RR}$, and $\Sigma_2^{\RR}\subsetneq\PARR$.
+\end{corollary}
+
+\begin{proof}
+By \cref{thm:second} with $n=m^2$ and $d=m$ the border size of $\per_m$ is bounded by a polynomial in $m$, $t_m$, $k_m$ and $l_m$. By \cref{thm:lowerbound} it exceeds $2^{c(\log m)^{4/3}}$. A $\Sigma_2^{\RR}$ machine unrolls into trees with polynomial $t_m$, $k_m$ and $l_m$. The graph is in $\PARR$ by \cref{lem:ryser}, and $\Sigma_2^{\RR}\subseteq\PARR$.
+\end{proof}
