@@ -1,10 +1,10 @@
 \section{The analytic core}\label{sec:core}
 
-This section contains the three tools on which every later argument rests, and the local theorem that combines them. Nothing here mentions certificates.
+This section contains three tools used in every later argument, and the local theorem, which combines them. Certificates do not appear in this section.
 
 \subsection{Derivatives of semialgebraic families}
 
-Pointwise convergence does not give convergence of derivatives in general. For semialgebraic families it does, on some open ball.
+In general, pointwise convergence of functions does not imply convergence of their derivatives. For semialgebraic families it does on some open ball.
 
 \begin{lemma}\label{lem:derivatives}
 Let $V\subseteq\RR^N$ be open and nonempty, let $g\colon V\times(0,\eps_0)\to\RR$ be semialgebraic, and let $g_0\colon V\to\RR$ be continuous with $g(\xi,\eps)\to g_0(\xi)$ as $\eps\to0$ for every $\xi\in V$. Then there are an open ball $V'\subseteq V$ and $\eps'>0$ such that $g$ is of class $C^1$ on $V'\times(0,\eps')$, $g_0$ is of class $C^1$ on $V'$, and for $i=1,\dots,N$
@@ -14,59 +14,59 @@ Let $V\subseteq\RR^N$ be open and nonempty, let $g\colon V\times(0,\eps_0)\to\RR
 \end{lemma}
 
 \begin{proof}
-\emph{A box on which $g$ is smooth.} By \ref{S5}, $V\times(0,\eps_0)$ is a finite union of cells with $g$ of class $C^1$ on the open ones. Let $\Sigma$ be the union of the other cells, so $\dim\Sigma\le N$. Let $V^b$ be the set of $\xi\in V$ whose fiber $\Sigma_\xi\subseteq(0,\eps_0)$ contains an interval $(0,e)$. If $V^b$ had nonempty interior, then by \ref{S4}(c) the set $\Sigma$ would have dimension $N+1$. So $\dim V^b<N$, and there is a ball $V_1\subseteq V\setminus\overline{V^b}$. For $\xi\in V_1$ the fiber $\Sigma_\xi$ is a finite union of points and intervals by \ref{S3} and contains no $(0,e)$, so $e(\xi)=\inf(\Sigma_\xi\cup\{\eps_0\})$ is positive. The function $e$ is semialgebraic, hence continuous on an open dense set by \ref{S5}, hence bounded below by some $\eps_1>0$ on a ball $V_2\subseteq V_1$. The box $V_2\times(0,\eps_1)$ misses $\Sigma$. It is connected, so it lies in one open cell and $g$ is $C^1$ on it.
+\emph{A box on which $g$ is continuously differentiable.} By \ref{S5}, $V\times(0,\eps_0)$ is a finite union of cells such that $g$ is of class $C^1$ on each open cell. Let $\Sigma$ be the union of the other cells, so $\dim\Sigma\le N$. Let $V^b$ be the set of $\xi\in V$ whose fiber $\Sigma_\xi\subseteq(0,\eps_0)$ contains an interval $(0,e)$. If $V^b$ had nonempty interior, then by \ref{S4}(c) the set $\Sigma$ would have dimension $N+1$. So $\dim V^b<N$, and there is a ball $V_1\subseteq V\setminus\overline{V^b}$. For $\xi\in V_1$ the fiber $\Sigma_\xi$ is a finite union of points and intervals by \ref{S3}, and it contains no interval $(0,e)$. So $e(\xi)=\inf(\Sigma_\xi\cup\{\eps_0\})$ is positive. The function $e$ is semialgebraic, so by \ref{S5} it is continuous on an open dense set. Hence it is bounded below by some $\eps_1>0$ on a ball $V_2\subseteq V_1$. The box $V_2\times(0,\eps_1)$ does not meet $\Sigma$. It is connected, so it lies in one open cell, and $g$ is $C^1$ on it.
 
-Fix $i$ and let $\mathcal D=\partial g/\partial\xi_i$ on this box, a semialgebraic function. Let $\theta(v)=v/\sqrt{1+v^2}$, a semialgebraic homeomorphism from $\RR$ onto $(-1,1)$, and put $\tilde{\mathcal D}=\theta\circ\mathcal D$.
+Fix $i$, and let $\mathcal D=\partial g/\partial\xi_i$ on this box; it is a semialgebraic function. The function $\theta(v)=v/\sqrt{1+v^2}$ is a semialgebraic homeomorphism from $\RR$ onto $(-1,1)$. Put $\tilde{\mathcal D}=\theta\circ\mathcal D$.
 
-\emph{Limit values.} Let $\Gamma\subseteq V_2\times(0,\eps_1)\times(-1,1)$ be the graph of $\tilde{\mathcal D}$ and
+\emph{The set of limit values.} Let $\Gamma\subseteq V_2\times(0,\eps_1)\times(-1,1)$ be the graph of $\tilde{\mathcal D}$, and let
 \[
 \Lambda=\{(\xi,v)\in V_2\times[-1,1]:\ (\xi,0,v)\in\overline\Gamma\}.
 \]
-A copy of $\Lambda$ lies in $\overline\Gamma\setminus\Gamma$, so $\dim\Lambda\le N$ by \ref{S4}(b). Every fiber $\Lambda_\xi$ is nonempty by compactness of $[-1,1]$. By \ref{S4}(c) the set of $\xi$ with infinite $\Lambda_\xi$ has empty interior. By \ref{S4}(a) and \ref{S5} there is a ball $V_4\subseteq V_2$ over which $\Lambda$ is the union of the graphs of continuous semialgebraic functions $\lambda_1<\dots<\lambda_q$ with $q\ge1$. For $\xi\in V_4$ the limit $\tilde\ell(\xi)=\lim_{\eps\to0}\tilde{\mathcal D}(\xi,\eps)\in[-1,1]$ exists by \ref{S3}. It is a semialgebraic function of $\xi$, and $(\xi,\tilde\ell(\xi))\in\Lambda$.
+A copy of $\Lambda$ lies in $\overline\Gamma\setminus\Gamma$, so $\dim\Lambda\le N$ by \ref{S4}(b). Since $[-1,1]$ is compact, every fiber $\Lambda_\xi$ is nonempty. By \ref{S4}(c) the set of $\xi$ with infinite $\Lambda_\xi$ has empty interior. By \ref{S4}(a) and \ref{S5} there is a ball $V_4\subseteq V_2$ over which $\Lambda$ is the union of the graphs of continuous semialgebraic functions $\lambda_1<\dots<\lambda_q$ with $q\ge1$. For $\xi\in V_4$ the limit $\tilde\ell(\xi)=\lim_{\eps\to0}\tilde{\mathcal D}(\xi,\eps)\in[-1,1]$ exists by \ref{S3}. It is a semialgebraic function of $\xi$, and $(\xi,\tilde\ell(\xi))\in\Lambda$.
 
-\emph{One sheet.} Suppose $q\ge2$. The index $j(\xi)$ with $\tilde\ell(\xi)=\lambda_{j(\xi)}(\xi)$ is semialgebraic with finitely many values, so it is constant, equal to $j_0$, on a ball $V_5\subseteq V_4$. Take a neighbouring index $b=j_0\pm1$, say $b=j_0+1$; the other case is symmetric. Let $\beta=(\lambda_{j_0}+\lambda_b)/2$. For $\xi\in V_5$ we have $\tilde{\mathcal D}(\xi,\eps)\to\lambda_{j_0}(\xi)<\beta(\xi)$, so
+\emph{The set of limit values is a single graph.} Suppose that $q\ge2$. The index $j(\xi)$ with $\tilde\ell(\xi)=\lambda_{j(\xi)}(\xi)$ is semialgebraic and takes finitely many values. So it is constant, equal to $j_0$, on a ball $V_5\subseteq V_4$. Take a neighboring index $b=j_0\pm1$, say $b=j_0+1$; the other case is symmetric. Let $\beta=(\lambda_{j_0}+\lambda_b)/2$. For $\xi\in V_5$ we have $\tilde{\mathcal D}(\xi,\eps)\to\lambda_{j_0}(\xi)<\beta(\xi)$, so
 \[
 e'(\xi)=\sup\{e\le\eps_1:\ \tilde{\mathcal D}(\xi,\eps'')<\beta(\xi)\text{ for all }\eps''\in(0,e)\}
 \]
-is positive. It is semialgebraic, hence continuous on an open dense set, so $e'\ge e_0>0$ on a ball $V_6\subseteq V_5$, and $\tilde{\mathcal D}<\beta$ on $V_6\times(0,e_0)$. Take $\xi\in V_6$. Since $(\xi,\lambda_b(\xi))\in\Lambda$, there are $(\xi_m,\eps_m)\to(\xi,0)$ with $\tilde{\mathcal D}(\xi_m,\eps_m)\to\lambda_b(\xi)$. For large $m$ these values are below $\beta(\xi_m)$, and $\beta(\xi_m)\to\beta(\xi)$. So $\lambda_b(\xi)\le\beta(\xi)<\lambda_b(\xi)$, a contradiction. Hence $q=1$, and $\Lambda$ over $V_4$ is the graph of the continuous function $\tilde\ell$.
+is positive. This function is semialgebraic and hence continuous on an open dense set. So $e'\ge e_0>0$ on a ball $V_6\subseteq V_5$, and $\tilde{\mathcal D}<\beta$ on $V_6\times(0,e_0)$. Take $\xi\in V_6$. Since $(\xi,\lambda_b(\xi))\in\Lambda$, there are $(\xi_m,\eps_m)\to(\xi,0)$ with $\tilde{\mathcal D}(\xi_m,\eps_m)\to\lambda_b(\xi)$. For large $m$ these values are less than $\beta(\xi_m)$, and $\beta(\xi_m)\to\beta(\xi)$. So $\lambda_b(\xi)\le\beta(\xi)<\lambda_b(\xi)$, a contradiction. Hence $q=1$, and $\Lambda$ over $V_4$ is the graph of the continuous function $\tilde\ell$.
 
-\emph{Uniform convergence.} Let $K'\subseteq V_4$ be compact. If $\tilde{\mathcal D}(\cdot,\eps)$ did not tend to $\tilde\ell$ uniformly on $K'$, there would be $\eta>0$, $\eps_m\to0$ and $\xi_m\in K'$ with $|\tilde{\mathcal D}(\xi_m,\eps_m)-\tilde\ell(\xi_m)|\ge\eta$. Pass to a subsequence with $\xi_m\to\xi$ and $\tilde{\mathcal D}(\xi_m,\eps_m)\to v$. Then $(\xi,v)\in\Lambda$, so $v=\tilde\ell(\xi)$, while $\tilde\ell(\xi_m)\to\tilde\ell(\xi)$, a contradiction.
+\emph{Uniform convergence.} Let $K'\subseteq V_4$ be compact. Suppose that $\tilde{\mathcal D}(\cdot,\eps)$ does not tend to $\tilde\ell$ uniformly on $K'$. Then there are $\eta>0$, $\eps_m\to0$ and $\xi_m\in K'$ with $|\tilde{\mathcal D}(\xi_m,\eps_m)-\tilde\ell(\xi_m)|\ge\eta$. We pass to a subsequence with $\xi_m\to\xi$ and $\tilde{\mathcal D}(\xi_m,\eps_m)\to v$. Then $(\xi,v)\in\Lambda$, so $v=\tilde\ell(\xi)$. But also $\tilde\ell(\xi_m)\to\tilde\ell(\xi)$, a contradiction.
 
-\emph{The limit is finite.} The sets $\{\tilde\ell=1\}$, $\{\tilde\ell=-1\}$ and $\{|\tilde\ell|<1\}$ are semialgebraic and cover $V_4$. Suppose $\tilde\ell=1$ on a ball, and let $K'$ be a compact ball inside it. By uniform convergence, for every $M$ there is $e_M$ with $\mathcal D\ge M$ on $K'\times(0,e_M)$. For $\xi$ and $\xi+he_i$ in $K'$ with $h>0$,
+\emph{The limit is finite.} The sets $\{\tilde\ell=1\}$, $\{\tilde\ell=-1\}$ and $\{|\tilde\ell|<1\}$ are semialgebraic and cover $V_4$. Suppose that $\tilde\ell=1$ on a ball, and let $K'$ be a compact ball inside it. By uniform convergence, for every $M$ there is $e_M$ with $\mathcal D\ge M$ on $K'\times(0,e_M)$. For $\xi$ and $\xi+he_i$ in $K'$ with $h>0$,
 \begin{equation}\label{eq:ftc}
 g(\xi+he_i,\eps)-g(\xi,\eps)=\int_0^h\mathcal D(\xi+se_i,\eps)\,ds\ \ge\ Mh .
 \end{equation}
-Letting $\eps\to0$ gives $g_0(\xi+he_i)-g_0(\xi)\ge Mh$ for every $M$, which is impossible. The case $\tilde\ell=-1$ is the same. So $|\tilde\ell|<1$ on some ball $V_8\subseteq V_4$. Put $\ell=\theta^{-1}\circ\tilde\ell$ there. On a compact ball $K''\subseteq V_8$ the values of $\tilde\ell$ stay in a compact subset of $(-1,1)$, on which $\theta^{-1}$ is uniformly continuous. So $\mathcal D(\cdot,\eps)\to\ell$ uniformly on $K''$.
+Letting $\eps\to0$ gives $g_0(\xi+he_i)-g_0(\xi)\ge Mh$ for every $M$, which is impossible. The case $\tilde\ell=-1$ is treated in the same way. So $|\tilde\ell|<1$ on some ball $V_8\subseteq V_4$. Put $\ell=\theta^{-1}\circ\tilde\ell$ there. On a compact ball $K''\subseteq V_8$ the values of $\tilde\ell$ lie in a compact subset of $(-1,1)$, and $\theta^{-1}$ is uniformly continuous on this subset. So $\mathcal D(\cdot,\eps)\to\ell$ uniformly on $K''$.
 
-\emph{Identification.} For $\xi$ and $\xi+he_i$ in $K''$, the identity in \eqref{eq:ftc} and uniform convergence give $g_0(\xi+he_i)-g_0(\xi)=\int_0^h\ell(\xi+se_i)\,ds$. Since $\ell$ is continuous, $\partial g_0/\partial\xi_i$ exists and equals $\ell$ in the interior of $K''$.
+\emph{The limit is the partial derivative.} For $\xi$ and $\xi+he_i$ in $K''$, the identity in \eqref{eq:ftc} and uniform convergence give $g_0(\xi+he_i)-g_0(\xi)=\int_0^h\ell(\xi+se_i)\,ds$. Since $\ell$ is continuous, $\partial g_0/\partial\xi_i$ exists and equals $\ell$ in the interior of $K''$.
 
-Treat $i=1,\dots,N$ in turn, each time inside the ball obtained before. Let $V'$ be the interior of the last compact ball and $\eps'=\eps_1$. A continuous function with continuous partial derivatives is $C^1$.
+We treat $i=1,\dots,N$ in turn, each time inside the ball obtained for the previous index. Let $V'$ be the interior of the last compact ball, and let $\eps'=\eps_1$. A continuous function with continuous partial derivatives is $C^1$.
 \end{proof}
 
 \begin{corollary}\label{cor:derivatives}
-Let $V\subseteq\RR^N$ be open and nonempty, let $W\colon V\times(0,\eps_0)\to\RR^\kappa$ be semialgebraic, and let $\varphi\colon V\to\RR^\kappa$ be continuous with $W(\xi,\eps)\to\varphi(\xi)$ for every $\xi$. Let $D\ge1$. Then there are an open ball $V^*\subseteq V$ and $\eps^*>0$ such that $W$ is $C^1$ on $V^*\times(0,\eps^*)$ and has continuous $\xi$-derivatives of all orders up to $D$ there, $\varphi$ is of class $C^D$ on $V^*$, and for every multi-index $\alpha$ with $|\alpha|\le D$
+Let $V\subseteq\RR^N$ be open and nonempty, let $W\colon V\times(0,\eps_0)\to\RR^\kappa$ be semialgebraic, and let $\varphi\colon V\to\RR^\kappa$ be continuous with $W(\xi,\eps)\to\varphi(\xi)$ for every $\xi$. Let $D\ge1$. Then there are an open ball $V^*\subseteq V$ and $\eps^*>0$ with the following properties. The map $W$ is $C^1$ on $V^*\times(0,\eps^*)$ and has continuous $\xi$-derivatives of all orders up to $D$ there. The map $\varphi$ is of class $C^D$ on $V^*$. For every multi-index $\alpha$ with $|\alpha|\le D$,
 \[
 \sup_{\xi\in V^*}\bigl|\partial_\xi^\alpha W(\xi,\eps)-\partial^\alpha\varphi(\xi)\bigr|\longrightarrow0\qquad(\eps\to0).
 \]
 \end{corollary}
 
 \begin{proof}
-Apply \cref{lem:derivatives} to the coordinates of $W$ one after another, each time restricting to the box found before. The first derivatives are semialgebraic and converge uniformly to the first derivatives of $\varphi$, which are continuous. Apply the lemma to them, and continue. There are finitely many multi-indices of order at most $D$ and finitely many coordinates, so finitely many applications suffice.
+We apply \cref{lem:derivatives} to the coordinates of $W$ one after another, each time restricting to the box found in the previous step. The first derivatives are semialgebraic and converge uniformly to the first derivatives of $\varphi$, which are continuous. We apply the lemma to them, and so on for the higher derivatives. There are finitely many multi-indices of order at most $D$ and finitely many coordinates, so finitely many applications suffice.
 \end{proof}
 
 \subsection{From real approximations to approximating circuits}
 
 \begin{lemma}\label{lem:closure}
-Fix finitely many circuit graphs. Let $f\in\RR[X]$ and suppose that for every $\eta>0$ one of the graphs computes, for suitable real values of its constants, a polynomial all of whose coefficients are within $\eta$ of the corresponding coefficients of $f$. Then one of the graphs, with suitable constants in $\Leps$, approximates $f$ in the sense of \cref{def:border}.
+Fix finitely many circuit graphs. Let $f\in\RR[X]$, and suppose that for every $\eta>0$ one of the graphs computes, for suitable real values of its constants, a polynomial all of whose coefficients are within $\eta$ of the corresponding coefficients of $f$. Then one of the graphs, with suitable constants in $\Leps$, approximates $f$ in the sense of \cref{def:border}.
 \end{lemma}
 
 \begin{proof}
-One graph serves for a sequence $\eta\to0$; fix it and let it have $p$ constant gates. For $a\in\RR^p$ let $\Psi_a=\sum_\alpha\psi_\alpha(a)X^\alpha$ be the polynomial it computes, so each $\psi_\alpha$ is a polynomial in $a$ with integer coefficients. Let $\mathcal A$ be the finite set of exponents $\alpha$ for which $\psi_\alpha$ is not identically zero or the coefficient $f_\alpha$ of $f$ is nonzero. The set of $(\eta,a)\in(0,1)\times\RR^p$ with $\max_{\alpha\in\mathcal A}|\psi_\alpha(a)-f_\alpha|<\eta$ is semialgebraic, and it projects onto $(0,1)$ because the condition for one $\eta$ implies it for all larger ones. By \ref{S2} it has a semialgebraic section $a(\eta)$. By \ref{S7} there are $M\ge1$ and Laurent series $A_i(s)=\sum_{j\ge j_0}a_{ij}s^j$, convergent for small $s\ne0$, with $a_i(s^M)=A_i(s)$ for small $s>0$. For each $\alpha\in\mathcal A$ the function $s\mapsto\psi_\alpha(a(s^M))$ is then given by the convergent Laurent series $\psi_\alpha(A(s))$, and it differs from $f_\alpha$ by less than $s^M$. A convergent Laurent series whose values tend to $f_\alpha$ as $s\to0^+$ has no terms of negative order and has constant term $f_\alpha$. So with the constants $A_i(\eps)\in\Leps$ the circuit computes $f+\eps g$ with the coefficients of $g$ in $\RR[[\eps]]$.
+One of the graphs has this property for a sequence $\eta\to0$. We fix it and let $p$ be the number of its constant gates. For $a\in\RR^p$ let $\Psi_a=\sum_\alpha\psi_\alpha(a)X^\alpha$ be the polynomial that the graph computes with these constants. Each $\psi_\alpha$ is a polynomial in $a$ with integer coefficients. Let $\mathcal A$ be the finite set of exponents $\alpha$ for which $\psi_\alpha$ is not identically zero or the coefficient $f_\alpha$ of $f$ is nonzero. The set of $(\eta,a)\in(0,1)\times\RR^p$ with $\max_{\alpha\in\mathcal A}|\psi_\alpha(a)-f_\alpha|<\eta$ is semialgebraic. It projects onto $(0,1)$, because the condition for one $\eta$ implies it for all larger ones. By \ref{S2} it has a semialgebraic section $a(\eta)$. By \ref{S7} there are $M\ge1$ and Laurent series $A_i(s)=\sum_{j\ge j_0}a_{ij}s^j$, convergent for small $s\ne0$, with $a_i(s^M)=A_i(s)$ for small $s>0$. For each $\alpha\in\mathcal A$ the function $s\mapsto\psi_\alpha(a(s^M))$ is then given by the convergent Laurent series $\psi_\alpha(A(s))$. This function differs from $f_\alpha$ by less than $s^M$. A convergent Laurent series whose values tend to $f_\alpha$ as $s\to0^+$ has no terms of negative order and has constant term $f_\alpha$. So with the constants $A_i(\eps)\in\Leps$ the circuit computes $f+\eps g$ with the coefficients of $g$ in $\RR[[\eps]]$.
 \end{proof}
 
 \subsection{Newton iteration as a circuit}
 
-For $D\ge1$ and variables $\chi=(\chi_1,\dots,\chi_N)$ let $\Rtrunc=\RR[\chi][\tau]/(\tau^{D+1})$. An element is stored as its $D+1$ coefficients in $\RR[\chi]$. A sum costs $D+1$ gates, a product with a real constant $D+1$ gates, a difference $2(D+1)$ gates, and a product of two elements at most $(D+1)(D+2)$ gates.
+For $D\ge1$ and variables $\chi=(\chi_1,\dots,\chi_N)$ let $\Rtrunc=\RR[\chi][\tau]/(\tau^{D+1})$. We represent an element by its $D+1$ coefficients in $\RR[\chi]$. A sum costs $D+1$ gates, a product with a real constant $D+1$ gates, a difference $2(D+1)$ gates, and a product of two elements at most $(D+1)(D+2)$ gates.
 
 \begin{lemma}\label{lem:newton}
 Let $E=(E_1,\dots,E_\kappa)$ be polynomials in $(\xi,w)\in\RR^N\times\RR^\kappa$ computed by a straight-line program with $\ell$ operations. Let $\xi_1\in\RR^N$, $w_1\in\RR^\kappa$ and a real $\kappa\times\kappa$ matrix $A$ be given. In $\Rtrunc^\kappa$ put
@@ -75,19 +75,19 @@ Let $E=(E_1,\dots,E_\kappa)$ be polynomials in $(\xi,w)\in\RR^N\times\RR^\kappa$
 \]
 and let $g_i\in\RR[\xi]$ be the sum of the $D+1$ coefficients of $\Omega^{(D)}_i$, with $\chi=\xi-\xi_1$ substituted.
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item The $g_i$ are computed by a circuit with at most $C\bigl((D+1)^3\ell+(D+1)^2\kappa^2+N\bigr)$ gates plus the constants of the program, whose graph depends only on the graph of the program and on $N$, $\kappa$ and $D$. Each $g_i$ has degree at most $D$. The coefficients of the $g_i$ are polynomial functions of the coefficients of $E$ and of $\xi_1$, $w_1$ and $A$.
-\item Suppose $E(\xi_1,w_1)=0$ and $A$ is the inverse of $\partial_wE(\xi_1,w_1)$. Let $\omega$ be the analytic map near $\xi_1$ with $\omega(\xi_1)=w_1$ and $E(\xi,\omega(\xi))=0$. Then $g_i$ is the Taylor polynomial of order $D$ of $\omega_i$ at $\xi_1$.
+\item The $g_i$ are computed by a circuit with at most $C\bigl((D+1)^3\ell+(D+1)^2\kappa^2+N\bigr)$ gates plus the constants of the program. The graph of this circuit depends only on the graph of the program and on $N$, $\kappa$ and $D$. Each $g_i$ has degree at most $D$. The coefficients of the $g_i$ are polynomial functions of the coefficients of $E$ and of $\xi_1$, $w_1$ and $A$.
+\item Suppose that $E(\xi_1,w_1)=0$ and that $A$ is the inverse of $\partial_wE(\xi_1,w_1)$. Let $\omega$ be the analytic map near $\xi_1$ with $\omega(\xi_1)=w_1$ and $E(\xi,\omega(\xi))=0$. Then $g_i$ is the Taylor polynomial of order $D$ of $\omega_i$ at $\xi_1$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(a) Each of the $D$ steps evaluates the program in $\Rtrunc$, at a cost of $O(\ell(D+1)^2)$ gates, multiplies by the constant matrix $A$ and subtracts, at a cost of $O(\kappa^2(D+1))$ gates. Forming $\chi$ and the final sums costs $O(N+\kappa D)$ gates. The wiring never refers to the values of the constants. For every choice of the constants, each element of $\Rtrunc$ that the circuit forms has, as its coefficient of $\tau^j$, a homogeneous polynomial of degree $j$ in $\chi$: this holds for the inputs $\xi_1+\tau\chi$ and for constants, and sums and products preserve it. So the output has degree at most $D$. Evaluating a program in $\Rtrunc$ evaluates the polynomials it computes, so the output depends on the program only through the coefficients of $E$.
+(a) Each of the $D$ steps consists of an evaluation of the program in $\Rtrunc$, which costs $O(\ell(D+1)^2)$ gates, and of a multiplication by the constant matrix $A$ and a subtraction, which cost $O(\kappa^2(D+1))$ gates. Forming $\chi$ and the final sums costs $O(N+\kappa D)$ gates. The wiring does not depend on the values of the constants. For every choice of the constants, the coefficient of $\tau^j$ in each element of $\Rtrunc$ formed by the circuit is a homogeneous polynomial of degree $j$ in $\chi$. This holds for the inputs $\xi_1+\tau\chi$ and for constants, and sums and products preserve it. So the output has degree at most $D$. Evaluating a program in $\Rtrunc$ is the same as evaluating there the polynomials that it computes. So the output depends on the program only through the coefficients of $E$.
 
-(b) Let $\Omega\in\RR[\chi][[\tau]]^\kappa$ be the Taylor series of $\tau\mapsto\omega(\xi_1+\tau\chi)$. Its coefficient of $\tau^j$ is the homogeneous part of degree $j$ of the Taylor series of $\omega$ at $\xi_1$, and $E(\xi_1+\tau\chi,\Omega)=0$ as an identity of power series. We claim $\Omega^{(j)}\equiv\Omega\pmod{\tau^{j+1}}$. This holds for $j=0$. If $\Omega^{(j)}=\Omega+\tau^{j+1}\Delta$, the Taylor expansion of the polynomial map $E$ in $w$ gives
+(b) Let $\Omega\in\RR[\chi][[\tau]]^\kappa$ be the Taylor series of $\tau\mapsto\omega(\xi_1+\tau\chi)$. Its coefficient of $\tau^j$ is the homogeneous part of degree $j$ of the Taylor series of $\omega$ at $\xi_1$. Moreover $E(\xi_1+\tau\chi,\Omega)=0$ as an identity of power series. We claim that $\Omega^{(j)}\equiv\Omega\pmod{\tau^{j+1}}$. This holds for $j=0$. If $\Omega^{(j)}=\Omega+\tau^{j+1}\Delta$, the Taylor expansion of the polynomial map $E$ in $w$ gives
 \[
 E(\xi_1+\tau\chi,\Omega^{(j)})=\partial_wE(\xi_1+\tau\chi,\Omega)\,\tau^{j+1}\Delta+O(\tau^{2j+2})\equiv A^{-1}\tau^{j+1}\Delta\pmod{\tau^{j+2}},
 \]
-since $\partial_wE(\xi_1+\tau\chi,\Omega)\equiv A^{-1}\pmod\tau$. So $\Omega^{(j+1)}\equiv\Omega\pmod{\tau^{j+2}}$. After $D$ steps $\Omega^{(D)}\equiv\Omega\pmod{\tau^{D+1}}$.
+since $\partial_wE(\xi_1+\tau\chi,\Omega)\equiv A^{-1}\pmod\tau$. So $\Omega^{(j+1)}\equiv\Omega\pmod{\tau^{j+2}}$. After $D$ steps, $\Omega^{(D)}\equiv\Omega\pmod{\tau^{D+1}}$.
 \end{proof}
 
 \subsection{The local theorem}
@@ -95,12 +95,12 @@ since $\partial_wE(\xi_1+\tau\chi,\Omega)\equiv A^{-1}\pmod\tau$. So $\Omega^{(j
 \begin{theorem}[local theorem]\label{thm:local}
 Let $K\subseteq\RR^N$ be a closed ball, let $\bar B\subseteq\RR^\kappa$ be the closed ball of radius $r_0$ about $w_0$, and let $\lambda\in\RR^\kappa$. Let $Q\in\RR[\xi,w]$ be nonnegative on $K\times\bar B$ and computed by a straight-line program with $\ell$ operations. Let $\varphi\colon K\to\RR^\kappa$ be continuous with $|\varphi(\xi)-w_0|\le r_0/2$ on $K$, and suppose that for every $\xi\in K$
 \begin{equation}\label{eq:unique}
-\varphi(\xi)\ \text{is the unique maximiser of }\langle\lambda,w\rangle\text{ on }\{w\in\bar B:\ Q(\xi,w)=0\}.
+\varphi(\xi)\ \text{is the unique maximizer of }\langle\lambda,w\rangle\text{ on }\{w\in\bar B:\ Q(\xi,w)=0\}.
 \end{equation}
-Let $D\ge1$. Then there are an open ball $V^*\subseteq K$, a semialgebraic set $E^*\subseteq V^*$ of dimension less than $N$, and a circuit graph with $\kappa$ outputs and at most $C\bigl((D+1)^3\ell+(D+1)^2\kappa^2+N\bigr)$ gates, which depends only on the graph of the program and on $N$, $\kappa$ and $D$, such that $\varphi$ is of class $C^D$ on $V^*$ and, for every $\xi_1\in V^*\setminus E^*$, the Taylor polynomial of order $D$ of $\varphi_i$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed at the $i$-th output with real constants.
+Let $D\ge1$. Then there are an open ball $V^*\subseteq K$, a semialgebraic set $E^*\subseteq V^*$ of dimension less than $N$, and a circuit graph with $\kappa$ outputs and at most $C\bigl((D+1)^3\ell+(D+1)^2\kappa^2+N\bigr)$ gates, with the following properties. The circuit graph depends only on the graph of the program and on $N$, $\kappa$ and $D$. The map $\varphi$ is of class $C^D$ on $V^*$. For every $\xi_1\in V^*\setminus E^*$, the Taylor polynomial of order $D$ of $\varphi_i$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed at the $i$-th output with real constants.
 \end{theorem}
 
-For $\lambda=0$ condition \eqref{eq:unique} says that $\varphi(\xi)$ is the only zero of $Q(\xi,\cdot)$ in $\bar B$. The zero may be degenerate to any order, and nothing bounds its multiplicity. The proof regularises it.
+For $\lambda=0$, condition \eqref{eq:unique} means that $\varphi(\xi)$ is the only zero of $Q(\xi,\cdot)$ in $\bar B$. This zero may be degenerate to any order, and its multiplicity is not bounded. We regularize the problem as follows.
 
 For $c\in\RR^\kappa$ and $\eps>0$ put
 \[
@@ -108,20 +108,20 @@ G_{c,\eps}(\xi,w)=Q(\xi,w)-\eps\langle\lambda,w\rangle+\eps^2|w-c|^2 .
 \]
 
 \begin{lemma}\label{lem:minimisers}
-Fix $c$. There is $\eps_0>0$ such that for $\xi\in K$ and $0<\eps<\eps_0$ every minimiser $w^*$ of $G_{c,\eps}(\xi,\cdot)$ on $\bar B$ lies in the interior of $\bar B$ and satisfies
+Fix $c$. There is $\eps_0>0$ such that for $\xi\in K$ and $0<\eps<\eps_0$ every minimizer $w^*$ of $G_{c,\eps}(\xi,\cdot)$ on $\bar B$ lies in the interior of $\bar B$ and satisfies
 \begin{equation}\label{eq:critical}
 \nabla_wQ(\xi,w^*)-\eps\lambda+2\eps^2(w^*-c)=0 .
 \end{equation}
-Moreover $|w^*-\varphi(\xi)|\to0$ as $\eps\to0$, uniformly over $\xi\in K$ and over all minimisers.
+Moreover $|w^*-\varphi(\xi)|\to0$ as $\eps\to0$, uniformly over $\xi\in K$ and over all minimizers.
 \end{lemma}
 
 \begin{proof}
-Let $C_0=\sup_{\xi\in K}|\varphi(\xi)-c|^2$. Since $Q(\xi,\varphi(\xi))=0$, a minimiser satisfies $G_{c,\eps}(\xi,w^*)\le-\eps\langle\lambda,\varphi(\xi)\rangle+\eps^2C_0$. As $Q\ge0$ and $|w^*-c|^2\ge0$, this gives
+Let $C_0=\sup_{\xi\in K}|\varphi(\xi)-c|^2$. Since $Q(\xi,\varphi(\xi))=0$, a minimizer satisfies $G_{c,\eps}(\xi,w^*)\le-\eps\langle\lambda,\varphi(\xi)\rangle+\eps^2C_0$. As $Q\ge0$ and $|w^*-c|^2\ge0$, this gives
 \begin{equation}\label{eq:twobounds}
 \langle\lambda,w^*\rangle\ge\langle\lambda,\varphi(\xi)\rangle-\eps C_0,\qquad
 Q(\xi,w^*)\le\eps\,\langle\lambda,w^*-\varphi(\xi)\rangle+\eps^2C_0\le\eps\,(2r_0|\lambda|+\eps C_0).
 \end{equation}
-Suppose the convergence is not uniform. Then there are $\eta>0$, $\eps_j\to0$, $\xi_j\in K$ and minimisers $w_j$ with $|w_j-\varphi(\xi_j)|\ge\eta$. Pass to a subsequence with $\xi_j\to\xi^\circ$ and $w_j\to w^\circ$. By \eqref{eq:twobounds} and the continuity of $\varphi$, $Q(\xi^\circ,w^\circ)=0$ and $\langle\lambda,w^\circ\rangle\ge\langle\lambda,\varphi(\xi^\circ)\rangle$. By \eqref{eq:unique}, $w^\circ=\varphi(\xi^\circ)$, which contradicts $|w^\circ-\varphi(\xi^\circ)|\ge\eta$. For small $\eps$ the minimisers are therefore within $r_0/4$ of $\varphi(\xi)$, hence interior, and the gradient of $G_{c,\eps}(\xi,\cdot)$ vanishes there.
+Suppose that the convergence is not uniform. Then there are $\eta>0$, $\eps_j\to0$, $\xi_j\in K$ and minimizers $w_j$ with $|w_j-\varphi(\xi_j)|\ge\eta$. We pass to a subsequence with $\xi_j\to\xi^\circ$ and $w_j\to w^\circ$. By \eqref{eq:twobounds} and the continuity of $\varphi$, $Q(\xi^\circ,w^\circ)=0$ and $\langle\lambda,w^\circ\rangle\ge\langle\lambda,\varphi(\xi^\circ)\rangle$. By \eqref{eq:unique}, $w^\circ=\varphi(\xi^\circ)$, which contradicts $|w^\circ-\varphi(\xi^\circ)|\ge\eta$. Therefore, for small $\eps$, the minimizers are within $r_0/4$ of $\varphi(\xi)$ and hence lie in the interior of the ball. So the gradient of $G_{c,\eps}(\xi,\cdot)$ vanishes at them.
 \end{proof}
 
 For $c\in\RR^\kappa$ let $\mathrm{Bad}_c$ be the set of $(\xi,\eps)\in\RR^N\times(0,\infty)$ for which some $w\in\RR^\kappa$ satisfies \eqref{eq:critical} and $\det\bigl(\nabla_w^2Q(\xi,w)+2\eps^2I\bigr)=0$.
@@ -135,19 +135,19 @@ On the manifold $\RR^N\times(0,\infty)\times\RR^\kappa$ consider the Nash map
 \[
 \Phi(\xi,\eps,w)=\Bigl(\xi,\ \eps,\ w+\tfrac1{2\eps^2}\bigl(\nabla_wQ(\xi,w)-\eps\lambda\bigr)\Bigr)
 \]
-into itself. A triple satisfies \eqref{eq:critical} exactly when $\Phi(\xi,\eps,w)=(\xi,\eps,c)$. The differential of $\Phi$ is block triangular with determinant $(2\eps^2)^{-\kappa}\det(\nabla_w^2Q+2\eps^2I)$. So $(\xi,\eps)\in\mathrm{Bad}_c$ exactly when $(\xi,\eps,c)$ is a critical value of $\Phi$. By \ref{S6} the set of critical values has dimension at most $N+\kappa$, and its fiber over $c$ is $\mathrm{Bad}_c$. If every fiber had dimension $N+1$, then \ref{S4}(c) would give dimension $N+1+\kappa$.
+into itself. A triple satisfies \eqref{eq:critical} exactly when $\Phi(\xi,\eps,w)=(\xi,\eps,c)$. The differential of $\Phi$ is block triangular with determinant $(2\eps^2)^{-\kappa}\det(\nabla_w^2Q+2\eps^2I)$. So $(\xi,\eps)\in\mathrm{Bad}_c$ exactly when $(\xi,\eps,c)$ is a critical value of $\Phi$. By \ref{S6} the set of critical values has dimension at most $N+\kappa$, and its fiber over $c$ is $\mathrm{Bad}_c$. If every fiber had dimension $N+1$, then by \ref{S4}(c) the set of critical values would have dimension $N+1+\kappa$.
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:local}]
-Fix $c$ as in \cref{lem:genericcentre} and $\eps_0$ as in \cref{lem:minimisers}. The set of $(\xi,\eps,w)$ with $\xi\in K$, $0<\eps<\eps_0$ and $w$ a minimiser of $G_{c,\eps}(\xi,\cdot)$ on $\bar B$ is semialgebraic by \ref{S1} and projects onto $K\times(0,\eps_0)$. By \ref{S2} there is a semialgebraic map $W\colon K\times(0,\eps_0)\to\bar B$ with $W(\xi,\eps)$ a minimiser. By \cref{lem:minimisers}, equation \eqref{eq:critical} holds at $w=W(\xi,\eps)$ and $W(\cdot,\eps)\to\varphi$ uniformly on $K$.
+Fix $c$ as in \cref{lem:genericcentre} and $\eps_0$ as in \cref{lem:minimisers}. The set of $(\xi,\eps,w)$ with $\xi\in K$, $0<\eps<\eps_0$ and $w$ a minimizer of $G_{c,\eps}(\xi,\cdot)$ on $\bar B$ is semialgebraic by \ref{S1}. It projects onto $K\times(0,\eps_0)$. By \ref{S2} there is a semialgebraic map $W\colon K\times(0,\eps_0)\to\bar B$ such that $W(\xi,\eps)$ is a minimizer. By \cref{lem:minimisers}, equation \eqref{eq:critical} holds at $w=W(\xi,\eps)$, and $W(\cdot,\eps)\to\varphi$ uniformly on $K$.
 
-By \cref{cor:derivatives}, applied on the interior of $K$, there are an open ball $V^*$ and $\eps^*\in(0,\eps_0)$ such that $W$ is $C^1$ on $V^*\times(0,\eps^*)$, $\varphi$ is $C^D$ on $V^*$, and the $\xi$-derivatives of $W(\cdot,\eps)$ up to order $D$ converge uniformly on $V^*$ to those of $\varphi$.
+We apply \cref{cor:derivatives} on the interior of $K$. It gives an open ball $V^*$ and $\eps^*\in(0,\eps_0)$ such that $W$ is $C^1$ on $V^*\times(0,\eps^*)$, $\varphi$ is $C^D$ on $V^*$, and the $\xi$-derivatives of $W(\cdot,\eps)$ up to order $D$ converge uniformly on $V^*$ to those of $\varphi$.
 
 Let $E^*$ be the set of $\xi_1\in V^*$ whose fiber $\{\eps:(\xi_1,\eps)\in\mathrm{Bad}_c\}$ contains an interval $(0,e)$. If $E^*$ had dimension $N$, then $\mathrm{Bad}_c$ would have dimension $N+1$ by \ref{S4}(c). So $\dim E^*<N$. Let $\xi_1\in V^*\setminus E^*$. By \ref{S3} its fiber is a finite union of points and intervals, so all sufficiently small $\eps$ lie outside it. For such $\eps<\eps^*$ put $w_1=W(\xi_1,\eps)$ and
 \[
 E(\xi,w)=\nabla_wQ(\xi,w)-\eps\lambda+2\eps^2(w-c).
 \]
-Then $E(\xi_1,w_1)=0$, and $\partial_wE(\xi_1,w_1)=\nabla_w^2Q(\xi_1,w_1)+2\eps^2I$ is invertible because $(\xi_1,\eps)\notin\mathrm{Bad}_c$. By the analytic implicit function theorem there is an analytic map $\omega$ near $\xi_1$ with $\omega(\xi_1)=w_1$ and $E(\xi,\omega(\xi))=0$, and every continuous solution through $(\xi_1,w_1)$ agrees with $\omega$ near $\xi_1$. The map $W(\cdot,\eps)$ is such a solution. So the Taylor polynomial of order $D$ of $\omega_i$ at $\xi_1$ is that of $W_i(\cdot,\eps)$, and as $\eps\to0$ its coefficients converge to those of the Taylor polynomial of $\varphi_i$.
+Then $E(\xi_1,w_1)=0$, and $\partial_wE(\xi_1,w_1)=\nabla_w^2Q(\xi_1,w_1)+2\eps^2I$ is invertible because $(\xi_1,\eps)\notin\mathrm{Bad}_c$. By the analytic implicit function theorem there is an analytic map $\omega$ near $\xi_1$ with $\omega(\xi_1)=w_1$ and $E(\xi,\omega(\xi))=0$. Every continuous solution through $(\xi_1,w_1)$ agrees with $\omega$ near $\xi_1$, and the map $W(\cdot,\eps)$ is such a solution. So the Taylor polynomial of order $D$ of $\omega_i$ at $\xi_1$ is that of $W_i(\cdot,\eps)$. As $\eps\to0$, its coefficients converge to those of the Taylor polynomial of $\varphi_i$.
 
-By \cref{thm:baurstrassen} the map $E$ has a straight-line program with $O(\ell+\kappa)$ operations; the construction of Baur and Strassen transforms the program gate by gate, so the graph of the new program depends only on that of the program for $Q$, and the numbers $\eps$, $c$ and $\lambda$ are constants of it. Moreover $\kappa\le2\ell$: if $Q$ did not involve some coordinate $w_j$, then $\varphi(\xi)+te_j$ would be a zero of $Q(\xi,\cdot)$ in $\bar B$ for small $|t|$, with a value of $\langle\lambda,\cdot\rangle$ at least as large for a suitable sign of $t$, against \eqref{eq:unique}; and a program with $\ell$ operations involves at most $2\ell$ input coordinates. \Cref{lem:newton}, with $A$ the inverse of $\partial_wE(\xi_1,w_1)$, computes the Taylor polynomials of the $\omega_i$ by a circuit of the stated size whose graph does not depend on $\eps$ or on $\xi_1$.
+By \cref{thm:baurstrassen} the map $E$ has a straight-line program with $O(\ell+\kappa)$ operations. The construction of Baur and Strassen transforms the program gate by gate. So the graph of the new program depends only on that of the program for $Q$, and the numbers $\eps$, $c$ and $\lambda$ are among its constants. Moreover $\kappa\le2\ell$, because a program with $\ell$ operations involves at most $2\ell$ input coordinates and $Q$ involves every coordinate $w_j$. Otherwise $\varphi(\xi)+te_j$ would be a zero of $Q(\xi,\cdot)$ in $\bar B$ for small $|t|$. For a suitable sign of $t$, the value of $\langle\lambda,\cdot\rangle$ at this zero would be at least as large as at the maximizer, which contradicts \eqref{eq:unique}. \Cref{lem:newton}, applied with $A$ the inverse of $\partial_wE(\xi_1,w_1)$, gives a circuit of the stated size that computes the Taylor polynomials of the $\omega_i$. The graph of this circuit does not depend on $\eps$ or on $\xi_1$.
 \end{proof}

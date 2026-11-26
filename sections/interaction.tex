@@ -1,72 +1,184 @@
 \section{Interaction}\label{sec:interaction}
 
-This section concerns interactive proofs in which the verifier is a real machine and the randomness is discrete. When the prover's messages are Boolean, a verifier for the graph of the permanent needs time $2^{\Omega((\log m)^{4/3})}$, whatever the number of rounds, and this separates the resulting class from $\PARR$. When the prover's messages are real and the coins are public, a constant number of rounds gives exactly $\NPR$, and a polynomial-time verifier for the graph of the permanent needs $\Omega(\log\log m)$ rounds.
+This section treats interactive proofs in which the verifier is a real machine and the randomness is discrete.
+When the prover's messages are Boolean, a verifier for the graph of the permanent needs time $2^{\Omega((\log m)^{4/3})}$, for any number of rounds.
+This separates the resulting class from $\PARR$.
+When the prover's messages are real and the coins are public, a constant number of rounds gives exactly $\NPR$, and a polynomial-time verifier for the graph of the permanent needs $\Omega(\log\log m)$ rounds.
 
 \subsection{Boolean messages}
 
 \begin{definition}\label{def:bip}
-A \emph{verifier tree} on inputs $w\in\RR^N$ is a tree as in \cref{def:tree} with three further kinds of nodes, none of which computes a value. A \emph{coin node} has two children. A \emph{send node} is labelled by a bit, which the verifier sends to the prover, and has one child. A \emph{receive node} has two children, and the verifier continues with the child given by a bit that it receives from the prover. The \emph{transcript} of an initial segment of a path is the sequence of bits sent and received on it, in order, each marked with its direction. A \emph{prover} is a map $\mathcal P$ that assigns a bit $\mathcal P(w,s)$ to every input $w$ and every transcript $s$. Let $t$ be the depth of the tree and let $r\in\{0,1\}^t$ be a coin tape. Given $w$, $\mathcal P$ and $r$, the verifier follows the path from the root that proceeds as in \cref{def:tree} at computation and test nodes, continues with the branch $r_j$ at the $j$-th coin node on the path, and continues with the branch $\mathcal P(w,s)$ at a receive node, where $s$ is the transcript of the path up to that node. The \emph{acceptance probability} of $\mathcal P$ at $w$ is the probability that this path ends at an accepting leaf when $r$ is uniform in $\{0,1\}^t$. A \emph{Boolean-message protocol}, given by a verifier tree, \emph{decides} a language $L$ on a set $W\subseteq\RR^N$ if for every $w\in W\cap L$ some prover has acceptance probability at least $2/3$ at $w$, and for every $w\in W\setminus L$ every prover has acceptance probability at most $1/3$ at $w$.
+A \emph{verifier tree} on inputs $w\in\RR^N$ is a tree as in \cref{def:tree} with three further kinds of nodes, none of which computes a value.
+A \emph{coin node} has two children.
+A \emph{send node} is labeled by a bit, which the verifier sends to the prover, and has one child.
+A \emph{receive node} has two children, and the path continues with the child given by a bit that the verifier receives from the prover.
+The \emph{transcript} of an initial segment of a path is the sequence of bits sent and received on it, in order, each marked with its direction.
+A \emph{prover} is a map $\mathcal P$ that assigns a bit $\mathcal P(w,s)$ to every input $w$ and every transcript $s$.
+Let $t$ be the depth of the tree and let $r\in\{0,1\}^t$ be a coin tape.
+Given $w$, $\mathcal P$ and $r$, the verifier follows a path from the root.
+At computation and test nodes the path proceeds as in \cref{def:tree}.
+At the $j$-th coin node on the path it continues with the branch $r_j$.
+At a receive node it continues with the branch $\mathcal P(w,s)$, where $s$ is the transcript of the path up to that node.
+The \emph{acceptance probability} of $\mathcal P$ at $w$ is the probability that this path ends at an accepting leaf when $r$ is uniform in $\{0,1\}^t$.
+A \emph{Boolean-message protocol} is given by a verifier tree.
+It \emph{decides} a language $L$ on a set $W\subseteq\RR^N$ if for every $w\in W\cap L$ some prover has acceptance probability at least $2/3$ at $w$, and for every $w\in W\setminus L$ every prover has acceptance probability at most $1/3$ at $w$.
 \end{definition}
 
-The prover is computationally unbounded and may depend on the input in an arbitrary way. It sees the bits that the verifier sends but not the coin tape, so the coins are private. A randomised prover is a probability distribution over provers, and its acceptance probability is the corresponding average of theirs; so allowing randomised provers changes neither condition in \cref{def:bip}.
+The prover is computationally unbounded, and it may depend on the input in an arbitrary way.
+The prover's reply depends on the input and on the transcript, and not on the coin tape, so the coins are private.
+A randomized prover is a probability distribution over provers.
+Its acceptance probability is the corresponding average of the acceptance probabilities of these provers.
+So allowing randomized provers changes neither condition in \cref{def:bip}.
 
-A \emph{verifier} is a machine with additional instructions to flip a coin, to send a bit and to receive a bit. If it runs in time $t$ on inputs of size $N$, for every coin sequence and every sequence of received bits, then on these inputs it unrolls into a verifier tree of depth $O(t)$ whose constants are the constants of the machine. When the machine sends a computed value $v\in\{0,1\}$, the tree tests $v=0$ and continues with a send node labelled $0$ or $1$; this at most doubles the depth. The class $\BIPR$ of Ivanov and de~Rougemont \cite{IdR99} consists of the languages $L\subseteq\RR^\infty$ for which some verifier running in polynomial time decides $L$ on all of $\RR^N$, for every $N$. The number of rounds is bounded only by the running time. Ivanov and de~Rougemont proved
+A \emph{verifier} is a machine with additional instructions to flip a coin, to send a bit and to receive a bit.
+Suppose that it runs in time $t$ on inputs of size $N$, for every coin sequence and every sequence of received bits.
+Then on these inputs it unrolls into a verifier tree of depth $O(t)$ whose constants are the constants of the machine.
+When the machine sends a computed value $v\in\{0,1\}$, the tree tests $v=0$ and continues with a send node labeled $0$ or $1$.
+This at most doubles the depth.
+The class $\BIPR$ of Ivanov and de~Rougemont \cite{IdR99} consists of the languages $L\subseteq\RR^\infty$ for which some verifier running in polynomial time decides $L$ on all of $\RR^N$, for every $N$.
+The number of rounds is bounded only by the running time.
+Ivanov and de~Rougemont proved
 \[
 \BIPR\subseteq\PARR
 \]
 in the Blum--Shub--Smale model with multiplication that is used throughout this paper \cite{IdR99}.
 
 \begin{lemma}[boundary test]\label{lem:boolean}
-Let $f\in\RR[X_1,\dots,X_n]$, let $U\subseteq\RR^n$ be open and nonempty, and let $W\subseteq\RR^n\times\RR$ be an open set that contains $(x,f(x))$ for every $x\in U$. Suppose that a Boolean-message protocol whose verifier tree has depth $t$ decides on $W$ the language $\{Y=f(X)\}$, or the language $\{Y\le f(X)\}$. Then some nonzero multiple of $Y-f(X)$ in $\RR[X,Y]$ has a straight-line program with at most $4t$ operations. In particular, if the verifier runs in time $t$, this program has $O(t)$ operations.
+Let $f\in\RR[X_1,\dots,X_n]$, let $U\subseteq\RR^n$ be open and nonempty, and let $W\subseteq\RR^n\times\RR$ be an open set that contains $(x,f(x))$ for every $x\in U$.
+Suppose that a Boolean-message protocol whose verifier tree has depth $t$ decides on $W$ the language $\{Y=f(X)\}$, or the language $\{Y\le f(X)\}$.
+Then some nonzero multiple of $Y-f(X)$ in $\RR[X,Y]$ has a straight-line program with at most $4t$ operations.
+In particular, if the verifier runs in time $t$, this program has $O(t)$ operations.
 \end{lemma}
 
 \begin{proof}
-\emph{A generic point.} Let $k_0\subseteq\RR$ be the field generated by the constants of the verifier tree and the coefficients of $f$. It is countable. The points of $\RR^n$ whose coordinates are algebraically dependent over $k_0$ form the union of the zero sets of the countably many nonzero polynomials in $k_0[X]$. Each of these zero sets is closed with empty interior, so by the Baire category theorem the union contains no nonempty open set. Fix $x\in U$ outside the union, and put $w_0=(x,f(x))$.
+\emph{A generic point.}
+Let $k_0\subseteq\RR$ be the field generated by the constants of the verifier tree and the coefficients of $f$.
+It is countable.
+The points of $\RR^n$ whose coordinates are algebraically dependent over $k_0$ form the union of the zero sets of the countably many nonzero polynomials in $k_0[X]$.
+Each of these zero sets is closed with empty interior, so by the Baire category theorem the union contains no nonempty open set.
+Fix $x\in U$ outside the union, and put $w_0=(x,f(x))$.
 
-\emph{Paths.} For a coin tape $r\in\{0,1\}^t$ and a sequence of replies $b\in\{0,1\}^t$, let $T_{r,b}$ be the tree in the sense of \cref{def:tree} obtained from the verifier tree by continuing with the branch $r_j$ at the $j$-th coin node of every path, continuing with the branch $b_j$ at the $j$-th receive node of every path, and contracting the send nodes. Its depth is at most $t$, and each of its paths still carries a transcript. Let $\pi_{r,b}$ be the path of $T_{r,b}$ that $w_0$ follows, and represent the values computed on it as fractions $P/D$ of polynomials in $(X,Y)$ as in \cref{sec:cells}. At a test node of $\pi_{r,b}$ call the numerator $P$ of the tested value the \emph{tested numerator}. Since $w_0$ follows $\pi_{r,b}$, every denominator on it is nonzero at $w_0$. So the polynomial $S=PD$ of condition \textup{(b)} of \cref{sec:cells} vanishes at $w_0$ exactly when $P$ does, and it is the zero polynomial exactly when $P$ is.
+\emph{Paths.}
+For a coin tape $r\in\{0,1\}^t$ and a sequence of replies $b\in\{0,1\}^t$, let $T_{r,b}$ be the tree in the sense of \cref{def:tree} obtained from the verifier tree as follows.
+On every path, continue with the branch $r_j$ at the $j$-th coin node and with the branch $b_j$ at the $j$-th receive node, and contract the send nodes.
+The depth of this tree is at most $t$, and each of its paths still has a transcript.
+Let $\pi_{r,b}$ be the path of $T_{r,b}$ that $w_0$ follows.
+Represent the values computed on it as fractions $P/D$ of polynomials in $(X,Y)$ as in \cref{sec:cells}.
+At a test node of $\pi_{r,b}$, the numerator $P$ of the tested value is called the \emph{tested numerator}.
+Since $w_0$ follows $\pi_{r,b}$, every denominator on it is nonzero at $w_0$.
+So the polynomial $S=PD$ of condition \textup{(b)} of \cref{sec:cells} vanishes at $w_0$ exactly when $P$ does, and it is the zero polynomial exactly when $P$ is.
 
-\emph{Some tested numerator vanishes nontrivially at $w_0$.} We claim that for some pair $(r,b)$ some tested numerator on $\pi_{r,b}$ is a nonzero polynomial that vanishes at $w_0$. Suppose not, and consider one of the finitely many pairs $(r,b)$. At every division on $\pi_{r,b}$ the numerator $P_2$ of the divisor is nonzero at $w_0$. At every test on $\pi_{r,b}$, either the tested numerator is nonzero at $w_0$, and then so is $S$, or the tested numerator is the zero polynomial, and then so is $S$. A polynomial that is nonzero at $w_0$ keeps its sign on a neighbourhood of $w_0$, and the zero polynomial vanishes everywhere. By conditions \textup{(a)}--\textup{(c)} of \cref{sec:cells}, every point of some neighbourhood of $w_0$ follows $\pi_{r,b}$ in $T_{r,b}$. Let $V_0$ be the intersection of these neighbourhoods over all pairs $(r,b)$. Inside $V_0$, for each coin tape and each sequence of replies, the verifier sends the same bits and reaches the same verdict as at $w_0$.
+\emph{A nonzero tested numerator that vanishes at $w_0$.}
+We claim that for some pair $(r,b)$ some tested numerator on $\pi_{r,b}$ is a nonzero polynomial that vanishes at $w_0$.
+Suppose not, and consider one of the finitely many pairs $(r,b)$.
+At every division on $\pi_{r,b}$ the numerator $P_2$ of the divisor is nonzero at $w_0$.
+At every test on $\pi_{r,b}$, either the tested numerator is nonzero at $w_0$, and then so is $S$, or the tested numerator is the zero polynomial, and then so is $S$.
+A polynomial that is nonzero at $w_0$ keeps its sign on a neighborhood of $w_0$, and the zero polynomial vanishes everywhere.
+By conditions \textup{(a)}--\textup{(c)} of \cref{sec:cells}, every point of some neighborhood of $w_0$ follows $\pi_{r,b}$ in $T_{r,b}$.
+Let $V_0$ be the intersection of these neighborhoods over all pairs $(r,b)$.
+At every point of $V_0$, for each coin tape and each sequence of replies, the verifier sends the same bits and gives the same result as at $w_0$.
 
-\emph{Freezing the honest prover.} Since $w_0\in W$ belongs to the language, some prover $\mathcal P$ has acceptance probability at least $2/3$ at $w_0$. Let $\mathcal P'(w,s)=\mathcal P(w_0,s)$ for every input $w$ and every transcript $s$. This prover ignores its input and plays the table of replies of $\mathcal P$ at $w_0$, which is a strategy on the finitely many transcripts of this input size; it does not need to know the coin tape. Let $w\in V_0$ and $r\in\{0,1\}^t$. Let $b\in\{0,1\}^t$ consist of the replies of $\mathcal P$ in the interaction at $w_0$ with coin tape $r$, followed by zeros. That interaction follows the path of the verifier tree that corresponds to $\pi_{r,b}$. By induction along this path, the interaction of $\mathcal P'$ at $w$ with coin tape $r$ follows the same path: at computation and test nodes because $w$ follows $\pi_{r,b}$ in $T_{r,b}$, at coin nodes because the coin tape is the same, and at a receive node because the transcript up to that node is the same as at $w_0$, so that $\mathcal P'$ sends the bit that $\mathcal P$ sent at $w_0$. Hence the interaction ends at the same leaf as at $w_0$, and the acceptance probability of $\mathcal P'$ at $w$ equals that of $\mathcal P$ at $w_0$, which is at least $2/3$. The set $V_0\cap W$ is a neighbourhood of $w_0=(x,f(x))$, so it contains a point $w=(x,y')$ with $y'>f(x)$. This point lies outside both languages, so every prover has acceptance probability at most $1/3$ at $w$. This contradiction proves the claim.
+\emph{Fixing the replies of the prover.}
+Since $w_0\in W$ belongs to the language, we can fix a prover $\mathcal P$ with acceptance probability at least $2/3$ at $w_0$.
+Let $\mathcal P'(w,s)=\mathcal P(w_0,s)$ for every input $w$ and every transcript $s$.
+The reply of this prover depends only on the transcript, and not on the input or on the coin tape.
+So the prover is given by the table of the replies of $\mathcal P$ at $w_0$ to the finitely many transcripts of this input size.
+Let $w\in V_0$ and $r\in\{0,1\}^t$.
+Let $b\in\{0,1\}^t$ consist of the replies of $\mathcal P$ in the interaction at $w_0$ with coin tape $r$, followed by zeros.
+That interaction follows the path of the verifier tree that corresponds to $\pi_{r,b}$.
+By induction along this path, the interaction of $\mathcal P'$ at $w$ with coin tape $r$ follows the same path.
+At computation and test nodes this holds because $w$ follows $\pi_{r,b}$ in $T_{r,b}$.
+At coin nodes it holds because the coin tape is the same.
+At a receive node the transcript up to that node is the same as at $w_0$, so $\mathcal P'$ sends the bit that $\mathcal P$ sent at $w_0$.
+Hence the interaction ends at the same leaf as at $w_0$.
+So the acceptance probability of $\mathcal P'$ at $w$ equals that of $\mathcal P$ at $w_0$, which is at least $2/3$.
+The set $V_0\cap W$ is a neighborhood of $w_0=(x,f(x))$, so it contains a point $w=(x,y')$ with $y'>f(x)$.
+This point lies outside both languages, so every prover has acceptance probability at most $1/3$ at $w$.
+This contradiction proves the claim.
 
-\emph{Division by the graph equation.} Let $P\in\RR[X,Y]$ be a nonzero tested numerator with $P(x,f(x))=0$. It is formed from the input coordinates and the constants of the verifier tree by additions, subtractions and multiplications, so its coefficients lie in $k_0$, and so do those of $g=P(X,f(X))\in k_0[X]$. Since $g(x)=0$ and the coordinates of $x$ are algebraically independent over $k_0$, the polynomial $g$ is zero. Division by $Y-f(X)$, which is monic in $Y$, gives $P=(Y-f(X))G+R$ in $\RR[X][Y]$ with $R\in\RR[X]$, and the substitution $Y=f(X)$ gives $R=g=0$. So $P=(Y-f(X))\,G$, and $G\ne0$ because $P\ne0$. By \cref{sec:cells}, the numerators and denominators along $\pi_{r,b}$ up to the test are computed by one straight-line program with at most $4$ operations per computation node, hence with at most $4t$ operations, whose constants are constants of the verifier tree. This program computes $P$. A verifier running in time $t$ unrolls into a verifier tree of depth $O(t)$, which gives the last assertion.
+\emph{Division by the graph equation.}
+Let $P\in\RR[X,Y]$ be a nonzero tested numerator with $P(x,f(x))=0$.
+It is formed from the input coordinates and the constants of the verifier tree by additions, subtractions and multiplications.
+So its coefficients lie in $k_0$, and so do those of $g=P(X,f(X))\in k_0[X]$.
+Since $g(x)=0$ and the coordinates of $x$ are algebraically independent over $k_0$, the polynomial $g$ is zero.
+Division by $Y-f(X)$, which is monic in $Y$, gives $P=(Y-f(X))G+R$ in $\RR[X][Y]$ with $R\in\RR[X]$.
+The substitution $Y=f(X)$ gives $R=g=0$.
+So $P=(Y-f(X))\,G$, and $G\ne0$ because $P\ne0$.
+By \cref{sec:cells}, the numerators and denominators along $\pi_{r,b}$ up to the test are computed by one straight-line program with at most $4$ operations per computation node.
+So this program has at most $4t$ operations, and its constants are constants of the verifier tree.
+It computes $P$.
+A verifier running in time $t$ unrolls into a verifier tree of depth $O(t)$, which gives the last assertion.
 \end{proof}
 
-The number of pairs $(r,b)$ may be exponential in $t$. This costs nothing in the bound, because only one numerator is extracted. The restriction to Boolean messages is used at the step that makes the paths locally constant: if the honest prover sends real numbers that vary with $x$, its possible messages already form an infinite set at a fixed input size.
+The number of pairs $(r,b)$ may be exponential in $t$.
+This does not affect the bound, because only one numerator is used.
+The restriction to Boolean messages is used in the step that shows that the paths are locally constant.
+If a prover sends real numbers that vary with $x$, then the set of its possible messages is already infinite at a fixed input size.
 
 \begin{theorem}\label{thm:bip}
-For every $m$ let a Boolean-message protocol whose verifier tree has depth $t_m$ decide $\{Y=\per_m(X)\}$ on $\RR^{m^2}\times\RR$. Then $t_m\ge2^{\Omega((\log m)^{4/3})}$. Hence every Boolean-message protocol for $\{Y=\per_m(X)\}$ has verifier time $2^{\Omega((\log m)^{4/3})}$, the language $\{Y=\per_m(X)\}$ is not in $\BIPR$, and
+For every $m$ let a Boolean-message protocol whose verifier tree has depth $t_m$ decide $\{Y=\per_m(X)\}$ on $\RR^{m^2}\times\RR$.
+Then $t_m\ge2^{\Omega((\log m)^{4/3})}$.
+Hence every Boolean-message protocol for $\{Y=\per_m(X)\}$ has verifier time $2^{\Omega((\log m)^{4/3})}$, the language $\{Y=\per_m(X)\}$ is not in $\BIPR$, and
 \[
 \BIPR\subsetneq\PARR .
 \]
 \end{theorem}
 
-The theorem allows private coins, any number of rounds, a computationally unbounded prover and arbitrary real constants in the verifier. By \cref{lem:boolean} it suffices that the protocol decide the language on a neighbourhood of the graph of $\per_m$ over a nonempty open set.
+In the theorem the coins may be private, the number of rounds is arbitrary, the prover is computationally unbounded, and the verifier may use arbitrary real constants.
+By \cref{lem:boolean} it suffices that the protocol decide the language on a neighborhood of the graph of $\per_m$ over a nonempty open set.
 
 \begin{proof}
-Apply \cref{lem:boolean} with $n=m^2$, $f=\per_m$, $U=\RR^{m^2}$ and $W=\RR^{m^2}\times\RR$. Some nonzero multiple of $Y-\per_m(X)$ has a straight-line program with at most $4t_m$ operations. The permanent has degree $m\ge1$ in $m^2$ variables, so by \cref{thm:burgisser} its border size is at most $Cm^3(4t_m+m^2)$. By \cref{thm:lowerbound} its border size exceeds $2^{c(\log m)^{4/3}}$ for $m\ge m_0$. Since $m^{O(1)}=2^{O(\log m)}$, the two bounds together give $t_m\ge2^{\Omega((\log m)^{4/3})}$. A verifier running in time $T$ unrolls into verifier trees of depth $O(T)$, so its running time is $2^{\Omega((\log m)^{4/3})}$ as well. In particular no verifier running in polynomial time decides $\{Y=\per_m(X)\}$, and the language is not in $\BIPR$. It is in $\PARR$ by \cref{lem:ryser}. Together with the inclusion $\BIPR\subseteq\PARR$ of \cite{IdR99}, this proves $\BIPR\subsetneq\PARR$.
+Apply \cref{lem:boolean} with $n=m^2$, $f=\per_m$, $U=\RR^{m^2}$ and $W=\RR^{m^2}\times\RR$.
+Some nonzero multiple of $Y-\per_m(X)$ has a straight-line program with at most $4t_m$ operations.
+The permanent has degree $m\ge1$ in $m^2$ variables, so by \cref{thm:burgisser} its border complexity is at most $Cm^3(4t_m+m^2)$.
+By \cref{thm:lowerbound} its border complexity exceeds $2^{c(\log m)^{4/3}}$ for $m\ge m_0$.
+Since $m^{O(1)}=2^{O(\log m)}$, the two bounds together give $t_m\ge2^{\Omega((\log m)^{4/3})}$.
+A verifier running in time $T$ unrolls into verifier trees of depth $O(T)$, so its running time is $2^{\Omega((\log m)^{4/3})}$ as well.
+In particular no verifier running in polynomial time decides $\{Y=\per_m(X)\}$, and the language is not in $\BIPR$.
+It is in $\PARR$ by \cref{lem:ryser}.
+Together with the inclusion $\BIPR\subseteq\PARR$ of \cite{IdR99}, this proves $\BIPR\subsetneq\PARR$.
 \end{proof}
 
 \begin{remark}[other discrete resources]\label{rem:discrete}
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item The proof of \cref{lem:boolean} applies when the prover's messages are taken from a fixed countable set $\mathcal M\subseteq\RR$ instead of $\{0,1\}$, and the verifier's messages are still bits. The generic point $x$ can then be chosen with coordinates algebraically independent over the field generated by the constants of the verifier, the coefficients of $f$ and the elements of $\mathcal M$, which is still countable. There are now infinitely many sequences of replies, but only the finitely many paths followed at $w_0$ under the frozen strategy, one for each coin tape, enter the argument; their tested numerators have coefficients in that field, and their programs use the received messages as constants.
-\item The proof also covers any purely discrete resource, for instance Boolean nondeterminism, Boolean alternation, or several provers with Boolean messages. The argument uses only that, unless some tested numerator vanishes nontrivially at the generic point $w_0$, the finitely many paths given by the choices of the discrete data are followed on a whole neighbourhood of $w_0$. The outcome of each choice is then locally constant, and so is every acceptance condition formed from these outcomes, including the acceptance probability of frozen strategies; but $w_0$ is accepted and every neighbourhood of $w_0$ contains rejected inputs.
+\item The proof of \cref{lem:boolean} applies when the prover's messages are taken from a fixed countable set $\mathcal M\subseteq\RR$ instead of $\{0,1\}$, and the verifier's messages are still bits.
+The generic point $x$ can then be chosen with coordinates algebraically independent over the field generated by the constants of the verifier, the coefficients of $f$ and the elements of $\mathcal M$.
+This field is still countable.
+In this case there are infinitely many sequences of replies.
+But the argument uses only the finitely many paths that are followed at $w_0$ with the prover fixed as in the proof, one for each coin tape.
+The tested numerators on these paths have coefficients in that field, and their programs use the received messages as constants.
+\item The proof also applies to any purely discrete resource, for instance Boolean nondeterminism, Boolean alternation, or several provers with Boolean messages.
+The argument uses only the following fact.
+Unless some tested numerator is a nonzero polynomial that vanishes at the generic point $w_0$, the finitely many paths given by the choices of the discrete data are followed on a whole neighborhood of $w_0$.
+Then the outcome of each choice is locally constant, and so is every acceptance condition formed from these outcomes, including the acceptance probability of strategies fixed as in the proof.
+But $w_0$ is accepted, and every neighborhood of $w_0$ contains rejected inputs.
 \end{enumerate}
 \end{remark}
 
 \subsection{Constant-round Arthur--Merlin proofs}
 
 \begin{definition}\label{def:am}
-Let $c,\rho,\mu\ge1$. A \emph{$c$-round public-coin protocol} on inputs $x\in\RR^n$ runs as follows. In round $i=1,\dots,c$ Arthur sends a string $r_i\in\{0,1\}^\rho$ of fair coin flips and Merlin answers with $z_i\in\RR^\mu$. Then a tree $V$ of depth $t$, the \emph{verifier}, accepts or rejects $(x,r_1,z_1,\dots,r_c,z_c)$. For a history $h=(r_1,z_1,\dots,r_{i-1},z_{i-1})$ of the first $i-1$ rounds put $\val_{c+1}(x,h)=1$ if $V$ accepts $(x,h)$ and $\val_{c+1}(x,h)=0$ otherwise, and
+Let $c,\rho,\mu\ge1$.
+A \emph{$c$-round public-coin protocol} on inputs $x\in\RR^n$ runs as follows.
+In round $i=1,\dots,c$, Arthur sends a string $r_i\in\{0,1\}^\rho$ of fair coin flips, and Merlin answers with $z_i\in\RR^\mu$.
+Then a tree $V$ of depth $t$, the \emph{verifier}, accepts or rejects $(x,r_1,z_1,\dots,r_c,z_c)$.
+For a history $h=(r_1,z_1,\dots,r_{i-1},z_{i-1})$ of the first $i-1$ rounds put $\val_{c+1}(x,h)=1$ if $V$ accepts $(x,h)$ and $\val_{c+1}(x,h)=0$ otherwise, and
 \begin{equation}\label{eq:amval}
 \val_i(x,h)=\EE_{r_i}\ \sup_{z_i\in\RR^\mu}\ \val_{i+1}(x,h,r_i,z_i)\qquad(i=c,\dots,1),
 \end{equation}
-where $r_i$ is uniform in $\{0,1\}^\rho$. The protocol \emph{decides} $L\subseteq\RR^n$ if $\val_1(x)\ge2/3$ for $x\in L$ and $\val_1(x)\le1/3$ for $x\notin L$.
+where $r_i$ is uniform in $\{0,1\}^\rho$.
+The protocol \emph{decides} $L\subseteq\RR^n$ if $\val_1(x)\ge2/3$ for $x\in L$ and $\val_1(x)\le1/3$ for $x\notin L$.
 \end{definition}
 
-By downward induction on $i$, every $\val_i$ takes values in the finite set $2^{-\rho(c+1-i)}\ZZ\cap[0,1]$. So the suprema are attained, and $\val_1(x)$ is the acceptance probability against the best Merlin. The coins are public: Merlin's answer $z_i$ may depend on $x$ and on everything sent before it. A protocol in which Merlin speaks first is the case in which $V$ ignores $r_1$.
+By downward induction on $i$, every $\val_i$ takes values in the finite set $2^{-\rho(c+1-i)}\ZZ\cap[0,1]$.
+So the suprema are attained, and $\val_1(x)$ is the largest acceptance probability over all strategies of Merlin.
+The coins are public: Merlin's answer $z_i$ may depend on $x$ and on all messages sent before it.
+A protocol in which Merlin sends the first message is the case in which $V$ does not depend on $r_1$.
 
-A language $L\subseteq\RR^\infty$ is in $\AMR[c]$ if there are a machine running in polynomial time and polynomial bounds on $\rho$ and $\mu$ in terms of the input size $n$ such that, for every $n$, the $c$-round protocol whose verifier $V$ is the unrolling of the machine on inputs $(x,r_1,z_1,\dots,r_c,z_c)$ with $x\in\RR^n$ decides $L\cap\RR^n$. Put $\AMR[O(1)]=\bigcup_c\AMR[c]$, and let $\AMR[\mathrm{poly}]$ be the class defined in the same way with a number of rounds bounded by a polynomial in $n$. We write $\IPR$ for the class of real interactive proofs of Baartse and Meer \cite{BM16}.
+A language $L\subseteq\RR^\infty$ is in $\AMR[c]$ if there are a machine running in polynomial time and polynomial bounds on $\rho$ and $\mu$ in terms of the input size $n$ with the following property.
+For every $n$, the $c$-round protocol whose verifier $V$ is the unrolling of the machine on inputs $(x,r_1,z_1,\dots,r_c,z_c)$ with $x\in\RR^n$ decides $L\cap\RR^n$.
+Put $\AMR[O(1)]=\bigcup_c\AMR[c]$, and let $\AMR[\mathrm{poly}]$ be the class defined in the same way with a number of rounds bounded by a polynomial in $n$.
+We write $\IPR$ for the class of real interactive proofs of Baartse and Meer \cite{BM16}.
 
 \begin{theorem}\label{thm:am}
 For every constant $c\ge1$,
@@ -79,10 +191,16 @@ Hence
 \]
 \end{theorem}
 
-The equality $\AMR[c]=\NPR$ is proved below by fixing the coins, and its proof uses no lower bound; in particular it does not use \cref{thm:lowerbound}. The strict inclusion and the last equality are due to Baartse and Meer, building on Ivanov and de~Rougemont \cite{IdR99}: by \cite[Theorem~14]{BM16} we have $\PARR\subsetneq\IPR$, so $\NPR\subseteq\PARR\subsetneq\IPR$, and by \cite[Proposition~6]{BM16} public coins suffice for $\IPR$, so $\AMR[\mathrm{poly}]=\IPR$. Thus a constant number of rounds of public coins adds nothing to a real certificate, while polynomially many rounds lead beyond $\PARR$.
+We prove the equality $\AMR[c]=\NPR$ below by fixing the coins.
+The proof uses no lower bound; in particular it does not use \cref{thm:lowerbound}.
+The strict inclusion and the last equality are due to Baartse and Meer, who build on the work of Ivanov and de~Rougemont \cite{IdR99}.
+By \cite[Theorem~14]{BM16} we have $\PARR\subsetneq\IPR$, so $\NPR\subseteq\PARR\subsetneq\IPR$.
+By \cite[Proposition~6]{BM16} public coins suffice for $\IPR$, so $\AMR[\mathrm{poly}]=\IPR$.
+Thus a constant number of rounds of public coins adds nothing to a real certificate, while polynomially many rounds give languages outside $\PARR$.
 
 \begin{lemma}[fixing the coins]\label{lem:coins}
-Let a $c$-round public-coin protocol on inputs in $\RR^n$ be given, with $\rho$ coins per round, messages in $\RR^\mu$ and a verifier tree $V$ of depth $t$. There are multisets $R_1,\dots,R_c$ of elements of $\{0,1\}^\rho$, of sizes $q_1,\dots,q_c\ge2$ with
+Let a $c$-round public-coin protocol on inputs in $\RR^n$ be given, with $\rho$ coins per round, messages in $\RR^\mu$ and a verifier tree $V$ of depth $t$.
+There are multisets $R_1,\dots,R_c$ of elements of $\{0,1\}^\rho$, of sizes $q_1,\dots,q_c\ge2$ with
 \[
 q_1\cdots q_c\le A^{3^c},\qquad A=O\bigl(c^2(n+c\mu)\,\mu\,(\rho c+t)\bigr),
 \]
@@ -95,50 +213,126 @@ with the sum counting multiplicities, satisfy $|\val'_1(x)-\val_1(x)|\le1/8$ for
 \end{lemma}
 
 \begin{proof}
-\emph{Construction.} Put $\gamma=1/(8c)$. We choose the multisets from the last round to the first. Suppose that $R_{i+1},\dots,R_c$ have been chosen, and put $P_{i+1}=q_{i+1}\cdots q_c$, with $P_{c+1}=1$. Then $\val'_{i+1}$ is defined and takes values in $P_{i+1}^{-1}\ZZ\cap[0,1]$, so suprema of it are attained. As $(x,h)$ ranges over all inputs and all histories of the first $i-1$ rounds, real messages included, the functions
+\emph{Construction.}
+Put $\gamma=1/(8c)$.
+We choose the multisets from the last round to the first.
+Suppose that $R_{i+1},\dots,R_c$ have been chosen, and put $P_{i+1}=q_{i+1}\cdots q_c$, with $P_{c+1}=1$.
+Then $\val'_{i+1}$ is defined and takes values in $P_{i+1}^{-1}\ZZ\cap[0,1]$, so its suprema are attained.
+As $(x,h)$ ranges over all inputs and all histories of the first $i-1$ rounds, real messages included, the functions
 \[
 g_{x,h}\colon\{0,1\}^\rho\to[0,1],\qquad g_{x,h}(r_i)=\sup_{z_i\in\RR^\mu}\val'_{i+1}(x,h,r_i,z_i),
 \]
-form a family $\mathfrak F_i$. It is finite, because each of its members maps a finite set into a finite set, and it does not depend on $R_i$. Let $q_i$ be the least integer with $q_i>32c^2\ln(2|\mathfrak F_i|)$; in particular $q_i\ge2$. Draw $q_i$ independent uniform elements of $\{0,1\}^\rho$. For each $g\in\mathfrak F_i$, by Hoeffding's inequality \cite{Hoe63} the sample mean of $g$ differs from $\EE g$ by at least $\gamma$ with probability at most $2\exp(-2q_i\gamma^2)=2\exp(-q_i/(32c^2))<1/|\mathfrak F_i|$. By the union bound some outcome $R_i$ has a sample mean within $\gamma$ of the mean for every $g\in\mathfrak F_i$. Fix such an $R_i$.
+form a family $\mathfrak F_i$.
+This family is finite, because each of its members maps a finite set into a finite set.
+It does not depend on $R_i$.
+Let $q_i$ be the least integer with $q_i>32c^2\ln(2|\mathfrak F_i|)$.
+In particular $q_i\ge2$.
+Draw $q_i$ independent uniform elements of $\{0,1\}^\rho$.
+For each $g\in\mathfrak F_i$, by Hoeffding's inequality \cite{Hoe63} the sample mean of $g$ differs from $\EE g$ by at least $\gamma$ with probability at most $2\exp(-2q_i\gamma^2)=2\exp(-q_i/(32c^2))<1/|\mathfrak F_i|$.
+By the union bound there is an outcome $R_i$ for which the sample mean of every $g\in\mathfrak F_i$ is within $\gamma$ of its mean.
+Fix such an $R_i$.
 
-\emph{Accumulated error.} We show $|\val'_i(x,h)-\val_i(x,h)|\le(c+1-i)\gamma$ for all $x$ and $h$, by downward induction on $i$. For $i=c+1$ the two sides agree. Let $g(r_i)=\sup_{z_i}\val_{i+1}(x,h,r_i,z_i)$ and $g'=g_{x,h}$. Suprema do not increase sup-norm distances, so $|g'-g|\le(c-i)\gamma$ pointwise by the induction hypothesis, and averages do not increase them either. Hence
+\emph{Accumulated error.}
+We show $|\val'_i(x,h)-\val_i(x,h)|\le(c+1-i)\gamma$ for all $x$ and $h$, by downward induction on $i$.
+For $i=c+1$ the two sides agree.
+Let $g(r_i)=\sup_{z_i}\val_{i+1}(x,h,r_i,z_i)$ and $g'=g_{x,h}$.
+Taking suprema does not increase sup-norm distances, so $|g'-g|\le(c-i)\gamma$ pointwise by the induction hypothesis.
+Taking averages does not increase these distances either.
+Hence
 \[
 |\val'_i(x,h)-\val_i(x,h)|\le\Bigl|\frac1{q_i}\sum_{r_i\in R_i}g'(r_i)-\EE g'\Bigr|+\bigl|\EE g'-\EE g\bigr|\le\gamma+(c-i)\gamma .
 \]
 For $i=1$ this gives $|\val'_1-\val_1|\le c\gamma=1/8$.
 
-\emph{Counting.} It remains to bound $|\mathfrak F_i|$. The suprema in \eqref{eq:amsampled} are attained and range over independent arguments, so a sum of suprema is a maximum over joint choices. Hence, for $\theta\in P_{i+1}^{-1}\ZZ$, the statement $g_{x,h}(r_i)\ge\theta$ says: there are a reply $z_i$ and replies for every sampled continuation, that is, a reply $z_{i+1}$ for every element of $R_{i+1}$, a reply $z_{i+2}$ for every pair in $R_{i+1}\times R_{i+2}$, and so on, such that at least a fraction $\theta$ of the $P_{i+1}$ sampled leaves $(x,h,r_i,z_i,r_{i+1},z_{i+1},\dots,r_c,z_c)$ with $(r_{i+1},\dots,r_c)\in R_{i+1}\times\dots\times R_c$ are accepted by $V$. Since every $q_j\ge2$, this is one block of at most $K=2\mu P_{i+1}$ existentially quantified reals. Whether $V$ accepts an input is a Boolean combination of sign conditions of the polynomials of conditions \textup{(a)}--\textup{(c)} of \cref{sec:cells}, at most one for each node of $V$, and $V$ has fewer than $2^t$ nodes. Along a path each operation at most doubles the degrees of the numerators and denominators, which therefore stay at most $2^t$, so these polynomials, including the products $S=PD$, have degree at most $\Delta=2^{t+1}$. Substitute the coin bits: there are $2^{\rho i}$ coin prefixes $(r_1,\dots,r_i)$ and $P_{i+1}$ sampled continuations. So, over all coin prefixes and all $r_i$, the statements involve at most $S=2^{\rho i}P_{i+1}2^{t}$ polynomials of degree at most $\Delta$ in the $M=n+(i-1)\mu\le n+c\mu$ free reals $(x,z_1,\dots,z_{i-1})$ and the $K$ quantified ones. We use the following counting bound.
+\emph{Counting.}
+It remains to bound $|\mathfrak F_i|$.
+The suprema in \eqref{eq:amsampled} are attained and range over independent arguments, so a sum of suprema is a maximum over joint choices.
+Hence, for $\theta\in P_{i+1}^{-1}\ZZ$, the inequality $g_{x,h}(r_i)\ge\theta$ holds exactly when there are a reply $z_i$ and replies for every sampled continuation such that at least a fraction $\theta$ of the $P_{i+1}$ sampled leaves $(x,h,r_i,z_i,r_{i+1},z_{i+1},\dots,r_c,z_c)$ with $(r_{i+1},\dots,r_c)\in R_{i+1}\times\dots\times R_c$ are accepted by $V$.
+Here the replies for the sampled continuations are a reply $z_{i+1}$ for every element of $R_{i+1}$, a reply $z_{i+2}$ for every pair in $R_{i+1}\times R_{i+2}$, and so on.
+Since every $q_j\ge2$, this condition is an existential statement with one block of at most $K=2\mu P_{i+1}$ quantified reals.
+The condition that $V$ accepts an input is a Boolean combination of sign conditions on the polynomials of conditions \textup{(a)}--\textup{(c)} of \cref{sec:cells}.
+There is at most one such polynomial for each node of $V$, and $V$ has fewer than $2^t$ nodes.
+Along a path each operation at most doubles the degrees of the numerators and denominators.
+So these degrees are at most $2^t$, and the polynomials of conditions \textup{(a)}--\textup{(c)}, including the products $S=PD$, have degree at most $\Delta=2^{t+1}$.
+Substitute the coin bits.
+There are $2^{\rho i}$ coin prefixes $(r_1,\dots,r_i)$ and $P_{i+1}$ sampled continuations.
+So, over all coin prefixes and all $r_i$, the statements involve at most $S_0=2^{\rho i}P_{i+1}2^{t}$ polynomials of degree at most $\Delta$.
+These are polynomials in the $M=n+(i-1)\mu\le n+c\mu$ free reals $(x,z_1,\dots,z_{i-1})$ and the $K$ quantified ones.
+We use the following counting bound.
 \begin{enumerate}[label=\textup{(C)},leftmargin=3em]
-\item For $S$ polynomials of degree at most $\Delta$ in $M+K$ variables, $\RR^M$ is partitioned into at most $(S\Delta)^{O(MK)}$ sets on each of which the truth value of every one-block existential statement over these polynomials is constant.
+\item For $S_0$ polynomials of degree at most $\Delta$ in $M+K$ variables, there is a partition of $\RR^M$ into at most $(S_0\Delta)^{O(MK)}$ sets such that on each set the truth value of every one-block existential statement over these polynomials is constant.
 \end{enumerate}
-Here a one-block existential statement over the polynomials is a formula $\exists u\in\RR^K\,\Psi$, where $\Psi$ is a Boolean combination of the conditions that a polynomial is positive, zero or negative at $(y,u)$, with $y\in\RR^M$ free. The bound \textup{(C)} follows from block elimination \cite[Algorithm~14.1]{BPR06}. It produces a family of $S^{K+1}\Delta^{O(K)}$ polynomials in the $M$ free variables, of degree $\Delta^{O(K)}$, such that the set of sign conditions realised by the original polynomials on the fiber $\{y\}\times\RR^K$ is constant as $y$ ranges over a connected component of a sign condition of the family. By the usual count of sign conditions \cite[Proposition~7.31]{BPR06}, the number of these components is at most $(S\Delta)^{O(MK)}$. The set of sign conditions realised on the fiber determines the truth value of every one-block existential statement.
+Here a one-block existential statement over the polynomials is a formula $\exists u\in\RR^K\,\Psi$, where $\Psi$ is a Boolean combination of the conditions that a polynomial is positive, zero or negative at $(y,u)$, with $y\in\RR^M$ free.
+The bound \textup{(C)} follows from block elimination \cite[Algorithm~14.1]{BPR06}.
+Block elimination gives a family of $S_0^{K+1}\Delta^{O(K)}$ polynomials in the $M$ free variables, of degree $\Delta^{O(K)}$, with the following property.
+The set of sign conditions realized by the original polynomials on the fiber $\{y\}\times\RR^K$ is constant as $y$ ranges over a connected component of a sign condition of the family.
+By the standard count of sign conditions \cite[Proposition~7.31]{BPR06}, the number of these components is at most $(S_0\Delta)^{O(MK)}$.
+The set of sign conditions realized on the fiber determines the truth value of every one-block existential statement.
 
-The value $g_{x,h}(r_i)$ is the largest $\theta$ for which $g_{x,h}(r_i)\ge\theta$ holds. So $g_{x,h}$ is determined by the coin prefix of $h$ and by the set of the partition in \textup{(C)} that contains $(x,z_1,\dots,z_{i-1})$. Hence $|\mathfrak F_i|\le2^{\rho c}(S\Delta)^{O(MK)}$ and
+The value $g_{x,h}(r_i)$ is the largest $\theta$ for which $g_{x,h}(r_i)\ge\theta$ holds.
+So $g_{x,h}$ is determined by the coin prefix of $h$ and by the set of the partition in \textup{(C)} that contains $(x,z_1,\dots,z_{i-1})$.
+Hence $|\mathfrak F_i|\le2^{\rho c}(S_0\Delta)^{O(MK)}$ and
 \[
 \ln|\mathfrak F_i|\le O(MK)\,(\rho c+t+\log P_{i+1}).
 \]
-Since $q_i\le32c^2\ln(2|\mathfrak F_i|)+1$, $K\le2\mu P_{i+1}$ and $M\le n+c\mu$, this gives $q_i\le A\,P_{i+1}(1+\ln P_{i+1})\le A\,P_{i+1}^2$ for a suitable $A=O\bigl(c^2(n+c\mu)\mu(\rho c+t)\bigr)$. Then $P_i=q_iP_{i+1}\le A\,P_{i+1}^3$, so $P_i\le A^{(3^{c+1-i}-1)/2}$ by downward induction, and $q_1\cdots q_c=P_1\le A^{3^c}$.
+Since $q_i\le32c^2\ln(2|\mathfrak F_i|)+1$, $K\le2\mu P_{i+1}$ and $M\le n+c\mu$, this gives $q_i\le A\,P_{i+1}(1+\ln P_{i+1})\le A\,P_{i+1}^2$ for a suitable $A=O\bigl(c^2(n+c\mu)\mu(\rho c+t)\bigr)$.
+Then $P_i=q_iP_{i+1}\le A\,P_{i+1}^3$, so $P_i\le A^{(3^{c+1-i}-1)/2}$ by downward induction, and $q_1\cdots q_c=P_1\le A^{3^c}$.
 \end{proof}
 
-Write each multiset as a list $R_i=(r_i^{(1)},\dots,r_i^{(q_i)})$ and put $P_1=q_1\cdots q_c$. A \emph{sampled leaf} is a tuple $(j_1,\dots,j_c)$ with $1\le j_i\le q_i$; there are $P_1$ of them. A \emph{strategy tree} assigns a reply $z_1(j_1)\in\RR^\mu$ to each element of $R_1$, a reply $z_2(j_1,j_2)\in\RR^\mu$ to each pair in $R_1\times R_2$, and so on up to $z_c(j_1,\dots,j_c)$. It is a vector of $\mu(q_1+q_1q_2+\dots+P_1)\le2\mu P_1$ reals. The sampled leaf $(j_1,\dots,j_c)$ \emph{accepts} if $V$ accepts $\bigl(x,r_1^{(j_1)},z_1(j_1),\dots,r_c^{(j_c)},z_c(j_1,\dots,j_c)\bigr)$. Since the suprema in \eqref{eq:amsampled} range over independent subtrees and are attained, downward induction on the round gives
+Write each multiset as a list $R_i=(r_i^{(1)},\dots,r_i^{(q_i)})$ and put $P_1=q_1\cdots q_c$.
+A \emph{sampled leaf} is a tuple $(j_1,\dots,j_c)$ with $1\le j_i\le q_i$.
+There are $P_1$ of them.
+A \emph{strategy tree} assigns a reply $z_1(j_1)\in\RR^\mu$ to each element of $R_1$, a reply $z_2(j_1,j_2)\in\RR^\mu$ to each pair in $R_1\times R_2$, and so on up to $z_c(j_1,\dots,j_c)$.
+It is a vector of $\mu(q_1+q_1q_2+\dots+P_1)\le2\mu P_1$ reals.
+The sampled leaf $(j_1,\dots,j_c)$ \emph{accepts} if $V$ accepts $\bigl(x,r_1^{(j_1)},z_1(j_1),\dots,r_c^{(j_c)},z_c(j_1,\dots,j_c)\bigr)$.
+Since the suprema in \eqref{eq:amsampled} range over independent subtrees and are attained, downward induction on the round gives
 \begin{equation}\label{eq:strategytree}
 \val'_1(x)=\max_{\text{strategy trees}}\ \frac{\#\{\text{accepting sampled leaves}\}}{P_1} .
 \end{equation}
-So $\val'_1(x)\ge1/2$ holds exactly when some strategy tree makes at least half of the $P_1$ sampled leaves accept. Let $T$ be the tree on inputs $(x,z)$, with $z$ a strategy tree, that runs $V$ on every sampled leaf in turn, with the coin bits of the leaf as constants, counts the accepting runs, and accepts when their number is at least $P_1/2$. Before each division in a simulated run it tests the divisor and counts that leaf as rejecting if the divisor is zero; by the convention of \cref{sec:trees} these tests are already present in $V$. The depth of $T$ is $O(P_1t)$. If the protocol decides $L$, then by \cref{lem:coins} we have $\val'_1\ge2/3-1/8>1/2$ on $L$ and $\val'_1\le1/3+1/8<1/2$ off $L$, so
+So $\val'_1(x)\ge1/2$ holds exactly when, for some strategy tree, at least half of the $P_1$ sampled leaves accept.
+Let $T$ be the following tree on inputs $(x,z)$, where $z$ is a strategy tree.
+It runs $V$ on every sampled leaf in turn, with the coin bits of the leaf as constants.
+It counts the accepting runs, and it accepts when their number is at least $P_1/2$.
+Before each division in a simulated run it tests the divisor, and it counts that leaf as rejecting if the divisor is zero.
+By the convention of \cref{sec:trees}, these tests are already present in $V$.
+The depth of $T$ is $O(P_1t)$.
+If the protocol decides $L$, then by \cref{lem:coins} we have $\val'_1\ge2/3-1/8>1/2$ on $L$ and $\val'_1\le1/3+1/8<1/2$ off $L$, so
 \begin{equation}\label{eq:amcert}
 T\text{ accepts }(x,z)\text{ for some strategy tree }z\quad\Longleftrightarrow\quad x\in L .
 \end{equation}
 
 \begin{proof}[Proof of \cref{thm:am}]
-Let $L\in\AMR[c]$ with $c$ constant. The numbers $\rho$ and $\mu$ and the depth $t$ of the verifier tree are polynomial in the input size $n$, so $A$ is polynomial in $n$, and so is $P_1\le A^{3^c}$. The multisets of \cref{lem:coins} for all input sizes form Boolean advice of polynomial length. A machine can carry all of it in one real constant and read the bits by doubling and comparing, as in the proof that randomised polynomial time over the reals equals $\PR$ \cite{CKKLW95,Koi94}. A machine that reads the multisets for the size of its input, takes a strategy tree $z$ of at most $2\mu P_1$ reals as its certificate, and runs $T$ on $(x,z)$ works in polynomial time, and by \eqref{eq:amcert} it witnesses $L\in\NPR$. Conversely, every language in $\NPR$ is in $\AMR[c]$: Merlin sends a certificate in the first round, and the verifier ignores the coins and the other rounds.
+Let $L\in\AMR[c]$ with $c$ constant.
+The numbers $\rho$ and $\mu$ and the depth $t$ of the verifier tree are polynomial in the input size $n$.
+So $A$ is polynomial in $n$, and so is $P_1\le A^{3^c}$.
+The multisets of \cref{lem:coins} for all input sizes form Boolean advice of polynomial length.
+A machine can store all of it in one real constant and read the bits by doubling and comparing, as in the proof that randomized polynomial time over the reals equals $\PR$ \cite{CKKLW95}. The same coding of advice is used for additive machines in \cite{Koi94}.
+Consider the machine that reads the multisets for the size of its input, takes a strategy tree $z$ of at most $2\mu P_1$ reals as its certificate, and runs $T$ on $(x,z)$.
+This machine runs in polynomial time, so $L\in\NPR$ by \eqref{eq:amcert}.
+Conversely, every language in $\NPR$ is in $\AMR[c]$: Merlin sends a certificate in the first round, and the verifier does not use the coins or the messages of the other rounds.
 \end{proof}
 
 \begin{theorem}\label{thm:amper}
-For every $m$ let a public-coin protocol with $c_m$ rounds, real messages from Merlin and a verifier running in time polynomial in $m$ decide $\{Y=\per_m(X)\}$ on $\RR^{m^2}\times\RR$. Then $c_m\ge\Omega(\log\log m)$. In particular $\{Y=\per_m(X)\}$ is not in $\AMR[O(1)]$.
+For every $m$ let a public-coin protocol with $c_m$ rounds, real messages from Merlin and a verifier running in time polynomial in $m$ decide $\{Y=\per_m(X)\}$ on $\RR^{m^2}\times\RR$.
+Then $c_m\ge\Omega(\log\log m)$.
+In particular $\{Y=\per_m(X)\}$ is not in $\AMR[O(1)]$.
 \end{theorem}
 
 \begin{proof}
-Fix $m$, write $c=c_m$, and let $\rho$, $\mu$ and $t$ be the number of coins per round, the length of Merlin's messages and the depth of the verifier tree, all polynomial in $m$. If $c>m$ there is nothing to prove, so let $c\le m$. Let $P_1$ and $T$ be as above, for the input size $m^2+1$. By \eqref{eq:amcert}, the tree $T$ satisfies the hypothesis of \cref{thm:graph} with $f=\per_m$, $n=m^2$, $d=m$, $U=\RR^{m^2}$, depth $O(P_1t)$ and at most $2\mu P_1$ certificate coordinates. So the border size of $\per_m$ is bounded by a polynomial in $m$, $t$ and $P_1$, and hence, as $t$ is polynomial in $m$, by $m^{O(1)}P_1^{O(1)}$. By \cref{thm:lowerbound} it exceeds $2^{\Omega((\log m)^{4/3})}$ for large $m$, which forces $P_1\ge2^{\Omega((\log m)^{4/3})}$. Since $n=m^2+1$ and $c$, $\rho$, $\mu$ and $t$ are polynomial in $m$, we have $\log A=O(\log m)$. From $P_1\le A^{3^c}$ we get $3^c\ge\Omega((\log m)^{1/3})$, and so $c\ge\Omega(\log\log m)$.
+Fix $m$ and write $c=c_m$.
+Let $\rho$, $\mu$ and $t$ be the number of coins per round, the length of Merlin's messages and the depth of the verifier tree.
+These three numbers are polynomial in $m$.
+If $c>m$ there is nothing to prove, so let $c\le m$.
+Let $P_1$ and $T$ be as above, for the input size $m^2+1$.
+By \eqref{eq:amcert}, the tree $T$ satisfies the hypothesis of \cref{thm:graph} with $f=\per_m$, $n=m^2$, $d=m$, $U=\RR^{m^2}$, depth $O(P_1t)$ and at most $2\mu P_1$ certificate coordinates.
+So the border complexity of $\per_m$ is at most a polynomial in $m$, $t$ and $P_1$, and hence at most $m^{O(1)}P_1^{O(1)}$, since $t$ is polynomial in $m$.
+By \cref{thm:lowerbound} it exceeds $2^{\Omega((\log m)^{4/3})}$ for large $m$.
+Hence $P_1\ge2^{\Omega((\log m)^{4/3})}$.
+Since the input size is $m^2+1$ and $c$, $\rho$, $\mu$ and $t$ are polynomial in $m$, we have $\log A=O(\log m)$.
+From $P_1\le A^{3^c}$ we get $3^c\ge\Omega((\log m)^{1/3})$, and so $c\ge\Omega(\log\log m)$.
 \end{proof}
 
-The protocol of Lund, Fortnow, Karloff and Nisan \cite{LFKN92} verifies the real permanent with public coins, real messages and $m$ rounds. The lower bound of \cref{thm:amper} is doubly logarithmic because the sample sizes in \cref{lem:coins} grow by a fixed power at each round. \Cref{thm:am,thm:amper} concern public coins; for Boolean messages, \cref{thm:bip} excludes protocols with private coins and any number of rounds.
+The protocol of Lund, Fortnow, Karloff and Nisan \cite{LFKN92} verifies the real permanent with public coins, real messages and $m$ rounds.
+The lower bound of \cref{thm:amper} is doubly logarithmic because the sample sizes in \cref{lem:coins} grow by a fixed power at each round.
+\Cref{thm:am,thm:amper} concern public coins.
+For Boolean messages, \cref{thm:bip} excludes protocols with private coins and any number of rounds.
