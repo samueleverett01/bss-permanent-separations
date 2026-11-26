@@ -4,7 +4,7 @@
 > [!IMPORTANT]
 > The results in this repository came out of a conversation between Samuel Everett and Claude Fable 5.2, an AI model developed by Anthropic. Claude Fable 5.2 found the proofs through the conversation with Sam, and then wrote most of the paper under his guidance.
 > That conversation started from initial ideas in a separate, earlier conversation Sam had with ChatGPT Astra 6.2, which proved $\mathrm{BIP}_{\mathbb R}^{\times}\subsetneq\mathrm{PAR}_{\mathbb R}^{\times}$ (Boolean-message interactive proofs against parallel polynomial time, in the real model with multiplication). The conversation with Claude Fable 5.2 extended that starting point to the further separations listed below.
-> A Lean formalization of the results is currently underway. The results have not been peer reviewed and should be read with that in mind.
+> All results are formalized in Lean 4 (see [Lean formalization](#lean-formalization) below), with the results cited from the literature as explicit hypotheses. The results have not been peer reviewed and should be read with that in mind.
 
 ## Results
 
@@ -39,6 +39,8 @@ The separations use the superpolynomial lower bound for the border complexity of
 | `sections/second-level.tex` | An existential and a universal block |
 | `sections/interaction.tex` | Boolean messages and constant-round Arthur–Merlin proofs |
 | `sections/open.tex` | Open problems |
+| `sections/lean.tex` | Appendix A: the Lean formalization, with the correspondence between results and Lean theorems |
+| `lean/` | The Lean 4 formalization (see `lean/README.md`) |
 
 ## Building
 
@@ -46,8 +48,31 @@ The separations use the superpolynomial lower bound for the border complexity of
 latexmk -pdf main.tex
 ```
 
+## Lean formalization
+
+The directory `lean/` contains a formalization of the paper in Lean 4 (v4.36.0) with Mathlib (v4.36.0), about 36 000 lines. To check it:
+
+```bash
+cd lean
+lake exe cache get
+lake build
+```
+
+- Every numbered lemma, proposition, theorem and corollary of §2–§7, Theorems A–F, and Remarks 4.3, 5.4 and 7.4(a) are stated and proved, with no `sorry`. `#print axioms` reports only `propext`, `Classical.choice` and `Quot.sound` for every result.
+- The results that the paper cites are explicit hypotheses of the theorems that use them, not axioms:
+  - `SAFacts` — facts (S2)–(S8) on semialgebraic sets;
+  - `PermLowerBound` — Theorem 2.3, the border-complexity lower bound for the permanent;
+  - `BurgisserThm` — Theorem 2.5;
+  - `EffectiveQE` — effective quantifier elimination [BPR06];
+  - `CountingBound` — the counting bound (C) of Lemma 7.7;
+  - `ClassFacts` — the known inclusions between complexity classes.
+
+  In particular, every separation is conditional on `PermLowerBound`, exactly as in the paper.
+- Fact (S1) holds by construction: semialgebraic sets are defined as first-order definable sets. Baur–Strassen, Ryser's formula, Hoeffding's inequality (from Mathlib) and the unrolling of machines into trees are proved.
+- Appendix A of the paper (`sections/lean.tex`) and `lean/README.md` list the Lean name of each result, the modelling choices, and the few places where a formal proof differs from the text. `lean/ClassSeparations/Pinned.lean` restates the main statements verbatim and checks them against the proved theorems.
+
 ## Status
 
-The proofs have not been peer reviewed. The paper is mostly AI-written (see above). A Lean formalization is in progress.
+The proofs have not been peer reviewed. The paper is mostly AI-written (see above). The results are formalized in Lean, conditional on the cited results listed above.
 
 The bibliographic data in `refs.bib` were checked against publisher and Crossref records. The numbered results cited from the Anthropic manuscript, Bürgisser (2004, 2026), Baartse–Meer, Baur–Strassen and Cucker et al. were confirmed in the sources. Still to be confirmed against the full texts: the attributions to Cucker (1992, 1993), Koiran (1994), Blum–Cucker–Shub–Smale, and the numbering in Basu–Pollack–Roy, which follows the second edition (2006).
