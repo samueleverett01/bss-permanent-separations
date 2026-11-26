@@ -46,7 +46,7 @@ In every case the separating language is the graph of the permanent. The languag
 \begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em,itemsep=1pt,topsep=3pt,start=6]
 \item Let $f$ be a real polynomial of degree $d$ in $n$ variables. If a real computation tree of depth $t$ verifies its graph with one existential or one universal block of certificates, then the border complexity of $f$ is polynomially bounded in $t,d,n$. With an existential block of length $k$ followed by a universal block of length $l$, the bound is polynomial in $t+k+l,d,n$.
 \end{enumerate}
-Result \textup{(6)} extends a theorem of B\"urgisser from deterministic verification to these three kinds of nondeterministic verification. The proofs of \textup{(6)} and of the first equality in \textup{(5)} use no lower bound.
+Result \textup{(6)} extends a theorem of B\"urgisser from deterministic verification to these three kinds of nondeterministic verification. The proofs of \textup{(6)} and of the first equality in \textup{(5)} use no lower bound. All results are formalized in Lean~4, with the results cited from the literature as explicit hypotheses.
 \end{abstract}
 \maketitle
 
@@ -60,6 +60,9 @@ Result \textup{(6)} extends a theorem of B\"urgisser from deterministic verifica
 \input{sections/second-level.tex}
 \input{sections/interaction.tex}
 \input{sections/open.tex}
+
+\appendix
+\input{sections/lean.tex}
 
 \bibliographystyle{alpha}
 \bibliography{refs}

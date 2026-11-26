@@ -1,0 +1,77 @@
+\section{Formal verification in Lean}\label{sec:lean}
+\begingroup\raggedright
+
+The results of this paper are formalized in the proof assistant Lean~4 (version 4.36.0), using the Mathlib library (version 4.36.0). The formalization is in the directory \texttt{lean/} of the source repository; it has about 36\,000 lines. It is built with \texttt{lake build} and contains no \texttt{sorry}. Every theorem below depends only on the three standard axioms of Lean and Mathlib (\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}), as reported by \texttt{\#print axioms}. All Lean names are in the namespace \texttt{ClassSep}.
+
+\subsection{What is formalized}
+
+Every numbered lemma, proposition, theorem and corollary of \crefrange{sec:prelim}{sec:interaction} is stated and proved in Lean, as are \cref{thm:A,thm:B,thm:C,thm:D,thm:E,thm:F}, \cref{rem:several}, \cref{rem:complexcoef} and part (a) of \cref{rem:discrete}. The informal part (b) of \cref{rem:discrete}, the example after \cref{prop:value}, the remark after \cref{thm:second} on the length of the existential block, and \cref{sec:open} are not formalized.
+
+\subsection{Cited results as hypotheses}
+
+The results that the paper cites from the literature are not proved in Lean. They enter as explicit hypotheses of the theorems that use them, in the form of propositions, and no axiom is added. They are:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \texttt{SAFacts}: the facts \ref{S2}--\ref{S8} on semialgebraic sets, each in a precise form (file \texttt{SA/Facts.lean});
+\item \texttt{PermLowerBound}: \cref{thm:lowerbound};
+\item \texttt{BurgisserThm}: \cref{thm:burgisser};
+\item \texttt{EffectiveQE}: effective quantifier elimination \cite[Theorem~14.16]{BPR06}, used in \cref{lem:flatten}(d);
+\item \texttt{CountingBound}: the counting bound (C) in the proof of \cref{lem:coins};
+\item \texttt{ClassFacts}: the known relations $\NPR,\coNPR,\Sigma_2^{\RR}\subseteq\PARR$, $\NPC,\coNPC\subseteq\PARC$, $\BIPR\subseteq\PARR$ \cite{IdR99}, $\PARR\subsetneq\IPR$ and $\AMR[\mathrm{poly}]=\IPR$ \cite{BM16}.
+\end{itemize}
+Fact \ref{S1} is not a hypothesis. A set is \emph{defined} to be semialgebraic if it is defined by a first-order formula over $(\RR,+,\times,<)$ with real parameters, so \ref{S1} holds by construction, and each of its applications is a proof that a concrete set has a defining formula. The theorem of Baur and Strassen (\cref{thm:baurstrassen}), Ryser's formula, Hoeffding's inequality (from Mathlib), and the unrolling of machines into trees are proved in Lean. In particular, all lower bounds for the permanent in the formalization are conditional on \texttt{PermLowerBound}, exactly as in the paper.
+
+\subsection{Modelling choices}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item The dimension of a semialgebraic set is described by the predicate ``some projection to $d$ coordinates has nonempty interior'' (\texttt{DimGE}); \ref{S4}(a), first part, is then a theorem.
+\item A tree returns an outcome: the label of the leaf reached, or a division by zero, which rejects. Sets of marked outcomes replace marked leaves, so the convention of \cref{sec:trees} that every rejection happens at a leaf is not needed. Tests may be applied to any operand.
+\item Programs and circuits have numbered slots for their constants. A program or circuit \emph{graph} is the object with slots; this expresses statements such as ``the graph depends only on the graph of the program''.
+\item Taylor polynomials are defined from iterated Fr\'echet derivatives, and \cref{cor:derivatives} is stated with iterated derivatives, whose components are the partial derivatives $\partial^\alpha$.
+\item Machines are real random-access machines whose index registers address the real registers; they simulate the machines of \cite{BCSS98} with polynomial overhead. $\PARR$ and $\PARC$ are defined by uniform families of algebraic circuits of polynomial depth, where a machine computes, in polynomial time, the description of a gate from the binary digits of its index.
+\end{itemize}
+
+\subsection{Proofs that differ from the text}
+
+The following proofs in Lean differ from the arguments given in the text; the statements are the same.
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \cref{lem:isolate} is proved by induction on the number of certificate coordinates, splitting off one coordinate at a time: the projection to $(x,y)$ either contains a box, and the coordinate is fixed, or has finite fibers over an open set, and \ref{S5} applies. Nash manifolds and tangent spaces are not used.
+\item In \cref{lem:newton}(b), in the proof of \cref{thm:onesided} and in the proof of \cref{thm:second}, the analytic implicit function theorem is replaced by little-$o$ estimates and the uniqueness of polynomial approximations of order $o(|\xi-\xi_1|^D)$.
+\item In \cref{lem:envelope}, the radius $r_0$ is assumed nonnegative explicitly.
+\item In the proof of \cref{thm:onesided}, the finiteness of the set $\Delta$ of exceptional levels is replaced by a density argument.
+\item In \cref{lem:boolean}, the generic point is chosen outside the zero sets of finitely many nonzero polynomials, which avoids the Baire category theorem; in \cref{rem:discrete}(a) the Baire category theorem is used.
+\end{itemize}
+
+\subsection{Correspondence}
+
+For each result we give the Lean name and the file, relative to \texttt{lean/ClassSeparations/}.
+
+\begin{description}[leftmargin=1.6em,itemsep=1pt,font=\normalfont\bfseries]
+\item[\Cref{def:tree,def:border}] \texttt{Tree}, \texttt{Tree.run}, \texttt{Tree.depth}; \texttt{IsApprox}, \texttt{BorderLE} (\texttt{Basic/Tree.lean}, \texttt{Basic/Circuits.lean}).
+\item[\Cref{thm:baurstrassen}] \texttt{baur\_strassen}, \texttt{baur\_strassen'} (\texttt{Core/BaurStrassen.lean}).
+\item[\Cref{lem:cells}] \texttt{cells}, \texttt{cells\_length} (\texttt{Basic/Cells.lean}).
+\item[\Cref{lem:derivatives,cor:derivatives}] \texttt{derivatives}, \texttt{derivatives\_cor} (\texttt{Core/Derivatives.lean}).
+\item[\Cref{lem:closure}] \texttt{closure\_lemma} (\texttt{Core/Closure.lean}).
+\item[\Cref{lem:newton}] \texttt{newton\_circuit}, \texttt{newtonPoly\_eq\_taylorPoly}, \texttt{tendsto\_coeff\_newtonPoly} (\texttt{Core/Newton.lean}).
+\item[\Cref{thm:local,lem:minimisers,lem:genericcentre}] \texttt{local\_theorem}, \texttt{minimisers}, \texttt{genericCentre} (\texttt{Core/Local.lean}).
+\item[\Cref{lem:isolate}] \texttt{isolate} (\texttt{Cert/Isolate.lean}).
+\item[\Cref{thm:graph,rem:several,thm:threshold}] \texttt{graph\_theorem}, \texttt{graph\_theorem\_vec}, \texttt{threshold\_theorem\_le}, \texttt{threshold\_theorem\_ge} (\texttt{Cert/Graph.lean}).
+\item[\Cref{prop:value}] \texttt{value\_functions} (\texttt{Cert/Value.lean}).
+\item[\Cref{lem:ryser}] \texttt{ryser} (\texttt{Cert/Permanent.lean}); \texttt{permLang\_mem\_PAR}, \texttt{cpermLang\_mem\_PAR} (\texttt{Machines/Perm.lean}).
+\item[\Cref{cor:np}] \texttt{cor\_np} (\texttt{Cert/Permanent.lean}) for trees; \texttt{theorem\_A} (\texttt{Main.lean}) for classes.
+\item[\Cref{thm:onesided,lem:margin}] \texttt{onesided}, \texttt{Margin.margin\_cert\_iff}, \texttt{OnesidedAux.lemma\_5\_2\_b}, \texttt{OnesidedAux.lemma\_5\_2\_c} (\texttt{Universal/Onesided.lean}, \texttt{Universal/Margin.lean}).
+\item[\Cref{thm:complex,rem:complexcoef}] \texttt{complex\_field}, \texttt{complex\_coeff} (\texttt{Universal/Complex.lean}).
+\item[\Cref{cor:conp}] \texttt{cor\_conp\_universal}, \texttt{cor\_conp\_strict}, \texttt{cor\_conp\_complex} (\texttt{Universal/Separations.lean}); \texttt{theorem\_B}, \texttt{theorem\_C} (\texttt{Main.lean}).
+\item[\Cref{thm:second}] \texttt{second\_level} (\texttt{Second/Main.lean}), from \texttt{sl\_setup} (\texttt{Second/Setup.lean}) and \texttt{sl\_conclude\_proof} (\texttt{Second/Conclude.lean}).
+\item[\Cref{lem:goodz,lem:flatten}] \texttt{SetupAux.lemma\_6\_2} (\texttt{Second/Goodz.lean}); \texttt{SetupAux.lemma\_6\_3\_a}, \texttt{\_b}, \texttt{\_c} (\texttt{Second/Flatten.lean}), \texttt{SetupAux.lemma\_6\_3\_d} (\texttt{Second/FlattenD.lean}) with \texttt{exponent\_bound} (\texttt{Second/Exponent.lean}).
+\item[\Cref{lem:envelope,lem:continuity,lem:envelopevalue,lem:tilt}] \texttt{envelope\_props} (\texttt{Second/Envelope.lean}), \texttt{SLData.Good.env\_continuity} (\texttt{Second/Continuity.lean}), \texttt{SLData.env\_value} (\texttt{Second/EnvValue.lean}), \texttt{SLData.Good.tilt} (\texttt{Second/Tilt.lean}).
+\item[\Cref{cor:second}] \texttt{cor\_second} (\texttt{Second/Main.lean}); \texttt{theorem\_B} (\texttt{Main.lean}).
+\item[\Cref{def:bip,lem:boolean,thm:bip}] \texttt{VTree}, \texttt{boundary\_test}, \texttt{bip\_lower} (\texttt{Interaction/Boolean.lean}); \texttt{theorem\_D} (\texttt{Main.lean}).
+\item[\Cref{rem:discrete}(a)] \texttt{boundary\_test\_countable} (\texttt{Interaction/Remark74.lean}).
+\item[\Cref{def:am,lem:coins,thm:amper}] \texttt{AMProtocol}, \texttt{fixing\_coins}, \texttt{strategy\_tree} (equation \eqref{eq:amcert}), \texttt{am\_rounds} (\texttt{Interaction/AM.lean}).
+\item[\Cref{thm:am}] \texttt{am\_eq\_np}, \texttt{am\_const\_eq\_np} (\texttt{Machines/AMNP.lean}).
+\item[\Cref{thm:A,thm:B,thm:C,thm:D,thm:E,thm:F}] \texttt{theorem\_A}, \dots, \texttt{theorem\_F} (\texttt{Main.lean}).
+\item[Classes] \texttt{P\_R}, \texttt{NP\_R}, \texttt{coNP\_R}, \texttt{Sigma2\_R}, \texttt{PAR\_R} (\texttt{Machines/Classes.lean}); \texttt{NP\_C}, \texttt{coNP\_C}, \texttt{PAR\_C} (\texttt{Machines/Complex.lean}); \texttt{BIP\_R}, \texttt{IP\_R}, \texttt{AM\_R}, \texttt{AM\_R\_const}, \texttt{AM\_R\_poly} (\texttt{Machines/Interactive.lean}).
+\end{description}
+
+The file \texttt{Pinned.lean} restates the main theorems verbatim and checks that the proved theorems have exactly these statements.
+\par\endgroup

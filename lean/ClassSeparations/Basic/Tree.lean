@@ -107,13 +107,13 @@ def Tree.consts : Tree ι → Set ℝ
 
 /-! ## Inputs `(x, y, z)` and `(x, y, z, u)` -/
 
-/-- The input `(x, y, z) ∈ ℝⁿ × ℝ × ℝᵏ` of a tree on `Fin n ⊕ Unit ⊕ Fin k`. -/
-def inp3 {n k : ℕ} (x : Fin n → ℝ) (y : ℝ) (z : Fin k → ℝ) : Fin n ⊕ Unit ⊕ Fin k → ℝ :=
+/-- The input `(x, y, z) ∈ ℝ^α × ℝ × ℝ^γ` of a tree on `α ⊕ Unit ⊕ γ`. -/
+def inp3 {α γ : Type} (x : α → ℝ) (y : ℝ) (z : γ → ℝ) : α ⊕ Unit ⊕ γ → ℝ :=
   Sum.elim x (Sum.elim (fun _ => y) z)
 
-/-- The input `(x, y, z, u) ∈ ℝⁿ × ℝ × ℝᵏ × ℝˡ` of a tree on `Fin n ⊕ Unit ⊕ Fin k ⊕ Fin l`. -/
-def inp4 {n k l : ℕ} (x : Fin n → ℝ) (y : ℝ) (z : Fin k → ℝ) (u : Fin l → ℝ) :
-    Fin n ⊕ Unit ⊕ Fin k ⊕ Fin l → ℝ :=
+/-- The input `(x, y, z, u)` of a tree on `α ⊕ Unit ⊕ γ ⊕ δ`. -/
+def inp4 {α γ δ : Type} (x : α → ℝ) (y : ℝ) (z : γ → ℝ) (u : δ → ℝ) :
+    α ⊕ Unit ⊕ γ ⊕ δ → ℝ :=
   Sum.elim x (Sum.elim (fun _ => y) (Sum.elim z u))
 
 end ClassSep

@@ -68,10 +68,10 @@ structure SAFacts : Prop where
     IsSA E → IsOpen V → V.Nonempty →
     (∀ x ∈ V, {y : ℝ | extendVal y x ∈ E}.Finite ∧ {y : ℝ | extendVal y x ∈ E}.Nonempty) →
     ∃ (x₀ : α → ℝ) (r : ℝ), 0 < r ∧ Metric.ball x₀ r ⊆ V ∧
-      ∃ (q : ℕ) (λ' : Fin q → (α → ℝ) → ℝ), 0 < q ∧
-        (∀ i, IsSAFunOn₁ (Metric.ball x₀ r) (λ' i) ∧ ContinuousOn (λ' i) (Metric.ball x₀ r)) ∧
-        (∀ x ∈ Metric.ball x₀ r, StrictMono fun i => λ' i x) ∧
-        ∀ x ∈ Metric.ball x₀ r, {y : ℝ | extendVal y x ∈ E} = range fun i => λ' i x
+      ∃ (q : ℕ) (lam : Fin q → (α → ℝ) → ℝ), 0 < q ∧
+        (∀ i, IsSAFunOn₁ (Metric.ball x₀ r) (lam i) ∧ ContinuousOn (lam i) (Metric.ball x₀ r)) ∧
+        (∀ x ∈ Metric.ball x₀ r, StrictMono fun i => lam i x) ∧
+        ∀ x ∈ Metric.ball x₀ r, {y : ℝ | extendVal y x ∈ E} = range fun i => lam i x
   /-- **(S6) Sard** (BCR98, Thm. 9.6.2), for Nash maps between open subsets of `ℝᵐ`: the
   critical values of a semialgebraic map that is analytic on an open semialgebraic set form a
   semialgebraic set of dimension `< m`. -/

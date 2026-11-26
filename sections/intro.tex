@@ -135,6 +135,10 @@ Over $\CC$, B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ impli
 
 \Cref{sec:prelim} contains the definition of the model and the tools used later. The local theorem is proved in \cref{sec:core}. Existential certificates are treated in \cref{sec:certificates}, universal certificates and the complex field in \cref{sec:universal}, the second level in \cref{sec:second}, and interactive proofs in \cref{sec:interaction}.
 
+\subsection{Formal verification}
+
+All results of this paper are formalized in the proof assistant Lean~4 with the Mathlib library, and the formal proofs are checked by the Lean kernel. The formalization proves every numbered lemma, proposition, theorem and corollary, including \cref{thm:A,thm:B,thm:C,thm:D,thm:E,thm:F}. The results that we cite from the literature, namely the facts \ref{S2}--\ref{S8} on semialgebraic sets, \cref{thm:lowerbound}, \cref{thm:burgisser}, effective quantifier elimination, the counting bound of \cref{lem:coins} and the known inclusions between complexity classes, enter the formalization as explicit hypotheses and are not proved there. \Cref{sec:lean} describes the formalization and lists, for each result, the corresponding Lean theorem.
+
 \subsection{Use of AI}
 
 The proofs in this paper were found through conversation with Claude Fable 5.2, an AI model developed by Anthropic. Claude Fable 5.2 also helped to write the paper.

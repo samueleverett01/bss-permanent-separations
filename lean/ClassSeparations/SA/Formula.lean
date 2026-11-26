@@ -126,9 +126,28 @@ def Fml.subst : {α β : Type} → Fml β → (β → MvPolynomial α ℝ) → F
   | _, _, .ex φ, σ =>
       .ex (φ.subst (fun o => o.elim (X none) (fun b => rename some (σ b))))
 
+theorem eval_bind₁' {α β : Type} (v : α → ℝ) (σ : β → MvPolynomial α ℝ)
+    (p : MvPolynomial β ℝ) : eval v (bind₁ σ p) = eval (fun b => eval v (σ b)) p :=
+  eval₂Hom_bind₁ _ _ _ _
+
 theorem Fml.holds_subst {α β : Type} (φ : Fml β) (σ : β → MvPolynomial α ℝ) (v : α → ℝ) :
     (φ.subst σ).Holds v ↔ φ.Holds (fun b => eval v (σ b)) := by
-  sorry
+  induction φ generalizing α with
+  | pos p => simp only [Fml.subst, Fml.Holds, eval_bind₁']
+  | zero p => simp only [Fml.subst, Fml.Holds, eval_bind₁']
+  | not φ ih => simp only [Fml.subst, Fml.Holds, ih]
+  | and φ ψ ih₁ ih₂ => simp only [Fml.subst, Fml.Holds, ih₁, ih₂]
+  | ex φ ih =>
+    simp only [Fml.subst, Fml.Holds, ih]
+    refine exists_congr fun a => ?_
+    have : (fun o : Option _ => eval (extendVal a v)
+        (Option.elim o (X none) fun b => rename some (σ b))) =
+        extendVal a (fun b => eval v (σ b)) := by
+      funext o
+      cases o with
+      | none => simp [extendVal]
+      | some b => simp [extendVal, eval_rename]; rfl
+    rw [this]
 
 /-- Preimage of a semialgebraic set under a polynomial map. -/
 theorem IsSA.preimage_poly {s : Set (β → ℝ)} (h : IsSA s) (σ : β → MvPolynomial α ℝ) :
@@ -144,9 +163,68 @@ theorem IsSA.preimage_comp {s : Set (β → ℝ)} (h : IsSA s) (f : β → α) :
   exact this
 
 /-- Existential quantification over finitely many variables. -/
+theorem IsSA.exists_fin : ∀ (n : ℕ) {α : Type} {s : Set (α ⊕ Fin n → ℝ)}, IsSA s →
+    IsSA {v : α → ℝ | ∃ z : Fin n → ℝ, Sum.elim v z ∈ s}
+  | 0, α, s, h => by
+    have := h.preimage_comp (Sum.elim id (Fin.elim0 : Fin 0 → α))
+    convert this using 1
+    ext v
+    simp only [Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨z, hz⟩
+      convert hz using 1
+      ext (i | i)
+      · rfl
+      · exact i.elim0
+    · intro hv
+      refine ⟨Fin.elim0, ?_⟩
+      convert hv using 1
+      ext (i | i)
+      · rfl
+      · exact i.elim0
+  | n + 1, α, s, h => by
+    -- variables of `α ⊕ Fin (n+1)` expressed through `Option (α ⊕ Fin n)`
+    let g : α ⊕ Fin (n + 1) → Option (α ⊕ Fin n) :=
+      Sum.elim (fun a => some (Sum.inl a)) (Fin.cases none fun i => some (Sum.inr i))
+    have ht := h.preimage_comp g
+    have h1 := ht.exists_option
+    have h2 := IsSA.exists_fin n h1
+    convert h2 using 1
+    ext v
+    simp only [Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨z, hz⟩
+      refine ⟨Fin.tail z, z 0, ?_⟩
+      convert hz using 1
+      ext (i | i)
+      · rfl
+      · refine Fin.cases ?_ (fun j => ?_) i <;> rfl
+    · rintro ⟨z, a, hz⟩
+      refine ⟨Fin.cons a z, ?_⟩
+      convert hz using 1
+      ext (i | i)
+      · rfl
+      · refine Fin.cases ?_ (fun j => ?_) i <;> rfl
+
 theorem IsSA.exists_sum {γ : Type} [Finite γ] {s : Set (α ⊕ γ → ℝ)} (h : IsSA s) :
     IsSA {v : α → ℝ | ∃ z : γ → ℝ, Sum.elim v z ∈ s} := by
-  sorry
+  obtain ⟨n, ⟨e⟩⟩ := Finite.exists_equiv_fin γ
+  have h' := h.preimage_comp (Sum.map id e)
+  have := IsSA.exists_fin n h'
+  convert this using 1
+  ext v
+  simp only [Set.mem_ofPred_eq]
+  constructor
+  · rintro ⟨z, hz⟩
+    refine ⟨z ∘ e.symm, ?_⟩
+    convert hz using 1
+    ext (i | i)
+    · rfl
+    · simp
+  · rintro ⟨z, hz⟩
+    refine ⟨z ∘ e, ?_⟩
+    convert hz using 1
+    ext (i | i) <;> rfl
 
 /-- Universal quantification over finitely many variables. -/
 theorem IsSA.forall_sum {γ : Type} [Finite γ] {s : Set (α ⊕ γ → ℝ)} (h : IsSA s) :
