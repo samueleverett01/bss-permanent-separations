@@ -58,7 +58,7 @@ theorem taylorPoly_eq_of_isLittleO {D : ℕ} {g : (ι → ℝ) → ℝ} {ξ₁ :
     (hg : ContDiffAt ℝ D g ξ₁) {P : MvPolynomial ι ℝ} (hP : P.totalDegree ≤ D)
     (h : (fun ξ => g ξ - eval ξ P) =o[𝓝 ξ₁] fun ξ => ‖ξ - ξ₁‖ ^ D) :
     taylorPoly D g ξ₁ = P := by
-  refine eq_of_isLittleO (totalDegree_taylorPoly_le D g ξ₁) hP ?_
+  refine eq_of_isLittleO (ξ₁ := ξ₁) (totalDegree_taylorPoly_le D g ξ₁) hP ?_
   have := h.sub (taylorPoly_isLittleO hg)
   refine this.congr_left fun ξ => ?_
   ring
@@ -74,9 +74,6 @@ theorem taylorPoly_eval_poly {D : ℕ} {f : MvPolynomial ι ℝ} (hf : f.totalDe
 /-- The Taylor polynomial depends only on the germ of `g` at `ξ₁`. -/
 theorem taylorPoly_congr {D : ℕ} {g h : (ι → ℝ) → ℝ} {ξ₁ : ι → ℝ} (hgh : g =ᶠ[𝓝 ξ₁] h) :
     taylorPoly D g ξ₁ = taylorPoly D h ξ₁ := by
-  unfold taylorPoly
-  congr 1
-  ext1 j
   sorry
 
 /-- The coefficients of Taylor polynomials depend continuously on the base point and on the

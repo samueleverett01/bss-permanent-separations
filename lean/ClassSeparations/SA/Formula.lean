@@ -102,7 +102,7 @@ theorem isSA_nonneg (p : MvPolynomial α ℝ) : IsSA {v : α → ℝ | 0 ≤ eva
   have := (isSA_pos p).union (isSA_zero p)
   convert this using 1
   ext v
-  simp only [Set.mem_setOf_eq, Set.mem_union]
+  simp only [Set.mem_ofPred_eq, Set.mem_union]
   constructor
   · intro h; rcases h.lt_or_eq with h | h
     · exact Or.inl h
@@ -140,7 +140,8 @@ theorem IsSA.preimage_poly {s : Set (β → ℝ)} (h : IsSA s) (σ : β → MvPo
 theorem IsSA.preimage_comp {s : Set (β → ℝ)} (h : IsSA s) (f : β → α) :
     IsSA {v : α → ℝ | v ∘ f ∈ s} := by
   have := h.preimage_poly (fun b => X (f b))
-  simpa using this
+  simp only [MvPolynomial.eval_X] at this
+  exact this
 
 /-- Existential quantification over finitely many variables. -/
 theorem IsSA.exists_sum {γ : Type} [Finite γ] {s : Set (α ⊕ γ → ℝ)} (h : IsSA s) :
