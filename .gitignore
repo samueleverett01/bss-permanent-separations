@@ -10,3 +10,8 @@
 .DS_Store
 build.log
 .claude/
+
+# Lean
+lean/.elan/
+lean/.lake/
+lean/.cache/

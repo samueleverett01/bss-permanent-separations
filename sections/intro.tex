@@ -31,9 +31,9 @@ of an $m\times m$ matrix of variables, which is complete for the class $\VNP$. A
 \noindent\textbf{Theorem} (\cite{Cla26}; \cref{thm:lowerbound} below)\textbf{.} \emph{There is an absolute constant $c>0$ such that for all large $m$ the border complexity of $\per_m$ over $\RR$ is greater than $2^{c(\log m)^{4/3}}$.}
 \medskip
 
-A theorem of B\"urgisser \cite{Bur04} connects the two theories. If the graph $\{Y=f(X)\}$ of a real polynomial of degree $d$ is decided by a computation tree of depth $t$, then the border complexity of $f$ is bounded by a polynomial in $t$ and $d$. Thus, for polynomials of moderate degree, checking a value is not easier than computing it. B\"urgisser deduced that a superpolynomial lower bound for the border complexity of the permanent implies $\PR\ne\PARR$ \cite[Corollary~4.5]{Bur04}; the hypothesis was formulated in \cite{Bur01}. Together with the theorem above, this gives $\PR\subsetneq\PARR$, a strict inclusion between the two ends of the chain \eqref{eq:chain}.
+A theorem of B\"urgisser \cite{Bur04} connects the two theories. If the graph $\{Y=f(X)\}$ of a real polynomial of degree $d$ is decided by a computation tree of depth $t$, then $f$ has an approximating circuit of size polynomial in $t$ and $d$. B\"urgisser deduced that a superpolynomial lower bound for the border complexity of the permanent implies $\PR\ne\PARR$ \cite[Corollary~4.5]{Bur04}. The hypothesis was formulated in \cite{Bur01}. Together with the theorem above, this gives $\PR\subsetneq\PARR$, a strict inclusion between the two ends of the chain \eqref{eq:chain}.
 
-In B\"urgisser's theorem the verifier is a deterministic tree. In this paper the verifier is given more resources: a certificate of real numbers, a universal quantifier, an alternation of the two, or a prover with which it interacts. Throughout, the test language is
+B\"urgisser's graph theorem also allows randomized trees with two-sided error \cite[Corollary~1.5]{Bur04}. Here we study verification with existential or universal real certificates, an alternation of the two, or interaction with a prover. Throughout, the test language is
 \[
 \mathrm{PERM}=\bigl\{(X,Y)\in\RR^{m^2}\times\RR:\ Y=\per_m(X),\ m\ge1\bigr\},
 \]
@@ -54,9 +54,9 @@ The same holds for the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m
 By \cref{thm:A}, the value of a real permanent has no short proof. No vector of polynomially many real numbers, whatever its dependence on the matrix, certifies in polynomial time that $Y=\per_m(X)$. The certificate may contain arbitrary real numbers, and the verifier may use arbitrary real constants and may be different for each $m$. The corresponding classical statement, that the permanent has no $\cc{NP}$ certificates, is open. By Toda's theorem \cite{Tod91}, such certificates would collapse the polynomial hierarchy. \Cref{thm:A} is proved as \cref{cor:np}.
 
 \begin{maintheorem}[universal certificates and the second level]\label{thm:B}
-The language $\mathrm{PERM}$ is not in $\coNPR$ and not in $\Sigma_2^{\RR}$, and the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ are not in $\coNPR$. A tree of depth $t_m$ that accepts every $z$ exactly when $Y=\per_m(X)$ has $t_m\ge2^{\Omega((\log m)^{4/3})}$. A tree of depth $t_m$ for which
+The graph of the real permanent and its two closed thresholds lie outside both $\coNPR$ and $\Sigma_2^{\RR}$. Let $R_m(X,Y)$ be any one of the relations $Y=\per_m(X)$, $Y\le\per_m(X)$ and $Y\ge\per_m(X)$. A tree of depth $t_m$ that accepts every $z$ exactly when $R_m(X,Y)$ holds has $t_m\ge2^{\Omega((\log m)^{4/3})}$. A tree of depth $t_m$ for which
 \[
-Y=\per_m(X)\quad\Longleftrightarrow\quad\exists z\ \forall u\ \text{the tree accepts }(X,Y,z,u),
+R_m(X,Y)\quad\Longleftrightarrow\quad\exists z\ \forall u\ \text{the tree accepts }(X,Y,z,u),
 \]
 with $z$ and $u$ real vectors of lengths $k_m$ and $l_m$, has $t_m+k_m+l_m\ge2^{\Omega((\log m)^{4/3})}$. Consequently $\coNPR\subsetneq\PARR$ and $\Sigma_2^{\RR}\subsetneq\PARR$.
 \end{maintheorem}
@@ -93,17 +93,17 @@ The proof of part (i) uses no lower bound. By part (i), a bounded number of roun
 
 \Cref{thm:A,thm:B,thm:C} and the second part of \cref{thm:E} follow from the lower bound for the permanent and the following theorem, which holds for every polynomial and whose proof uses no lower bound.
 
-\begin{maintheorem}[certificates do not help to check a polynomial]\label{thm:F}
-Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$, and let $U\subseteq\RR^n$ be open and nonempty. Suppose that for $x\in U$ and $y\in\RR$ the relation $y=f(x)$ holds exactly when one of the following holds, for a tree of depth $t$ with arbitrary real constants and real vectors $z$, $u$ of length at most $t$:
+\begin{maintheorem}[certificates and border complexity]\label{thm:F}
+Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$, and let $U\subseteq\RR^n$ be open and nonempty. Suppose that a tree of depth $t$ with arbitrary real constants verifies $y=f(x)$ on $U\times\RR$ by one of the following conditions, with $z\in\RR^k$ and $u\in\RR^l$.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the tree accepts $(x,y,z)$ for some $z$;
 \item the tree accepts $(x,y,z)$ for all $z$;
 \item there is $z$ such that the tree accepts $(x,y,z,u)$ for all $u$.
 \end{enumerate}
-Then the border complexity of $f$ is bounded by a polynomial in $t$, $d$ and $n$. In cases \textup{(i)} and \textup{(ii)} the same holds with $y\le f(x)$ or $y\ge f(x)$ in place of $y=f(x)$.
+In cases \textup{(i)} and \textup{(ii)} the border complexity of $f$ is bounded by a polynomial in $t,d,n$, also when the tree verifies $y\le f(x)$ or $y\ge f(x)$. In case \textup{(iii)} the bound is polynomial in $t+k+l,d,n$.
 \end{maintheorem}
 
-The case without certificates is B\"urgisser's theorem. By \cref{thm:F}, a polynomial of moderate degree is not easier to check than to compute also when the verifier is given real certificates, universally quantified real certificates, or an existential block of real certificates followed by a universal block. Case (i) is \cref{thm:graph,thm:threshold}, case (ii) is \cref{thm:onesided}, and case (iii) is \cref{thm:second}. Over the complex numbers, cases (i) and (ii) hold for polynomials with real coefficients (\cref{thm:complex}).
+The case without certificates is B\"urgisser's theorem. In all three cases the resulting circuit computes $f$ up to terms that vanish with $\eps$, in the sense of \cref{def:border}. Case (i) is \cref{thm:graph,thm:threshold}, case (ii) is \cref{thm:onesided}, and case (iii) is \cref{thm:second}. Over the complex numbers, cases (i) and (ii) hold for polynomials with real coefficients (\cref{thm:complex}).
 
 Together with the results cited above, these theorems give the relations
 \[
@@ -127,7 +127,9 @@ over probability measures $\mu$ with finitely many atoms. This is a regularizati
 
 \subsection{What remains open}
 
-The language $\mathrm{PERM}$ lies outside $\NPR$, so it does not separate $\PR$ from $\NPR$. By \cref{thm:F}, these two classes cannot be separated by a lower bound on the border complexity of a polynomial of polynomial degree whose graph is in $\NPR$. In \cref{sec:open} we discuss this question, the higher levels of the hierarchy, and the relation to a conjecture of B\"urgisser \cite{Bur26}.
+The language $\mathrm{PERM}$ lies outside $\NPR$, so it does not separate $\PR$ from $\NPR$. By \cref{thm:F}, these two classes cannot be separated by a lower bound on the border complexity of a polynomial of polynomial degree whose graph is in $\NPR$. In \cref{sec:open} we discuss this question and the higher levels of the hierarchy.
+
+Over $\CC$, B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ implies $\PC\ne\NPC$ in the nonuniform model \cite[Conjecture~1.1]{Bur26}. The border lower bound for the permanent over $\CC$ establishes the hypothesis. We are hopeful that a proof of B\"urgisser's conjecture may now be within reach, and we hope the algebraic complexity community will find one!
 
 \subsection{Organization}
 

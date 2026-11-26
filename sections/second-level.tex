@@ -8,9 +8,11 @@ Let $f\in\RR[X_1,\dots,X_n]$ have degree at most $d$ with $d\ge1$, and let $U\su
 Then the border complexity of $f$ is at most a polynomial in $t$, $k$, $l$, $d$ and $n$.
 \end{theorem}
 
+The length of the existential block matters even for the permanent. In the tree model, $z$ can list the values of all $S=2^m\mathrm{poly}(m)$ gates of the Ryser circuit in \cref{lem:ryser}. The verifier checks that the claimed output equals $Y$, then uses the signs of $\lceil\log_2 S\rceil$ universal coordinates to select a gate. For an arithmetic gate it applies the operation to the claimed predecessor values and checks the result against the claimed gate value. For an input or constant gate it checks the value directly. Unused indices impose no further condition. All checks pass for every index exactly when $z$ is a correct evaluation with output $Y$. This gives depth $O(m)$ with an exponentially long existential certificate.
+
 Once a certificate $z$ for which every $u$ is accepted has been isolated, the points $(x,y,z)$ at which every $u$ is accepted form a graph $\Gamma$ of lower dimension, and every other nearby point has a rejecting $u$. Rejection is the existential condition, so no tested polynomial need vanish on $\Gamma$. The largest margin $v$ of a rejecting certificate is positive off $\Gamma$ and zero on it. However, $v$ is defined as a maximum. It need not be differentiable at the points of $\Gamma$, and it can be discontinuous on sets of lower dimension, so it can take small values far from $\Gamma$. We therefore replace $v$ by an envelope that is the value of a single polynomial program, is continuously differentiable, and vanishes exactly on $\Gamma$.
 
-Throughout the section the hypotheses of \cref{thm:second} are in force.
+Throughout the section the hypotheses of \cref{thm:second} are in force, and we restrict $U$ to an open ball contained in it.
 
 \subsection{Isolating a certificate}
 
@@ -161,9 +163,18 @@ and $A=H^{-1}$. Replace $P$ by the output $\Psi$ of one of the circuit graphs of
 So for every $\eta>0$ one of finitely many circuit graphs computes, with real constants, a polynomial of degree at most $d$ within $2C_1\eta$ of $f$. By \cref{lem:closure} one of them approximates $f$. Its size is polynomial in $t$, $k$, $d$, $n$ and $\log N$, since $\kappa\le k+1$, and $\log N$ is polynomial in $t$, $n$, $k$ and $l$ by \cref{lem:flatten}(d). \qed
 
 \begin{corollary}\label{cor:second}
-Let trees of depth $t_m$, with $k_m$ and $l_m$ coordinates in $z$ and $u$, decide $Y=\per_m(X)$ in the sense of \cref{thm:second}. Then $t_m+k_m+l_m\ge2^{\Omega((\log m)^{4/3})}$, where the constant in the exponent depends on the degree of the polynomial bound of \cref{thm:second}. In particular the graph of the permanent is not in $\Sigma_2^{\RR}$, and $\Sigma_2^{\RR}\subsetneq\PARR$.
+Let trees of depth $t_m$, with $k_m$ and $l_m$ coordinates in $z$ and $u$, decide one of $Y=\per_m(X)$, $Y\le\per_m(X)$ and $Y\ge\per_m(X)$ with quantifiers $\exists z\,\forall u$. Then $t_m+k_m+l_m\ge2^{\Omega((\log m)^{4/3})}$. The graph and both closed thresholds lie in $\PARR\setminus\Sigma_2^{\RR}$, and $\Sigma_2^{\RR}\subsetneq\PARR$.
 \end{corollary}
 
 \begin{proof}
-By \cref{thm:second} with $n=m^2$ and $d=m$ the border complexity of $\per_m$ is at most a polynomial in $m$, $t_m$, $k_m$ and $l_m$. By \cref{thm:lowerbound} it exceeds $2^{c(\log m)^{4/3}}$. A $\Sigma_2^{\RR}$ machine unrolls into trees with polynomial $t_m$, $k_m$ and $l_m$. The graph is in $\PARR$ by \cref{lem:ryser}, and $\Sigma_2^{\RR}\subseteq\PARR$.
+For the graph, \cref{thm:second} with $n=m^2$ and $d=m$ bounds the border complexity of $\per_m$ by a polynomial in $m,t_m,k_m,l_m$. By \cref{thm:lowerbound} it exceeds $2^{c(\log m)^{4/3}}$, which gives the stated lower bound.
+
+Let $X'$ be obtained by negating the first row of $X$. Every monomial of the permanent uses exactly one entry from that row, so $\per_m(X')=-\per_m(X)$. Thus $(X,Y)\mapsto(X',-Y)$ interchanges the closed thresholds. Given a verifier $T$ for either threshold, the graph is defined by
+\[
+\exists z_1,z_2\ \forall u_1,u_2\quad
+  T(X,Y,z_1,u_1)\ \land\ T(X',-Y,z_2,u_2),
+\]
+where $T$ denotes acceptance. The two independent pairs of blocks verify the two inequalities, whose conjunction is equality. The resulting tree has depth at most $2t_m+m+1$ and block lengths $2k_m,2l_m$. The graph bound therefore gives the same asymptotic lower bound for each threshold, since $m=2^{O(\log m)}$.
+
+A $\Sigma_2^{\RR}$ machine unrolls into trees with polynomial $t_m,k_m,l_m$. All three languages belong to $\PARR$ by \cref{lem:ryser}, and $\Sigma_2^{\RR}\subseteq\PARR$.
 \end{proof}

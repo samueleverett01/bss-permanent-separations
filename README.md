@@ -26,6 +26,8 @@ In the Blum–Shub–Smale (BSS) model, the graph `{Y = per_m(X)}` of the real p
 
 and over the complex numbers outside NP_ℂ and coNP_ℂ. Each of these classes is therefore strictly contained in PAR_ℝ (respectively PAR_ℂ).
 
+Both closed thresholds, $Y \le \mathrm{per}_m(X)$ and $Y \ge \mathrm{per}_m(X)$, also lie in PAR_ℝ and outside NP_ℝ, coNP_ℝ and Σ₂^ℝ. Negating one matrix row and the claimed value interchanges the thresholds. Their intersection is the graph.
+
 The separations use the superpolynomial lower bound for the border complexity of the permanent (Theorem 2.3 in the paper, cited from the Anthropic manuscript "VP ≠ VNP over every field" and its Lean formalization). Two families of results use no lower bound:
 
 - the graph theorems: a polynomial of polynomial degree whose graph has short existential, universal or ∃∀ real certificates has small border complexity;

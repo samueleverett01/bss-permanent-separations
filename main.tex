@@ -32,7 +32,6 @@
 \date{}
 
 \begin{document}
-\maketitle
 
 \begin{abstract}
 We prove separations of complexity classes in the Blum--Shub--Smale model of computation over the real and complex numbers. Parallel polynomial time is denoted $\PARR$. The inclusions in \textup{(1)--(4)} are known, and we prove that they are strict. In \textup{(5)} we prove the first equality; the other relations in \textup{(5)} are known.
@@ -43,12 +42,13 @@ We prove separations of complexity classes in the Blum--Shub--Smale model of com
 \item $\BIPR\subsetneq\PARR$, where $\BIPR$ is the class of Ivanov and de Rougemont defined by interactive proofs with a real verifier and Boolean messages.
 \item $\AMR[O(1)]=\NPR\subsetneq\AMR[\mathrm{poly}]=\IPR$: a constant number of rounds of public coins gives exactly the languages with short real certificates, and polynomially many rounds give a larger class.
 \end{enumerate}
-In every case the separating language is the graph of the permanent. The language $\{(X,Y):Y=\per_m(X)\}$ lies in parallel polynomial time, outside the classes in \textup{(1)--(4)} and outside $\AMR[O(1)]$. Verifiers for it of the kinds that define $\NPR$, $\coNPR$, $\NPC$, $\coNPC$ and $\BIPR$, uniform or not and with arbitrary constants, need time $2^{\Omega((\log m)^{4/3})}$. For $\Sigma_2^{\RR}$ the same bound holds for the running time plus the length of the certificates. A public-coin protocol with real messages and a polynomial-time verifier needs $\Omega(\log\log m)$ rounds. The same holds for the threshold languages $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$ with respect to $\NPR$ and $\coNPR$. The proofs of the lower bounds combine the superpolynomial lower bound for the border complexity of the permanent with the following theorem, which holds for every polynomial:
+In every case the separating language is the graph of the permanent. The language $\{(X,Y):Y=\per_m(X)\}$ lies in parallel polynomial time, outside the classes in \textup{(1)--(4)} and outside $\AMR[O(1)]$. Verifiers for it of the kinds that define $\NPR$, $\coNPR$, $\NPC$, $\coNPC$ and $\BIPR$, uniform or not and with arbitrary constants, need time $2^{\Omega((\log m)^{4/3})}$. For $\Sigma_2^{\RR}$ the same bound holds for the running time plus the total length of the two certificate blocks. The respective bounds for $\NPR$, $\coNPR$ and $\Sigma_2^{\RR}$ also hold for each threshold $\{Y\le\per_m(X)\}$ and $\{Y\ge\per_m(X)\}$. A public-coin protocol for the graph with real messages and a polynomial-time verifier needs $\Omega(\log\log m)$ rounds. The proofs combine the lower bound for the border complexity of the permanent with upper bounds such as the following.
 \begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em,itemsep=1pt,topsep=3pt,start=6]
-\item Certificates do not help to check a polynomial. If the graph of a real polynomial $f$ of degree $d$ can be verified by a real computation of size $t$ with existential certificates, with universal certificates, or with an existential block followed by a universal block of certificates, then the border complexity of $f$ is bounded by a polynomial in $t$, $d$ and the number of variables.
+\item Let $f$ be a real polynomial of degree $d$ in $n$ variables. If a real computation tree of depth $t$ verifies its graph with one existential or one universal block of certificates, then the border complexity of $f$ is polynomially bounded in $t,d,n$. With an existential block of length $k$ followed by a universal block of length $l$, the bound is polynomial in $t+k+l,d,n$.
 \end{enumerate}
 Result \textup{(6)} extends a theorem of B\"urgisser from deterministic verification to these three kinds of nondeterministic verification. The proofs of \textup{(6)} and of the first equality in \textup{(5)} use no lower bound.
 \end{abstract}
+\maketitle
 
 \tableofcontents
 

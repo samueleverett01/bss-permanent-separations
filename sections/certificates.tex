@@ -33,7 +33,7 @@ Then the border complexity of $f$ is at most $C\bigl((d+1)^3\,t+(d+1)^2(\bar k+2
 The tree may use any real constants, so the theorem is nonuniform. Boolean certificates are the special case in which the tree tests $z_i(z_i-1)=0$. B\"urgisser's theorem on the decision complexity of graphs \cite[Corollary~1.5]{Bur04} is the case $k=0$, with a sharper bound.
 
 \begin{proof}
-\emph{Fixing a cell.} Apply \cref{lem:cells} with the accepting leaves marked. For $x\in U$ the point $(x,f(x))$ has a certificate. So $U$ is the union, over the finitely many cells $B$, of the semialgebraic sets $\{x\in U:(x,f(x),z)\in B\text{ for some }z\}$. By \ref{S4}(a) one of these sets has nonempty interior. Fix a cell $B=Z\cap O$ for which this holds, with polynomials $p_1,\dots,p_r$ and $q_1,\dots,q_m$. Certificate coordinates that do not occur in these polynomials do not affect membership in $B$. We set them to $0$, and we let $k$ denote the number of the remaining coordinates, which is at most $2t$. Let $U_1$ be an open ball in the set that corresponds to this cell, and let
+\emph{Fixing a cell.} Restrict $U$ to an open ball contained in it. Apply \cref{lem:cells} with the accepting leaves marked. For $x\in U$ the point $(x,f(x))$ has a certificate. So $U$ is the union, over the finitely many cells $B$, of the semialgebraic sets $\{x\in U:(x,f(x),z)\in B\text{ for some }z\}$. By \ref{S4}(a) one of these sets has nonempty interior. Fix a cell $B=Z\cap O$ for which this holds, with polynomials $p_1,\dots,p_r$ and $q_1,\dots,q_m$. Certificate coordinates that do not occur in these polynomials do not affect membership in $B$. We set them to $0$, and we let $k$ denote the number of the remaining coordinates, which is at most $2t$. Let $U_1$ be an open ball in the set that corresponds to this cell, and let
 \[
 F=\{(x,z)\in U_1\times\RR^k:\ (x,f(x),z)\in B\}.
 \]
@@ -76,7 +76,7 @@ The boundary points $(x,f(x))$ are accepted. Define the cell $B$, the set $F$, t
 The next proposition is the form of the local theorem used for universal quantifiers. It concerns the optimal value of a polynomial program and does not require the value to be a polynomial.
 
 \begin{proposition}[value functions]\label{prop:value}
-Let $Q\in\RR[\xi,s,\nu]$, with $\xi\in\RR^N$, $s\in\RR$ and $\nu\in\RR^\kappa$, be nonnegative and computed by a straight-line program with $\ell$ operations. Let $A\subseteq\RR^N$ be open and nonempty, and suppose that for every $\xi\in A$ the coordinate $s$ attains a maximum $v(\xi)$ on the set $\{(s,\nu):Q(\xi,s,\nu)=0\}$. Let $D\ge1$. Then there are a dense semialgebraic set $A^\circ\subseteq A$ and finitely many circuit graphs, each with at most $C\bigl((D+1)^3\ell+(D+1)^2(\kappa+1)^2+N\bigr)$ gates, with the following property. For every $\xi_1\in A^\circ$, the function $v$ is of class $C^D$ near $\xi_1$, and its Taylor polynomial of order $D$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed by one of these graphs with real constants.
+Let $Q\in\RR[\xi,s,\nu]$, with $\xi\in\RR^N$, $s\in\RR$ and $\nu\in\RR^\kappa$, be nonnegative and computed by a straight-line program with $\ell$ operations. Let $A\subseteq\RR^N$ be a nonempty open semialgebraic set, and suppose that for every $\xi\in A$ the coordinate $s$ attains a maximum $v(\xi)$ on the set $\{(s,\nu):Q(\xi,s,\nu)=0\}$. Let $D\ge1$. Then there are a dense semialgebraic set $A^\circ\subseteq A$ and finitely many circuit graphs, each with at most $C\bigl((D+1)^3\ell+(D+1)^2(\kappa+1)^2+N\bigr)$ gates, with the following property. For every $\xi_1\in A^\circ$, the function $v$ is of class $C^D$ near $\xi_1$, and its Taylor polynomial of order $D$ at $\xi_1$ is a coefficientwise limit of polynomials of degree at most $D$ computed by one of these graphs with real constants.
 \end{proposition}
 
 \begin{proof}
@@ -90,6 +90,8 @@ Let $\xi\in K$ and $|w-w_0|\le r_0$ with $\tilde Q(\xi,w)=0$. Then $s\le v(\xi)$
 
 Since the ball $U_1$ in the dense open set $A_1$ was arbitrary, the points $\xi_1$ obtained in this way are dense in $A$. For each of the finitely many graphs, consider the set of $\xi_1\in A$ near which $v$ is $C^D$ and at which its Taylor polynomial is such a limit. This set is defined by a first-order formula, so it is semialgebraic by \ref{S1}. Let $A^\circ$ be the union of these sets.
 \end{proof}
+
+The hypothesis on $A$ is necessary for the density conclusion. Take $Q=s^2$ and $A=\bigcup_{j\ge1}(2j,2j+1)\subseteq\RR$. Here $v=0$ everywhere, but a semialgebraic subset of $A$ has finitely many connected components and so meets only finitely many of these intervals.
 
 \subsection{The permanent}
 
