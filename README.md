@@ -17,7 +17,7 @@ A Lean formalization of the results is currently underway.
 
 ## Results
 
-In the Blum–Shub–Smale model, the graph `{Y = per_m(X)}` of the real permanent lies in parallel polynomial time PAR_ℝ and outside each of
+In the Blum–Shub–Smale (BSS) model, the graph `{Y = per_m(X)}` of the real permanent lies in parallel polynomial time PAR_ℝ and outside each of
 
 - NP_ℝ and coNP_ℝ,
 - the second existential level Σ₂ of the real polynomial hierarchy,
