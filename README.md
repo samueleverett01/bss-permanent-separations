@@ -5,15 +5,11 @@ LaTeX source of the paper
 > **NP_ℝ ≠ PAR_ℝ, Σ₂^ℝ ≠ PAR_ℝ and BIP_ℝ ≠ PAR_ℝ: the permanent has no short real certificates**
 
 > [!IMPORTANT]
-> **This paper is mostly AI-written.** The proofs were found, and most of the text was drafted, by AI models in conversation with the human author. The results have not been peer reviewed and should be read with that in mind.
+> The results in this repository came out of a conversation between Samuel Everett and Claude Fable 5.2, an AI model developed by Anthropic. Claude Fable 5.2 found the proofs together with Samuel Everett and wrote most of the paper.
 
-## How these results came about
+> That conversation started from initial ideas in a separate, earlier conversation with ChatGPT Astra 6.2, which proved $\mathrm{BIP}_{\mathbb R}^{\times}\subsetneq\mathrm{PAR}_{\mathbb R}^{\times}$ (Boolean-message interactive proofs against parallel polynomial time, in the real model with multiplication). The conversation with Claude Fable 5.2 extended that starting point to the further separations listed below.
 
-The results in this repository came out of a conversation between Samuel Everett and Claude Fable 5.2, an AI model developed by Anthropic. Claude Fable 5.2 found the proofs together with Samuel Everett and wrote most of the paper.
-
-That conversation started from initial ideas in a separate, earlier conversation with ChatGPT Astra 6.2, which proved $\mathrm{BIP}_{\mathbb R}^{\times}\subsetneq\mathrm{PAR}_{\mathbb R}^{\times}$ (Boolean-message interactive proofs against parallel polynomial time, in the real model with multiplication). The conversation with Claude Fable 5.2 extended that starting point to the further separations listed below.
-
-A Lean formalization of the results is currently underway.
+> A Lean formalization of the results is currently underway. The results have not been peer reviewed and should be read with that in mind.
 
 ## Results
 
