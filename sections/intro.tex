@@ -129,7 +129,7 @@ over probability measures $\mu$ with finitely many atoms. This is a regularizati
 
 The language $\mathrm{PERM}$ lies outside $\NPR$, so it does not separate $\PR$ from $\NPR$. By \cref{thm:F}, these two classes cannot be separated by a lower bound on the border complexity of a polynomial of polynomial degree whose graph is in $\NPR$. In \cref{sec:open} we discuss this question and the higher levels of the hierarchy.
 
-Over $\CC$, B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ implies $\PC\ne\NPC$ in the nonuniform model \cite[Conjecture~1.1]{Bur26}. The border lower bound for the permanent over $\CC$ establishes the hypothesis. We are hopeful that a proof of B\"urgisser's conjecture may now be within reach, and we hope the algebraic complexity community will find one!
+Over $\CC$, B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ implies $\PC\ne\NPC$ in the nonuniform model \cite[Conjecture~1.1]{Bur26}. The border lower bound for the permanent over $\CC$ establishes the hypothesis. As a side result, we observe in \cref{sec:open} that B\"urgisser's conjecture follows from a polynomial bound on the circuit complexity of squarefree parts, of the kind conjectured by Dutta, Saxena and Sinhababu \cite{DSS22} (\cref{prop:radical}). The proof writes the equation of a hypersurface in $\NPC$ that encodes the permanent as a quotient of four squarefree parts of polynomials computed along an accepting path. We are hopeful that a proof of B\"urgisser's conjecture may now be within reach, and we hope the algebraic complexity community will find one!
 
 \subsection{Organization}
 
@@ -137,7 +137,7 @@ Over $\CC$, B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ impli
 
 \subsection{Formal verification}
 
-All results of this paper are formalized in the proof assistant Lean~4 with the Mathlib library, and the formal proofs are checked by the Lean kernel. The formalization proves every numbered lemma, proposition, theorem and corollary, including \cref{thm:A,thm:B,thm:C,thm:D,thm:E,thm:F}. The results that we cite from the literature, namely the facts \ref{S2}--\ref{S8} on semialgebraic sets, \cref{thm:lowerbound}, \cref{thm:burgisser}, effective quantifier elimination, the counting bound of \cref{lem:coins} and the known inclusions between complexity classes, enter the formalization as explicit hypotheses and are not proved there. \Cref{sec:lean} describes the formalization and lists, for each result, the corresponding Lean theorem.
+The results of \crefrange{sec:prelim}{sec:interaction} are formalized in the proof assistant Lean~4 with the Mathlib library, and the formal proofs are checked by the Lean kernel. The formalization proves every numbered lemma, proposition, theorem and corollary of these sections, together with \cref{thm:A,thm:B,thm:C,thm:D,thm:E,thm:F}. The side result of \cref{sec:open} (\cref{lem:radpath,prop:radical}) is not formalized. The results that we cite from the literature, namely the facts \ref{S2}--\ref{S8} on semialgebraic sets, \cref{thm:lowerbound}, \cref{thm:burgisser}, effective quantifier elimination, the counting bound of \cref{lem:coins} and the known inclusions between complexity classes, enter the formalization as explicit hypotheses and are not proved there. \Cref{sec:lean} describes the formalization and lists, for each result, the corresponding Lean theorem.
 
 \subsection{Use of AI}
 

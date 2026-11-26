@@ -4,6 +4,49 @@
 
 B\"urgisser conjectures that $\VNP\not\subseteq\overline{\VP}$ over $\CC$ implies $\PC\ne\NPC$ nonuniformly \cite[Conjecture~1.1]{Bur26}. The hypothesis follows from \cref{thm:lowerbound} in its form over $\CC$. Polynomial-size circuits for the resultant of $n+1$ quadratic forms imply $\VP=\VNP$ over $\CC$ \cite{Bur26}. Extending this implication to every nonzero multiple of that resultant would prove the conjecture. The resultant has exponential degree, so the degree dependence in \cref{thm:burgisser} is an obstacle. See also \cite{SS95} for the analogous role of multiples of integers.
 
+\paragraph{B\"urgisser's conjecture and squarefree parts.} We record a side observation: B\"urgisser's conjecture follows from a bound on the circuit complexity of squarefree parts. Unlike the rest of the paper, this observation is not formalized in Lean. For a nonzero polynomial $P$ over $\CC$ write $\rad(P)$ for the product of its distinct irreducible factors, and write $\doteq$ for equality up to a nonzero scalar. Consider the following hypothesis.
+\begin{enumerate}[label=\textup{(R)},leftmargin=3em]
+\item There is a polynomial $\pi$ such that, if a polynomial $P$ over $\CC$ is computed by an arithmetic circuit of size $s$, then $\rad(P)$ is computed by an arithmetic circuit of size $\pi(s)$, whatever the degree of $P$.
+\end{enumerate}
+Let $\overline{\mathrm{(R)}}$ be the weaker hypothesis that bounds the border complexity of $\rad(P)$ by $\pi(s)$. Dutta, Saxena and Sinhababu conjecture a polynomial bound for the complexity of the squarefree part \cite[Conjecture~1]{DSS22}. In a form that bounds the minimum of the degree and the circuit size of $\rad(P)$, it implies \textup{(R)}: the polynomial $P\cdot(Z^{2^s}-1)$, with a new variable $Z$, has a circuit of size $O(s)$ and a squarefree part of degree at least $2^s$, so for large $s$ the bound applies to its circuit size, and setting $Z=0$ gives $\rad(P)$ up to a scalar.
+
+\begin{lemma}\label{lem:radpath}
+Let $f\in\CC[x]$ be irreducible, and let a complex tree of depth $t$ decide $\{f=0\}$. Then there are nonzero polynomials $A,B,C\in\CC[x]$, computed together by one straight-line program with $O(t)$ operations, such that
+\[
+f\ \doteq\ \frac{\rad(AB)\,\rad(CB)}{\rad(ACB)\,\rad(B)} .
+\]
+\end{lemma}
+
+\begin{proof}
+Run the tree at the generic point of $V(f)$, that is, over the function field of the irreducible hypersurface $V(f)$, and represent the values on the path it follows by fractions as in \cref{sec:cells}. The points of a dense open subset of $V(f)$ follow the same path, so the path accepts. Its conditions are $E_1=\dots=E_m=0$ and $B\ne0$, where the $E_i$ are the tested numerators of the tests answered ``yes'' and $B$ is the product of the other tested numerators and of the numerators of the divisors. All of them are computed by one straight-line program with $O(t)$ operations, $f$ divides every $E_i$, and $f$ does not divide $B$. Every point that satisfies the conditions is accepted, so it lies in $V(f)$. We discard the $E_i$ that are the zero polynomial. Some $E_i$ remains, since otherwise the open set $\{B\ne0\}$ would be accepted.
+
+Let $A$ be one of the remaining $E_i$. Let $C$ be a nonzero linear combination of the $E_i$ that is not divisible by any irreducible factor of $A$ that fails to divide some $E_j$. Each such factor excludes a proper linear subspace of coefficient vectors, and there are finitely many. The common irreducible factors of $A$ and $C$ are then exactly the common irreducible factors $g$ of all the $E_i$. If such a $g$ does not divide $B$, then a dense open subset of $V(g)$ satisfies the conditions of the path, so $V(g)\subseteq V(f)$ and $g\doteq f$. Conversely $f$ divides $A$ and $C$ and does not divide $B$. For an irreducible $g$ the exponent of $g$ in the displayed quotient is
+\[
+\mathbf 1_{g\mid AB}+\mathbf 1_{g\mid CB}-\mathbf 1_{g\mid ACB}-\mathbf 1_{g\mid B},
+\]
+which is $1$ if $g$ divides $A$ and $C$ but not $B$, and $0$ otherwise.
+\end{proof}
+
+\begin{proposition}\label{prop:radical}
+Assume \textup{(R)}. If $\NPC$ is contained in nonuniform polynomial time over $\CC$, then $\VP=\VNP$ over $\CC$. Under $\overline{\mathrm{(R)}}$ the same assumption gives $\VNP\subseteq\overline{\VP}$ over $\CC$. In particular $\overline{\mathrm{(R)}}$ implies B\"urgisser's conjecture \cite[Conjecture~1.1]{Bur26}, and together with \cref{thm:lowerbound} in its form over $\CC$ it implies $\PC\ne\NPC$ nonuniformly.
+\end{proposition}
+
+\begin{proof}
+Let $p(T')$ be a monic polynomial of degree $n$ with roots $r_1,\dots,r_n$, let $q_1,\dots,q_n$ have degree less than $n$, and let $T$ be a further variable. Put
+\[
+f(p,q,T)=\prod_{\sigma\in S_n}\Bigl(1-T\prod_{i=1}^nq_i(r_{\sigma(i)})\Bigr).
+\]
+Its coefficients are symmetric in the $r_j$, so $f$ is a polynomial in $T$ and in the coefficients of $p$ and of the $q_i$. Treat the $r_j$ and the coefficients of the $q_i$ as independent variables. The values $q_i(r_j)$ are then independent over $\CC(r)$ by the Vandermonde determinant, so the $n!$ products $\prod_iq_i(r_{\sigma(i)})$ are distinct, and $S_n$ permutes them transitively. Their common minimal polynomial over the field generated by the coefficients of $p$ and of the $q_i$ therefore has degree $n!$. It equals $T^{n!}f(1/T)=\prod_\sigma\bigl(T-\prod_iq_i(r_{\sigma(i)})\bigr)$, which is monic in $T$ and hence irreducible as a polynomial by Gauss's lemma. Since $f(0)=1$, also $f$ is irreducible. The set $\{f=0\}$ is in $\NPC$: guess $z_1,\dots,z_n$, check the coefficient identity $p(T')=\prod_j(T'-z_j)$, and check $T\prod_iq_i(z_i)=1$.
+
+By assumption, complex trees of depth polynomial in $n$ decide $\{f=0\}$. \Cref{lem:radpath} and \textup{(R)} give polynomial-size circuits for $U=\rad(AB)\rad(CB)$ and $V=\rad(ACB)\rad(B)$, with $U=\lambda fV$ for some $\lambda\ne0$. Each radical is divisible at most once by $T$, so $V$ has order $a\le2$ in $T$ at $0$. Write $U_j$ and $V_j$ for the coefficients of $T^j$. Since $f(0)=1$ we have $U_a=\lambda V_a\ne0$ and
+\[
+[T]\,f=\frac{U_{a+1}}{U_a}-\frac{V_{a+1}}{V_a}.
+\]
+Fix distinct complex numbers $r_1,\dots,r_n$ for which $V_a$ is a nonzero polynomial in the coefficients of the $q_i$, and determine the $q_i$ by interpolation from $q_i(r_j)=X_{ij}$. Then $[T]f=-\sum_\sigma\prod_iX_{i\sigma(i)}=-\per_n(X)$. The coefficients of $T^j$ for $j\le3$ are computed from the circuits for $U$ and $V$ in $\CC[x][T]/(T^4)$. Choose $X_0$ with $V_a(X_0)\ne0$ and evaluate the right-hand side at $X_0+\tau W$ modulo $\tau^{n+1}$; the constant terms of the denominators are nonzero constants, so the divisions cost $O(n^2)$ operations each. Summing the coefficients gives $-\per_n(X_0+W)$ exactly, a polynomial-size circuit for the permanent. As the permanent is complete for $\VNP$, $\VP=\VNP$. Under $\overline{\mathrm{(R)}}$ the same construction applied to approximating circuits gives coefficients that converge to those of the permanent, because the denominators have nonzero limits at $X_0$. Hence the permanent has polynomial border complexity and $\VNP\subseteq\overline{\VP}$.
+\end{proof}
+
+The identity of \cref{lem:radpath} holds unconditionally. Hypothesis \textup{(R)} is used only to bound the coefficients of $T^j$, $j\le3$, of the four squarefree parts on the interpolation slice. The identity depends on discarding multiplicities: with the polynomials $AB$, $CB$, $ACB$, $B$ in place of their squarefree parts the quotient is $1$, and quantities that are additive under products, such as root sums counted with multiplicity, cancel in the same way.
+
 Lower bounds for all nonzero elements are known for other ideals. Forbes, Shpilka, Tzameret and Wigderson \cite{FSTW16} prove lower bounds for all nonzero multiples of explicit polynomials in several restricted circuit models. Andrews and Forbes \cite{AF22} show that every nonzero polynomial in the ideal of $r\times r$ minors of a generic matrix yields, through a small oracle circuit of depth three, an approximation of a determinant of size $\Theta(r^{1/3})$. For the principal ideal $(Y-\per_m(X))$ over $\RR$, \cref{thm:lowerbound,thm:burgisser} give a lower bound even for unrestricted arithmetic circuits. If a nonzero multiple has a straight-line program of length $\ell$, then the border complexity of $\per_m$ is at most $Cm^3(\ell+m^2)$. Hence $\ell\ge 2^{\Omega((\log m)^{4/3})}$ regardless of the degree of the multiple.
 
 \paragraph{The universal--existential level.} Suppose $y=f(x)$ holds exactly when for all $z$ some $u$ is accepted. Off the graph there is a $z$ for which every $u$ is rejected. Such witnesses can escape to infinity as $(x,y)$ approaches the graph. For example, let the verifier test $yz-1=0$, accepting exactly when this test fails and ignoring $u$. Then $\forall z\,\exists u$ defines $y=0$. For $y\ne0$ the only rejecting value is $z=1/y$. On any fixed closed ball $B$ in $z$, the accepting margin of \eqref{eq:margin} is $v(y,z)=\min\{1,(1-yz)^2\}$, which tends uniformly to $1$ as $y\to0$. For fixed $N$ and $a$, the objective \eqref{eq:J} at maximizing margins changes from its value at $y=0$ by at most $\sup_{z\in B}|v(y,z)^N-1|$, uniformly over all atom locations and weights in that ball. Its maximum is therefore continuous across $y=0$. It remains open whether the border complexity of $f$ is polynomially bounded in its degree, the number of variables, the tree depth and the two block lengths for this quantifier order.
