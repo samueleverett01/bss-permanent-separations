@@ -2,7 +2,7 @@
 
 
 > [!IMPORTANT]
-> The results in this repository came out of a conversation between Samuel Everett and Claude Fable 5.2, an AI model developed by Anthropic. Claude Fable 5.2 found the proofs through the conversation with Sam, and then wrote most of the paper under his guidance.
+> The results in this repository grew out of a conversation between Samuel Everett and Claude Fable 5.2. The initial prompts were inspired by a separate discussion between Sam and Deven Mithal, who suggested combining the latest VP-VNP results with some of Sam's private work in the area. Claude Fable 5.2 found the proofs through the conversation with Sam, and then wrote most of the paper under his guidance.
 > That conversation started from initial ideas in a separate, earlier conversation Sam had with ChatGPT Astra 6.2, which proved $\mathrm{BIP}_{\mathbb R}^{\times}\subsetneq\mathrm{PAR}_{\mathbb R}^{\times}$ (Boolean-message interactive proofs against parallel polynomial time, in the real model with multiplication). The conversation with Claude Fable 5.2 extended that starting point to the further separations listed below.
 > All results are formalized in Lean 4 (see [Lean formalization](#lean-formalization) below), with the results cited from the literature as explicit hypotheses. The results have not been peer reviewed and should be read with that in mind.
 
